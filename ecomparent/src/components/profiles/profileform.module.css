@@ -1,0 +1,78 @@
+.form-holder{
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-55%, -50%);
+    border-radius: 10px;
+}
+.form-holder-dark{
+    background-color: gainsboro;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-55%, -50%);
+    border-radius: 10px;
+}
+.theme-dark{
+    background-color:rgb(249, 249, 249, 0.7);
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 40%;
+    left: 37%;
+    transform: translate(-50%, -60%);
+    border-radius: 10px;
+}
+.input {
+    display: grid;
+    gap: 3rem;
+    justify-items: center;
+
+    
+    /* border-radius: 10px; */
+    
+}
+.cancel{
+    background-color: red;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 30px;
+    margin-left: 89.3%;
+}
+.input input{
+    background: 0;
+    /* margin-top: 3.2rem; */
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    width: 390px;
+    margin: 0 2rem;
+
+}
+.incorrectpassword p{
+    margin-left: 20px;
+    color: red;
+
+}
+button{
+    margin-top: 1rem;
+    border: none;
+    outline: none;
+    background-color: cyan;
+    margin-left: 40%;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+input::placeholder{
+    color: black;
+}
+.cancel:hover{
+    opacity: 0.4;
+}

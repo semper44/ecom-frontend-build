@@ -1,0 +1,130 @@
+.all-items{
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;   
+}
+.theme-dark{
+    background-color:gainsboro;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+  
+}
+.parent-notification{
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    padding-bottom: 2rem;
+
+}
+.parent-notification a{
+    text-decoration: none;
+}
+#cancel{
+    color: black;
+    font-weight: 500;
+    font-size: large;
+    float: right;
+    border: none;
+    outline: none;
+    background: 0;
+    padding: 0 0.4rem;
+    cursor: pointer;
+    margin-top: -1px;
+}
+#pcancel{
+    color: black;
+    font-weight: 500;
+    font-size: large;
+    float: right;
+    border: none;
+    outline: none;
+    background: 0;
+    padding: 0 0.4rem;
+    cursor: pointer;
+}
+#pcancel:hover{
+    background-color: red;
+    padding:0 0.4rem ;
+    color: white;
+    border-radius: 3px;
+}
+#cancel:hover{
+    background-color: red;
+    padding:0 0.4rem ;
+    color: white;
+    border-radius: 3px;
+}
+.productnotif{
+    margin-top: 2rem;
+    /* margin-left: 1rem; */
+}
+.followingnotif{
+    /* margin-left: 1rem; */
+    margin-top: 2rem;
+}
+.productnotif a, .followingnotif a{
+    text-decoration: none;
+}
+#notification{
+    cursor: pointer;
+    padding: 1rem;
+    background: cyan;
+    width: fit-content;
+    border-radius: 10px;
+    text-decoration: none;
+    color:white
+}
+
+#notification:hover{
+    opacity: 0.5;
+}
+
+@media (max-width:493px){
+    .all-items{
+        background-color: green;
+        width: 59%;
+        height: fit-content;
+        border-radius: 10px;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+       
+    }
+    .theme-dark{
+        background-color:rgb(249, 249, 249, 0.7);
+        width: 59%;
+        height: fit-content;
+        border-radius: 10px;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* @media (max-width:606px){
+    .all-items{
+        background-color: white;
+        width: 32%;
+        height: fit-content;
+        border-radius: 10px;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+       
+    }
+    .theme-dark{
+        background-color:rgb(249, 249, 249, 0.7);
+        width: 32%;
+        height: fit-content;
+        border-radius: 10px;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+} */

@@ -1,0 +1,232 @@
+.box{
+    background-color:white;
+    width: 80%;
+    height: 73%;
+    display:flex;
+    gap:2%;
+    flex-direction:column;
+    border-radius: 10px;
+    z-index:3
+}
+.box-dark{
+    background-color:gainsboro;
+    width: 80%;
+    height: 73%;
+    display:flex;
+    gap:2%;
+    flex-direction:column;
+    border-radius: 10px;
+    z-index:3
+}
+.ribbon-dark{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* background-color: gainsboro; */
+    position: sticky; 
+    height: 40px;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px 10px 17px #cbced1, 0px 3px 1px gainsboro;
+
+}
+.item{
+    display: flex;
+}
+.item p{
+    margin-left: 12%;
+}
+.ribbon p{
+    color: black;
+}
+
+.nothing-in-cart{
+    background-color: white;
+    color: cyan;
+    border-radius: 10px;
+    height: fit-content;
+    width: fit-content;
+    padding:2% 5% 5% 5%;
+    
+}
+.nothing-in-cart-dark{
+    background-color: gainsboro;
+    border-radius: 10px;
+    height: fit-content;
+    width: fit-content;
+    padding:2% 5% 5% 5%;
+    color: black;
+    /* width: 40%; */
+    border-radius: 10px;
+    height: 70px;
+    width: 300px;
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+.cart-parent{
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width:100%,
+}
+.cart-parent-dark{
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width:100%;
+}
+.class:hover .cancel{
+    opacity:1
+  }
+.cart-parent::-webkit-scrollbar{
+    background-color: white;
+    width: 10px;
+}
+.cart-parent-dark::-webkit-scrollbar{
+    background-color: gainsboro;
+    width: 10px;
+}
+
+.cart-parent::-webkit-scrollbar-thumb{
+    background: white;
+    /* background: rgba(136, 133, 133, 0.83); */
+    /* opacity: 0; */
+    height: 100px;
+}
+.cart-parent-dark::-webkit-scrollbar-thumb{
+    background: gainsboro;
+    /* background: rgba(136, 133, 133, 0.83); */
+    /* opacity: 0; */
+    height: 100px;
+}
+.cart-parent:hover::-webkit-scrollbar-thumb{
+    background: rgba(136, 133, 133, 0.83);
+    height: 100px;
+}
+.cart-parent-dark:hover::-webkit-scrollbar-thumb{
+    background: rgba(136, 133, 133, 0.83);
+    height: 100px;
+}
+
+.cart-image{
+    height: 120px;
+    width: 120px;
+}
+.cart-image img{
+    height: 120px;
+    width: 120px;
+    transform: scale(0.8);
+
+
+}
+
+.cart-qty{
+    margin-top: 0.4rem;
+}
+.cart-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.minus-plus{
+    display: flex;
+    gap: 10%;
+}
+
+.minus, .plus{
+    border: none;
+    background: 0;
+    cursor: pointer;
+    padding: 0.3rem;
+    margin-bottom: 0.6rem;
+}
+.minus:hover{
+    background-color: red;
+    border-radius: 50%;
+}
+.plus:hover{
+    background-color: cyan;
+    border-radius: 50%;
+}
+.minus:active, .plus:active{
+    opacity: 0.5;
+}
+
+.cancel{
+    float: right;
+    margin-right: 7%;
+    font-size: large;
+    opacity: 0;
+    border: none;
+    background: 0;
+    padding: 2px 5px;
+    border-radius: 2px;
+    background-color: red;
+    /* margin-left: 5%; */
+    cursor: pointer;
+}
+.price-container{
+    display: inline-block;
+    margin-right: 2%;
+}
+.price-container p{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+#price{
+   margin-right: 7%;
+}
+.cart-price{
+   margin-right: 7.5%;
+}
+
+#continueshopping, .order{
+    margin-top: 2rem;
+    width: fit-content;
+    padding: 0.5rem 0.5rem;
+    background-color: cyan;
+    border-radius: 10px;
+    cursor: pointer; 
+}
+.order{
+    margin-right: 7%;
+}
+#continueshopping{
+    margin-left: 2%;
+}
+
+#continueshopping:active, .order:active{
+    opacity: 0.8;
+
+} 
+ 
+
+@media (min-width:1100px){
+    .box{
+        background-color:white;
+        width: 50%;
+        height: 73%;
+        display:flex;
+        gap:2%;
+        flex-direction:column;
+        border-radius: 10px;
+        z-index:3
+    }
+    .box-dark{
+        background-color:gainsboro;
+        width: 50%;
+        height: 73%;
+        display:flex;
+        gap:2%;
+        flex-direction:column;
+        border-radius: 10px;
+        z-index:3
+    }
+    
+}
+  

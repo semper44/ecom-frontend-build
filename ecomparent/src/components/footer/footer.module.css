@@ -1,0 +1,44 @@
+.footer{
+    margin-top: 3rem;
+    padding: 0 4%;
+    background-color: black;
+    
+}
+.footer h1, .footer h2, .footer h4, .footer p{
+    color: white;
+    letter-spacing: 2px;
+
+}
+.logo-sub{
+    display: flex;
+    padding-top: 1rem;
+}
+.footer-bottom{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(20%, 1fr));
+    /* grid-template-columns: 90px 90px 90px 90px 90px; */
+    grid-column-gap: 2%;
+    /* margin-left: 5.5%; */
+    /* margin-right: 4.5%; */
+    margin-top: 35px;
+    
+}
+
+@media(max-width:710px){
+    .footer-bottom{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(20%, 1fr));
+        /* grid-template-columns: 90px 90px 90px 90px 90px; */
+        grid-column-gap: 2%;
+        /* margin-left: 5.5%; */
+        /* margin-right: 4.5%; */
+        margin-top: 35px;
+        
+    }
+    .download-app{
+        grid-column-start: 1;
+        grid-column-end: 4;
+        text-align: center;
+        margin-top: 3rem;
+    }
+}

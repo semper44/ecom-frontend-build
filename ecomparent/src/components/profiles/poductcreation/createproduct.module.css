@@ -1,0 +1,155 @@
+.all-items{
+    background-color: white;
+    width: 70%;
+    height: fit-content;
+    position: absolute;
+    border-radius: 10px;
+    z-index: -1;
+}
+.all-items-dark{
+    background-color: gainsboro;
+    width: 70%;
+    height: fit-content;
+    border-radius: 10px;
+    z-index: 80;
+}
+
+#cancel{
+    color: black;
+    font-weight: 500;
+    font-size: large;
+    border: none;
+    outline: none;
+    background: 0;
+    padding: 0 0.4rem;
+    cursor: pointer;
+    float: right;
+    margin-top: -0.3%;
+}
+#pcancel{
+    color: black;
+    font-weight: 500;
+    font-size: large;
+    position: absolute;
+    right: 37.2rem;
+    top: 6.1rem;
+    border: none;
+    outline: none;
+    background: 0;
+    padding: 0 0.4rem;
+    cursor: pointer;
+}
+#pcancel:hover{
+    background-color: red;
+    padding:0 0.4rem ;
+    color: white;
+    border-radius: 3px;
+}
+#cancel:hover{
+    background-color: red;
+    padding:0 0.4rem ;
+    color: white;
+    border-radius: 3px;
+}
+.search-items{
+    display: grid;
+    row-gap: 10px;
+    margin-left: 2rem;
+    width: 90%;
+}
+.search-items input{
+    margin-top: 2rem;
+    outline: none;
+    background: 0;
+    border: none; 
+    width: 90%;   
+    /* height: 35px; */
+    border-bottom: 1px solid black;
+}
+.search-items input:focus{
+    outline: none;
+    background: 0;
+    border: none;
+    border-bottom: 1px solid black;
+}
+.search-items input:focus::placeholder{
+    color: cyan;
+    position: absolute;
+    bottom: 10px;
+}
+.send-button{
+    display: grid;
+    width: 90%;
+    justify-items: center;
+    /* align-items:  center; */
+    /* padding-bottom: 2rem; */
+}
+.searchcreate{
+    /* padding: 0.4rem 3rem; */
+    outline: none;
+    border: none;
+    background-color: cyan;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: large;
+    padding: 0.7rem 1.3rem;
+    margin-left: 0;
+    margin-top: 0;
+}
+.searchcreate:hover{
+    opacity: 0.5;
+}
+
+
+/*
+@media (max-width:1132px){
+    .all-items{
+        background-color: white;
+        width: 30%;
+      height: 60%;
+        border-radius: 10px;
+    }
+    .specific-search::before{
+        content: "Product Specific Search";
+        color: cyan;
+        position: absolute;
+        letter-spacing: 0.5px;
+        top: 39%;
+        left: 41%;
+    }
+}
+@media (max-width:910px){
+    .all-items{
+        background-color: white;
+        width: 45%;
+      height: 60%;
+        border-radius: 10px;
+    }
+}
+@media (max-width:630px){
+    .all-items{
+        background-color: white;
+        width: 55%;
+      height: 60%;
+        border-radius: 10px;
+    }
+}
+@media (max-width:567px){
+    .all-items{
+        background-color: white;
+        width: 57%;
+        height: 63%;
+        border-radius: 10px;
+    }
+}
+@media (min-width:1569px){
+    .all-items{
+        background-color: white;
+        width: 28%;
+      height: 60%;
+        border-radius: 10px;
+    }
+
+} */

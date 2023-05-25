@@ -1,0 +1,112 @@
+
+.parent{
+    margin-top: 4.5rem;
+    /* margin-left: 2%; */
+    width: 100%;
+    height: 100vh;    
+}
+
+.statbox{
+    display: flex;
+    gap: 2%;
+
+}
+.infographics{
+    display: flex;
+    grid-column-gap: 4%;
+    margin-top: 9rem;
+    width: 100%;
+    /* height:450px; */
+    padding-bottom: 1.5%;
+}
+
+.charts{
+    /* padding-top: 2rem; */
+    width: 32%;
+    height:410
+
+}
+
+@media(max-width:1223px){
+    .parent{
+        margin-top: 4.5rem;
+        margin-left: 3%;
+        width: 95%;
+        height: 100vh;
+    
+    }
+    .statbox{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        grid-row-gap:10%;
+        width: 100%; 
+    }
+    .infographics{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); 
+        grid-row-gap:10%;
+        width: 100%; 
+        margin-left: 6%;
+    }
+    .charts{
+        width: 90%; 
+        height: 410px;
+     }
+   
+}
+@media(max-width:1002px){
+    .parent{
+        margin-top: 4.5rem;
+        margin-left: 15%;
+        width: 80%;
+        height: 100; 
+    }
+    .statbox{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); 
+        grid-row-gap:4%; 
+        margin-right: 4%;
+    }
+    .infographics{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); 
+        grid-row-gap:10%;
+        width: 100%; 
+        margin-left: 6%;
+
+    }
+    .charts{
+        width: 90%; 
+        height: 410px;
+     }
+   
+   
+} 
+@media(max-width:810px){
+    .parent{
+        margin-top: 4.5rem;
+        margin-left: 0;
+        width: 95%;
+        height: 100vh; 
+        z-index: 100;      
+    }
+    .statbox{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); 
+        grid-row-gap:2%;
+        margin-right: 4%;
+    }
+    .infographics{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); 
+        grid-row-gap:10%;
+        /* margin-left: -5%; */
+        width: 100%; 
+
+    }
+    .charts{
+        width: 90%; 
+        height: 410px;
+     }
+   
+} 

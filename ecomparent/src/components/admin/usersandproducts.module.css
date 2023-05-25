@@ -1,0 +1,47 @@
+.usersandproduct{
+    /* background-color: red; */
+    /* padding: 0 20%; */
+    margin-top: 1rem;
+    width: 100%;
+    height: 100vh;
+    margin-left: -1.5rem;
+}
+
+@media(max-width:1550px){
+    .usersandproduct{
+        margin-top: 1rem;
+        width: 90%;
+        height: 100vh;
+    
+    }
+
+}
+@media(max-width:1223px){
+    .usersandproduct{
+        margin-top: 1rem;
+        width: 90%;
+        height: 100vh;
+    
+    }
+
+}
+@media(max-width:1002px){
+    .usersandproduct{
+        margin-top: 1rem;
+        width: 90%;
+        height: 100vh;
+        margin-left: 2rem;
+        
+        
+    }
+   
+} 
+@media(max-width:810px){
+    .usersandproduct{
+        margin-top: 1rem;
+        width: 93%;
+        height: 100vh;
+        margin-left: -0.2rem;        
+    }
+   
+} 

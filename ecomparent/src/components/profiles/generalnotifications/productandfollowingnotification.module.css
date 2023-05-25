@@ -1,0 +1,51 @@
+.parent{
+    width: 100%;
+   
+}
+.children{
+    padding: 8.4% 0;
+}
+.children-dark p{
+    padding: 8.4% 0;
+    color: cyan;
+}
+.unseen{
+    background-color: cyan;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 6%;
+    border-radius: 5px;
+    width: fit-content;
+}
+.unseen p{
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+.text{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 6%;
+}
+.text p{
+    padding-left: 15px;
+ 
+}
+.no-notifications, .no-notifications-dark{
+    height: 100%;
+    padding: 2.3% 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.no-notifications p{
+    font-size: larger;
+    font-weight: 500;
+    
+}
+
+.no-notifications-dark h1{
+    font-size: larger;
+    font-weight: 500;
+    color: cyan;  
+}

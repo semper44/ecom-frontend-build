@@ -1,0 +1,16 @@
+.parent{
+    margin-left: 6%;
+    margin-top:6% ;
+    margin-bottom:6% ;
+    /* margin-bottom: ; */
+}
+.parent a{
+    text-decoration: none;
+}
+
+.followers{
+    padding: 2% 0;
+}
+.followers h2{
+    color: cyan;
+}

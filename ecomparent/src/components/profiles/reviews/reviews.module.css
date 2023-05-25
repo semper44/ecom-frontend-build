@@ -1,0 +1,12 @@
+.parent{
+    margin-bottom: 1rem;
+}
+.container{
+    display: flex;
+    gap: 1rem;
+}
+.pics{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
