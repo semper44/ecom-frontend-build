@@ -2,10 +2,9 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import React, { useState, useEffect,useContext } from 'react'
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import ImageSearchOutlinedIcon from '@mui/icons-material/ImageSearchOutlined';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import { Link } from 'react-router-dom'
 import { AuthContext } from "../profiles/login/LoginFetch";
@@ -41,26 +40,24 @@ const Item = ({ title, too, icon, selected, setSelected }) => {
 
 
 function Admin({defaultTitle}) {
-  console.log(defaultTitle)
   let first= defaultTitle.charAt(0)
   first= first.toUpperCase()
   let newTitle= first+ defaultTitle.slice(1)
   if(newTitle==="Admin"){
     newTitle="Overview"
   }
-  console.log(newTitle)
   const {collapsed, collapseSidebar } = useProSidebar();
   const[selected, setSelected]= useState(newTitle)
-  console.log(selected)
+  
   // const[dontdisplay, setdontDisplay]= useState(undefined)
-  const[screenWidth, setScreenWidth]= useState(window.innerWidth)
+  // const[screenWidth, setScreenWidth]= useState(window.innerWidth)
 
   const {user}= useContext(AuthContext)
   const {theme, toggleTheme}= useContext(ThemeData)
   const {dontdisplay}= useContext(screensizecontext)
 
   // const screenWidth= useRef(window.innerWidth)
-  console.log(collapsed)
+  
   // useEffect(()=>{
   //   if(screenWidth<=810){
   //     setdontDisplay("md")
@@ -75,19 +72,19 @@ function Admin({defaultTitle}) {
   // }, [ screenWidth])
 
 
-  console.log(dontdisplay)
-  console.log(screenWidth)
+  
+  
 
-  useEffect(()=>{
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth)
-    }
-    window.addEventListener("resize", handleResize);
+  // useEffect(()=>{
+  //   const handleResize = () => {
+  //     setScreenWidth(window.innerWidth)
+  //   }
+  //   window.addEventListener("resize", handleResize);
 
-    return ()=>{
-      window.removeEventListener("resize", handleResize)
-   }
-  }, [screenWidth])
+  //   return ()=>{
+  //     window.removeEventListener("resize", handleResize)
+  //  }
+  // }, [screenWidth])
 
  
   
@@ -159,9 +156,10 @@ function Admin({defaultTitle}) {
           <Item
               title="Overview"
               too="/admin"
-              icon={<HomeOutlinedIcon />}
+              icon={<ImageSearchOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              
             />
           <Item
               title="Home"
@@ -182,27 +180,26 @@ function Admin({defaultTitle}) {
               title="Products"
              too={ {pathname:dontdisplay? "/admin/products/fullpage":"/products",
               state:"fullsize"}}
-              icon={<HomeOutlinedIcon />}
+              icon={<Inventory2OutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
           <Item
               title="Categories"
               too="/admin/Categories"
-              icon={<HomeOutlinedIcon />}
+              icon={<AddCircleOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
           <Item
               title="Settings"
               too="/settings"
-              icon={<HomeOutlinedIcon />}
+              icon={<SettingsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
            
         </Menu>
-        {dontdisplay}
       </Sidebar>
     </div>
   );

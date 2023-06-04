@@ -14,8 +14,9 @@ function ConfirmAndUpdateOrder() {
 
     const reference=searchParams.get("trxref")
     const{cart_id}= useParams()
-    console.log(cartReset)
-
+    
+  useEffect(()=>{document.title="Confirm Order"
+  },[])
     // cartReset
     
     let formdata= new FormData()
@@ -30,7 +31,7 @@ function ConfirmAndUpdateOrder() {
     useEffect(()=>{
       (async()=>{
           let data= await fetch("http://127.0.0.1:8000/product/confirmandupdateorder/", requestOptions)
-          console.log(data)
+          
           if(data.status===200){
             setDataStatus(true)
             setRequestStatus("success")
@@ -42,7 +43,7 @@ function ConfirmAndUpdateOrder() {
           }
           let result= await data.json()
           setData(result.msg)
-          console.log(result)
+          
         })()
     }, [])
 

@@ -1,4 +1,4 @@
-import React,{useContext, useState, useEffect} from 'react'
+import React,{useContext} from 'react'
 // import styles from "./header.module.css"
 import MenuIcon from '../menuicon/MenuIcon'
 import { AuthContext } from '../profiles/login/LoginFetch'
@@ -7,9 +7,9 @@ import { Box, Typography } from '@mui/material'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import HeaderContainer from '../headercontainer/HeaderContainer'
 import jwt_decode from "jwt-decode"
-import {  ThemeProvider, createTheme } from '@mui/material/styles'
-import { Link } from 'react-router-dom'
 import { showsidebarcontext } from '../../stores/CartContxt'
+import { screensizecontext } from '../../stores/CartContxt'
+import logo from "../../ecom_images/logo.png"
 // import BreakPointtheme  from './muiThemes'
 
 
@@ -17,32 +17,10 @@ import { showsidebarcontext } from '../../stores/CartContxt'
 function Header(props) {
   const userdetails= useContext(AuthContext)
   const {theme}= useContext(ThemeData)
-  const side= useContext(showsidebarcontext)
-  console.log(side)
-  const {sidebar, showSidebar, hideSidebar}= useContext(showsidebarcontext)
-  const [dontdisplay, setdontDisplay] = useState(false);
-
-  const[screenWidth, setScreenWidth]= useState(window.innerWidth)
- 
-  useEffect(()=>{
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth)
-    }
-    window.addEventListener("resize", handleResize);
-
-    return ()=>{
-      window.removeEventListener("resize", handleResize)
-   }
-  }, [screenWidth])
-
-  useEffect(()=>{
-    if(screenWidth<=710){
-      setdontDisplay(true)
-    }
-    else{
-      setdontDisplay(false)
-    }
-  }, [screenWidth])
+  const {dontdisplay, gridlg}= useContext(screensizecontext)
+  // const side= useContext(showsidebarcontext)
+  
+  const {sidebar, showSidebar, hideSidebar}= useContext(showsidebarcontext) 
 
   let user
   let userDetail
@@ -60,41 +38,43 @@ function Header(props) {
     }
   }
 
-  const BreakPointtheme = createTheme({
-    breakpoints:{
-        values:{
-            xs:0,
-            sm:480,
-            md:575,
-            lg:711,
-            xl:813
-        }
-    }
-})
+//   const BreakPointtheme = createTheme({
+//     breakpoints:{
+//         values:{
+//             xs:0,
+//             sm:480,
+//             md:575,
+//             lg:711,
+//             xl:813,
+//             special:810
+//         }
+//     }
+// })
   return (
-    <ThemeProvider theme={BreakPointtheme}>
+    // <ThemeProvider theme={BreakPointtheme}>
     <Box sx={{width:"100%",
-      height: "170px",
+      position:"fixed",
+      top:"0",
+      zIndex:"50",
+      height:dontdisplay?"130px":"170px",
       borderRadius: "10px",
       boxSizing: "border-box",
-      // zIndex:"modal",
-      // position:"fixed",
-      boxShadow: theme?'13px 13px 20px rgba(0, 0, 0, 0.6), -13px -13px 20px rgba(0, 0, 0, 0.6)':'13px 13px 20px #cbced1, -13px -13px 20px #fff',}} onClick={close} >
-      
+      backgroundColor:theme?"#050c30":"white",
+      boxShadow: theme?'13px 13px 20px rgba(0, 0, 0, 0.6), -13px -13px 20px rgba(0, 0, 0, 0.6)':'10px 4px 7px #cbced1, -13px -13px 20px transparent',}} onClick={close} >
       <Box>
-      {sidebar &&<MenuIcon showSidebar={showSidebar}/>}
+      {sidebar  &&<MenuIcon showSidebar={showSidebar}/>}
       </Box>
 
-      <Box sx={{width:"100%",display:"flex", padding:"3rem 0 0 15px", paddingLeft:"5.5%",justifyContent:"space-between",paddingRight:"5%",   }} >
-       <MenuOutlinedIcon fontSize='large' notif={props.headernotif} onClick={showSidebar} sx={{color:theme ? "cyan":"black", cursor:"pointer", opacity:sidebar&&"0"}} />
-        
+      <Box sx={{width:"100%",display:"flex",  padding:"3rem 0 0 15px", paddingLeft:"5.5%",justifyContent:!gridlg?"space-between":"end",paddingRight:"5%",   }} >
+       {!gridlg &&<MenuOutlinedIcon fontSize='large' notif={props.headernotif} onClick={showSidebar} sx={{color:theme ? "cyan":"black", cursor:"pointer", opacity:sidebar&&"0"}} />}
+       {gridlg &&<img src={logo} alt="" style={{height:"100px", position:"absolute", left:"3%", top:"14%"}}/>}
         <Box >
           <HeaderContainer onShow={props.onCart} onReveal={props.onSearch} notif={props.headernotif}/>
         </Box>
         {/* </div> */}
       </Box>
-      <Box sx={{width:"fit-content", float:"right", marginTop:"1rem", paddingRight:"5%",}}>
-        <Typography paragraph sx={{color: theme? "cyan": "black"}}>
+      <Box sx={{width:"100%",  paddingRight:"5%", mt:gridlg?"2%":"1.5%" }}>
+        <Typography paragraph sx={{color: theme? "cyan": "black", float:"right",}}>
           {user?
             `Welcome ${userDetail.username}`
           :
@@ -102,29 +82,7 @@ function Header(props) {
         </Typography>
       </Box>
     </Box>
-    <Box sx={{width:"100%", display:"flex", gap:"7.2%", alignItems:"center", justifyContent:"center", mt:"6%", mb:"2%", "& a":{textDecoration:"none"}}}>
-      <Link to={""}>
-        <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
-          Categories
-        </Typography>
-      </Link>
-      <Link to={""}>
-        {!dontdisplay &&<Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
-          Orders
-        </Typography>}
-      </Link>
-      <Link to={""}>
-        <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
-          Voucher
-        </Typography>
-      </Link>
-      <Link to={""}>
-        <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
-          Sellers
-        </Typography>
-      </Link>
-    </Box>
-    </ThemeProvider>
+    // </ThemeProvider>
   )
 }
 
@@ -140,7 +98,7 @@ export default Header
 
 // function Header(props) {
 //   const userdetails= useContext(AuthContext)
-//   console.log(userdetails)
+//   
 //   const {theme}= useContext(ThemeData)
 //   let user
 //   let userDetail

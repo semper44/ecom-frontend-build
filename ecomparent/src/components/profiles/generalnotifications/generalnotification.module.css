@@ -68,6 +68,8 @@
     text-decoration: none;
 }
 #notification{
+    display: flex;
+    /* gap: 1px; */
     cursor: pointer;
     padding: 1rem;
     background: cyan;
@@ -75,6 +77,14 @@
     border-radius: 10px;
     text-decoration: none;
     color:white
+}
+#notification span{
+    background-color: red;
+    color:white;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0 5px;
+
 }
 
 #notification:hover{

@@ -1,36 +1,37 @@
 import React, { useState, useEffect , useContext} from 'react'
 import styles from "./profileform.module.css"
 import Modals from '../extra comp/Modals'
-import { useParams } from 'react-router-dom'
 import { ThemeData } from '../../App'
+import Loading from '../extra comp/Loading'
+import jwt_decode from "jwt-decode";
+import Message from '../extra comp/Message'
 
-// const intialData={
 
-// }
+
 
 function ProfileForm(props) {
     const[data, setData]=useState({})
-    const[response, setResponse]=useState({active:"no"})
+    const[unsuccessful, setUnsuccessful]=useState(false)
+    const[loading, setLoading]=useState(false)
+    const[responseData, setResponseData]=useState(null)
     const[empty, setEmpty]=useState(false)
     const[incorrectEmail, setIncorrectEmail]=useState(false)
     const[UnCorrectPassword, setUnCorrectPassword]=useState(false)
-    const{id}=useParams()   
     const {theme}= useContext(ThemeData)
- 
 
-    // console.log(cancelProfileForm)
+    const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
+
+    let userDetails;
+    if(token){
+      userDetails=jwt_decode(token?.access)
+    }
+    ;
     function change(e){
         setData({...data, [e.target.name]:e.target.value})
 }
-// let BankAccount=parseInt(data.BankAccount)
-// let accountNumber=parseInt(data.AccountNumber)
-// let phoneNumber=parseInt(data.PhoneNumber)
-// let country=data.Country
-// let state=data.State
-// let email=data.Email
-// let businessName=data.BusinessName
 
-console.log(data)
+
+
 
 
 
@@ -46,7 +47,7 @@ useEffect(()=>{
         ){setEmpty(true)}
     
 }, [data, data.AccountNumber, data.BankAccount, data.BusinessName, data.Country, data.Email, data.PhoneNumber, data.State])
-// console.log(data.BankAccount)
+// 
 let formData= new FormData()
 formData.append("bankAccount",  parseInt(data.BankAccount))
 formData.append("accountNumber", parseInt(data.AccountNumber))
@@ -59,98 +60,112 @@ formData.append("businessName", data.BusinessName)
 
 const requestOptions = {
     method: 'PATCH',
+    headers: {
+      'Authorization': 'Bearer '+ token?.access
+      },  
     body: formData,
     redirect: 'follow'
   };
 
 function sendFormDetail(){
-    
+    setLoading(true)
     if(data?.PhoneNumber?.length !==11){
         setUnCorrectPassword(true)
     }else if(data?.Email==="" || !data?.Email?.includes("@")){
         setIncorrectEmail(true)
-        console.log("great")
+        
     }
     else{
       (async()=>{
-       const response= await fetch(`http://127.0.0.1:8000/profile/sellersprofileform/${id}/`, requestOptions)
+       const response= await fetch(`http://127.0.0.1:8000/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
        let res= await response.json();
        if(response.status===400){
-        setResponse({...response, code:response.status, msg:res, active:"yes"})
+        setLoading(false)
+        setUnsuccessful(true)
         // window.location.reload()
-      }else{
-        setResponse({...response, code:response.status, msg:res, active:"yes"})
-        // window.location.reload()
+      }else if(response.status===200){
+        setLoading(false)
+        setUnsuccessful(false)
+        setResponseData(res.data)
+        window.location.reload()
       }
-      // console.log(response)
-      // console.log(res)
+      else{
+        setLoading(false)
+        setUnsuccessful(true)
+
+      }
       })()                  
     }  
 }
-console.log(response)
-// console.log(formData.get("businessName"))
-// console.log(empty, UnCorrectPassword, incorrectEmail)
-// console.log(data?.Email==="", data?.PhoneNumber?.length !==11)
   return (
     <>
-    {/* {response.active==="yes" &&<Modals>
-        <div className={styles["succes-bad"]}>
-          {response.status===400?<p>Task unsuccessful-{response.msg}</p>:<p>Task done succesfully</p>}
-        </div>
-      </Modals>} */}
     <Modals>
-        <div className={theme?styles["form-holder-dark"]:styles["form-holder"]}>
-            <div className={styles.cancel} onClick={()=>props.setProfileFormstate(false)}>
-            &#10005;
-            </div>
-            <div className={styles.input}>
-                <input type="text"
-                name='BankAccount'
-                placeholder='Bank account'
-                onChange={change} />
+      {unsuccessful && <Message 
+      value={"Sorry, request failed"}
+      code={"error"}
+      fn={setUnsuccessful}
+       />}
 
-                <input type="number"
-                name='AccountNumber'
-                placeholder='Account number'
-                onChange={change} />
+      {responseData && <Message 
+      value={"Successful"}
+      code={"success"}
+      fn={setResponseData}
+       />  } 
 
-                <input type="number"
-                name='PhoneNumber'
-                placeholder='Phone number'
-                onChange={change} />
-              {UnCorrectPassword && 
-              <div className={styles.incorrectpassword}>
-                <p>phoneNumber not complete</p>
-              </div>}
+       <div className={theme?styles["form-holder-dark"]:styles["form-holder"]}>
+          <div className={styles.cancel} onClick={()=>props.setProfileFormstate(false)}>
+          &#10005;
+          </div>
+          <div className={styles.input}>
+              <input type="text"
+              name='BankAccount'
+              placeholder='Bank account'
+              onChange={change} />
 
-                <input type="text"
-                name='Country'
-                placeholder='Country'
-                onChange={change} />
+              <input type="text"
+              name='AccountNumber'
+              placeholder='Account number'
+              onChange={change} />
 
-                <input type="text"
-                name='State'
-                placeholder='State'
-                onChange={change} />
+              <input type="text"
+              name='PhoneNumber'
+              placeholder='Phone number'
+              onChange={change} />
+            {UnCorrectPassword && 
+            <div className={styles.incorrectpassword}>
+              <p>phoneNumber not complete</p>
+            </div>}
 
-                <input type="email"
-                name='Email'
-                placeholder='Email'
-                onChange={change} />
-                {incorrectEmail && 
-              <div className={styles.incorrectpassword}>
-                <p>Email is not correct</p>
-              </div>}
+              <input type="text"
+              name='Country'
+              placeholder='Country'
+              onChange={change} />
 
-                <input type="text"
-                name='BusinessName'
-                placeholder='Business name'
-                onChange={change} />
-            </div>
-            <button className="btn" onClick={sendFormDetail}>
-                Submit
-            </button>
-        </div>
+              <input type="text"
+              name='State'
+              placeholder='State'
+              onChange={change} />
+
+              <input type="email"
+              name='Email'
+              placeholder='Email'
+              onChange={change} />
+              {incorrectEmail && 
+            <div className={styles.incorrectpassword}>
+              <p>Email is not correct</p>
+            </div>}
+
+              <input type="text"
+              name='BusinessName'
+              placeholder='Business name'
+              onChange={change} />
+          </div>
+          <button className="btn" onClick={sendFormDetail}>
+            Submit
+          </button>
+      </div>
+      {loading && <Loading />}
+
     </Modals>
     </>
   )

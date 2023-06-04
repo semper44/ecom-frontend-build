@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, memo, useEffect } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {IconButton, Typography} from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
@@ -8,40 +8,90 @@ import { ThemeData } from "../../App";
 import Loading from "../extra comp/Loading";
 import { AuthContext } from "../profiles/login/LoginFetch"
 import jwt_decode from "jwt-decode"
-import Delete from "../admin/Delete";
+import Delete from "../admin/DeleteComp";
 import EditProduct from "../admin/EditProduct";
-import useFetchToken from "../../usequery/useFetchToken.js";
-import Message from "../extra comp/Message";
 import { screensizecontext } from "../../stores/CartContxt";
+import { useLocation } from "react-router-dom";
+
 
 
 
 function SellersProduct() {
-  // const [productData, setproductData] = useState("");
   const [edit, setEdit] = useState(false);
   const [deleteState, setdeleteState] = useState(false);
-  const [idd, setdIdd] = useState(null);
-  const {dontdisplay}= useContext(screensizecontext)
-  const{id}=useParams()
-  const {theme}= useContext(ThemeData)
-  let url= `https://cras.serveo.net/product/listproductsbyseller/${id}`
-  let method = "GET"
-  const {data, loading:loadingState, error, setMsgFn, msgFn}= useFetchToken(url, method)
-
-  console.log(data)
-
+  const[data, setData]=useState()
+  const[details, setDetails]=useState({})
+  const[error, setError]=useState(null)
+  const[loading, setLoading]=useState(true)
+  const {dontdisplay, gridlg, gridxl}= useContext(screensizecontext)
   const {user}= useContext(AuthContext)
+  const location= useLocation()
+  const{username}= useParams()
+  let fullscreen= false
+  const{pathname}=location
+
+  if(pathname.includes("userproducts")){
+    fullscreen=true
+  }else{
+    fullscreen=false
+
+  }
+
   let userDetail
   if(user){
     userDetail= jwt_decode(user.access)  
-  }
+  }  
+  
+  ;
+  const {theme}= useContext(ThemeData)
+  
+
+
+  useEffect(()=>{
+    let errorStatus=false
+    let url= `http://127.0.0.1:8000/product/listproductsbysellers/${username}`
+    let method = "GET"
+    fetch(url,
+      {method:method,
+      headers:{
+      'Content-Type':'application/json',
+      }})
+      .then((response)=>{
+          if(!response.ok){
+              setLoading(false)
+              if(response.status===417){
+                  errorStatus=true
+              }else{
+                  throw Error("Couldn't fetch data, please retry")
+              }
+          }
+          if (response.status===200){
+              setLoading(false)
+          }       
+          ;     
+          return response.json()
+      })
+      .then((data)=>{
+          ;     
+          if(errorStatus){
+              setError(data.msg)
+          }else{
+              setData(data)
+          }
+      })
+      .catch(err=>{
+          setLoading(false)
+          setError(err.message)
+  })  }, [username])
+ 
+
+  useEffect(()=>{document.title="Products"
+    },[])
+  
   function editing(params) {
     setEdit(true)
-    setdIdd(params.id)
-
+    setDetails(params.row);
   }
-  console.log(id)
-
 
 
   // useEffect(() => {
@@ -55,15 +105,8 @@ function SellersProduct() {
 
   function del(params) {
     setdeleteState(true)
-    setdIdd(params.id)
-
   }
-  console.log(msgFn)
 
-  // function del(params) {
-  //   setdeleteState(true)
-  //   setdId(params.id)
-  // }
   const columns = [
     { field: "id", headerName: "ID", hide: "true" },
     {
@@ -72,7 +115,7 @@ function SellersProduct() {
       filterable: false,      
       flex:dontdisplay?undefined: 1,
       renderCell: (params) => {
-        // console.log(params.row.image);
+        // ;
         return <Avatar src={params.row.image} />;
       },
     },
@@ -90,8 +133,9 @@ function SellersProduct() {
       headerName: "Access",
       filterable: false,
       flex: 1,
-      hide:userDetail?.user_id !== parseInt(id) && "true",
+      hide:userDetail?.username !== username && "true",
       renderCell: (params) => {
+        ;
         return (
           <Box
             width="60%"
@@ -101,7 +145,7 @@ function SellersProduct() {
             justifyContent="center"
             gap="25px"
           >
-            <IconButton
+            {(!dontdisplay && ((gridlg &&fullscreen)||(gridxl && gridlg))) &&<IconButton
               aria-label="Edit"
               size="small"
               className=""
@@ -112,8 +156,15 @@ function SellersProduct() {
               <Typography color={"grey"} sx={{ ml: "5px" }}>
                 Edit
               </Typography>
-            </IconButton>
-            {edit &&<EditProduct edit={setEdit} id={id}/>}
+            </IconButton>}
+            {edit &&<EditProduct edit={setEdit} 
+            id={details.id}
+            category={details.category}
+            description={details.description}
+            price={details.price}
+            colors={details.colors}
+            size={details.size}
+            />}
 
 
             <IconButton
@@ -127,44 +178,52 @@ function SellersProduct() {
                 Delete
               </Typography>
             </IconButton>
-            {deleteState &&<Delete setdelete={setdeleteState} url={`http://127.0.0.1:8000/product/admin/deleteproduct/${idd}`}/>}
+            {deleteState &&<Delete setdelete={setdeleteState} url={`http://127.0.0.1:8000/product/admin/deleteproduct/${params.id}`}/>}
           </Box>
         );
       },
     },
   ];
   return (
-    <div style={{ height: "60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>
-      {msgFn && <Message value={error} code={"error"} fn={setMsgFn}/>}
-      {data && !loadingState? (
-        <Box m="35px 0 0 0" height="60vh">
+    <>
+      {!loading?
+      <>
+      {error && <h1 style={{display: "flex", justifyContent: "center", alignItems: "center", padding:" 15% 0", color: "cyan",}}>
+        {error}
+      </h1> }
+    {data &&<div style={{ height:fullscreen?"100%":"60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>
+    {/* components={{Toolbar:GridToolbar, GridCell:{border:"none"}}} */}
+
+    <Box m="0 0 0 4%" height={dontdisplay?(fullscreen?"75vh":"80vh"):(fullscreen?"80vh":"60vh")} pt={fullscreen?"4%":"6%"} mb={fullscreen&&"29%"}>
           <DataGrid
             rows={data}
             columns={columns}
-            pageSize={7}
-            rowsPerPageOptions={[7]}
+            pageSize={fullscreen?9:5}
+            rowsPerPageOptions={[6]}
             checkboxSelection
             components={{Toolbar:GridToolbar, GridCell:{border:"none"}}}
-            // showColumnRightBorder={false}
+ // showColumnRightBorder={false}
             disableSelectionOnClick={true}
             sx={theme && {color:"white", 
             "& .MuiDataGrid-cellCheckbox":{outline:"white"},
+            "& :rli:":{outline:"yellow", color:"black"},
             "& .MuiCheckbox-colorPrimary":{color:"white"},
             "& .css-levciy-MuiTablePagination-displayedRows":{backgroundColor:"#0e7878",color:"white"},
             "& .MuiDataGrid-footerContainer":{backgroundColor:"#0e7878",color:"white", borderTop:"none"},
             "& .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar .MuiTablePagination-actions":{color:"white"},
             "& .MuiDataGrid-cell":{borderBottom:"none"},
-            "& .css-1j9kmqg-MuiDataGrid-toolbarContainer":{borderTop:"none", backgroundColor:"#0e7878", color:"white"},
+            "& .css-1j9kmqg-MuiDataGrid-toolbarContainer":{borderTop:"none", backgroundColor:"#0e7878", color:"white", gap:dontdisplay?"0":"5%", paddingLeft:"1.5%"},
             "& .css-1knaqv7-MuiButtonBase-root-MuiButton-root":{ color:"white"},
+            "& .css-1ptx2yq-MuiInputBase-root-MuiInput-root":{ color:"white"},
             "& .MuiDataGrid-root .MuiDataGrid-root--densityStandard":{borderBottom:"none"},
             "& .css-b1p1vf .MuiDataGrid-root ":{border:"5px solid red "},
           }}
             
           />
         </Box>
-      ): <Loading />}
-    </div>
+    </div>}</>:<Loading /> }
+    </>
   );
 }
 
-export default SellersProduct;
+export default memo(SellersProduct);

@@ -1,11 +1,11 @@
-import React, {useEffect,  useContext}from 'react'
+import React, {useEffect,  useContext, useState}from 'react'
 import {useReducer} from 'react'
 import {Link} from "react-router-dom"
-import Register from "../register/Register"
 import {AuthContext} from "./LoginFetch"
 import Message from '../../extra comp/Message'
 import { ThemeData } from '../../../App'
 import styles from "./login.module.css"
+import ResetPassword from "../resetpassword/ResetPassword"
 
 
 
@@ -21,16 +21,17 @@ function reducer(state, action){
 function Login() {
   
   useEffect(()=>{document.title="login"
-},[])
+  },[])
 
   const [state, dispatch] = useReducer(reducer, initialState)
   let sendData= useContext(AuthContext)
+  const[passwordChange, setPasswordChange]=useState(false)
   let {theme}= useContext(ThemeData)
   const{message, status, code}=sendData.message
   const interval=sendData.interval
   const intervalFn=sendData.intervalFn
-  console.log(intervalFn, interval)
-  console.log(sendData.loginUser)
+  
+  
 
   useEffect(()=>{
     const interval=setInterval(()=>{
@@ -39,8 +40,12 @@ function Login() {
     setTimeout(()=>clearInterval(interval), 6000)
   }, [interval, intervalFn])
 
-  // console.log(sendData)
+  // 
     
+  function changepasswordfn(){
+    setPasswordChange(true)
+  }
+
   function Change(e){
     const {name, value}=e.target
     const action={
@@ -52,6 +57,7 @@ function Login() {
   return (
       <>
       {(interval && status) &&<Message value={message} code={code}/>}
+      {passwordChange &&<ResetPassword />}
       <div className={theme?styles["background-dark"]:styles.background}>
         <div className={styles["login-container"]}>
           <div className={styles.login}>
@@ -72,14 +78,15 @@ function Login() {
             name='password'/>
             </div>
             <div id='forgotpassword' className={styles["login-text"]}>
-              <p >Forgot Password? 
+              <p>Forgot Password? 
                 <span>
-                  <Link to="/register">
-                    Change Password
+                  <Link to={"/resetpassword"}>
+                  Change Password
                   </Link>
                 </span>
               </p>
             </div>  
+            
             <div className={styles["login-button"]}> 
               <button id={styles['login-button']} >Login</button>
             </div>

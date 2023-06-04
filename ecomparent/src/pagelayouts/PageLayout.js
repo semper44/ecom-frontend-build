@@ -8,11 +8,12 @@ import jwt_decode from "jwt-decode";
 import { SearchOutlined } from "@mui/icons-material";
 import {ThemeData} from "../App"
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Box } from "@mui/material";
 import { Typography } from '@mui/material'
 import {  ThemeProvider, createTheme } from '@mui/material/styles'
 import { Navbars } from "./PageLayoutStyles";
-import { useProSidebar } from "react-pro-sidebar";
+import { Sidebar, useProSidebar } from "react-pro-sidebar";
 import { screensizecontext } from "../stores/CartContxt";
 
 
@@ -21,10 +22,10 @@ function PageLayout(props) {
   const [search, setSearch] = useState(false);
   const {theme}= useContext(ThemeData)
   const {dontdisplay}= useContext(screensizecontext)
-  const {collapsed} = useProSidebar();
+  const {collapsed, collapseSidebar} = useProSidebar();
 
 
-  // console.log(createShowState)
+  
 
   const BreakPointtheme = createTheme({
     breakpoints:{
@@ -40,8 +41,12 @@ function PageLayout(props) {
 
   let location=window.location.pathname.slice(1)
 
+  function showsidebar() {
+    collapseSidebar(false);
+    ;
+  }
   function createShow() {
-    setCreateShowState(true);
+    setCreateShowState(false);
   }
 
   function createHide() {
@@ -70,37 +75,43 @@ function PageLayout(props) {
           height: "100vh",
           // position:"absolute",
           }}>
-          <Box sx={{position:"fixed"}}>
-            <Admin defaultTitle={location}/>
+          <Box sx={{position:"fixed", display:(collapsed && dontdisplay) && "none"}}>
+            {<Admin defaultTitle={location}/>}
           </Box>
           <Navbars >
-            <Box sx={{display:"flex", justifyContent:"basline", gap:"3.5%", mt:"1.5rem", mr:"3%", float:"right"}}>
-              <Box
-                onClick={ShowSearch}
-                sx={{color:search?"cyan":"black", display: "flex", gap: "6px"}}
-                // className={`${styles.pagelayoutsearch} ${
-                //   search && styles["pagelayoutsearch-active"]
-                // }`}
-              >
-                <SearchOutlined fontSize="small" sx={{color:theme?"white":undefined}}  />
-                <Typography  sx={{color:theme &&"white"}}>Search</Typography>
+            <Box sx={{display:"flex",alignItems:"center", justifyContent:"space-between", mt:"1.5rem", mr:"3%"}}>
+              <Box  sx={{opacity:(collapsed && dontdisplay)? "1":"0"}}>
+                <MenuOutlinedIcon fontSize="medium" onClick={showsidebar} sx={{color:theme?"white":undefined, cursor:"pointer"}} />
               </Box>
-              {search && (
-                // <SearchModal changed={(search) => setSearch(search)} />
-                <SearchModal onHide={hideSearch} />
-              )}
-              <Typography
-              onClick={createShow} sx={{color:(createShowState &&"cyan")||(theme &&"white")}}>Create</Typography> 
-              {createShowState && <AdminCreate onHide={createHide} />}
-              <Box onClick={logout} sx={{display:"flex", color:theme &&"white"}}>
-                <LogoutOutlinedIcon fontSize="small" sx={{color:theme?"white":undefined, mr:"5px"}}/>
-                <Typography>Logout</Typography>
+              <Box sx={{display:"flex", justifyContent:"basline", gap:"3.5%", cursor:"pointer"}}>
+                <Box
+                  onClick={ShowSearch}
+                  sx={{color:search?"cyan":"black", display: "flex", gap: "6px"}}
+                  // className={`${styles.pagelayoutsearch} ${
+                  //   search && styles["pagelayoutsearch-active"]
+                  // }`}
+                >
+                  <SearchOutlined fontSize="small" sx={{color:theme?"white":undefined}}  />
+                  <Typography  sx={{color:theme &&"white"}}>Search</Typography>
+                </Box>
+                {search && (
+                  // <SearchModal changed={(search) => setSearch(search)} />
+                  <SearchModal onHide={hideSearch} />
+                )}
+                <Typography
+                onClick={createShow} sx={{color:(createShowState &&"cyan")||(theme &&"white")}}>Create</Typography> 
+                {createShowState && <AdminCreate onHide={createHide} />}
+                <Box onClick={logout} sx={{display:"flex", color:theme &&"white"}}>
+                  <LogoutOutlinedIcon fontSize="small" sx={{color:theme?"white":undefined, mr:"5px"}}/>
+                  <Typography>Logout</Typography>
+                </Box>
               </Box>
             </Box>
             <Box sx={{height: "100vh",
               // position:"absolute",
-              width:dontdisplay?(collapsed?"80%":"70%"):"80%", 
-              ml:dontdisplay?(collapsed?"13%":"27%"):(collapsed?"2%":"9%"),
+              width:dontdisplay?(collapsed?"80%":"70%"):"85%", 
+              ml:dontdisplay?(collapsed?"9%":"27%"):(collapsed?"2%":"9%"),
+              // backgroundColor:"red"
            //  paddingRight:screenSize && (collapsed?"13%":"95%")
              }}>
              <Typography variant="h3" sx={{textTransform: "capitalize",

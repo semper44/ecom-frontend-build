@@ -1,11 +1,4 @@
-.background{
-    display: block;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
+
 .background-dark{
     display: block;
     display: flex;
@@ -13,6 +6,14 @@
     justify-content: center;
     height: 100vh;
 }
+.background{
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
 .login-container{
     margin: 2rem 0px;
     text-align: center;
@@ -38,18 +39,7 @@
     outline: none;
     border-bottom: 1px solid black;
 }
-.checkbox{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-    gap: 2%;
-}
-.checkbox input{
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-}
+
 .login-text p{
     color: black;
     text-align: center;
@@ -64,8 +54,10 @@
 #forgotpassword{
     margin-top: 4rem;
 }
-.login-text a{
+.login-text span, a{
+    cursor: pointer;
     text-decoration: none;
+    color:rgb(25, 182, 182);
 }
 #login-button-disabled{
     margin-top: 2rem;

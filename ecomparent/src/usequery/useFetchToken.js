@@ -4,46 +4,50 @@ function useFetchToken(url, method) {
     const[data, setData]=useState()
     const[error, setError]=useState(null)
     const[loading, setLoading]=useState(true)
-    const[msgFn, setMsgFn]=useState(false)
 
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-    console.log(data)
+    
     // let response= await fetch(`http://127.0.0.1:8000/product/editproduct/${id}`,
-
    useEffect(()=>{
+        let errorStatus=false
+
         fetch(url,
         {method:method,
         headers:{
         'Content-Type':'application/json',
-        'Authorization': 'Bearer '+ token.access
+        'Authorization': 'Bearer '+ token?.access
         }})
         .then((response)=>{
             if(!response.ok){
                 setLoading(false)
-                throw Error("Couldn't fetch data, please retry")
-
+                if(response.status===417){
+                    errorStatus=true
+                }else{
+                    throw Error("Couldn't fetch data, please retry")
+                }
             }
             if (response.status===200){
                 setLoading(false)
-            }
-            if (response.status !==200){
-                setMsgFn(true)
-            }
-            
+            }       
+            ;     
             return response.json()
         })
         .then((data)=>{
-            setData(data)
+            ;     
+            if(errorStatus){
+                setError(data.msg)
+            }else{
+                setData(data)
+            }
         })
         .catch(err=>{
             setLoading(false)
             setError(err.message)
-            setMsgFn(true)
         })  
-    }, [method, token.access, url] ) 
+    }, [method, token?.access, url] ) 
     
-    console.log(loading);
-    return {loading, error, data, setMsgFn, msgFn} 
+    ;
+    return {loading, error, data} 
 }
 
 export default useFetchToken

@@ -6,14 +6,12 @@ import { AuthContext } from '../profiles/login/LoginFetch';
 import jwt_decode from "jwt-decode"
 import { useNavigate } from 'react-router-dom';
 import { ThemeData } from '../../App';
-import { Box, Typography } from '@mui/material';
-import { screensizecontext } from '../../stores/CartContxt';
+import { Box,} from '@mui/material';
 
 
 
 function CartContainer(props) {
   const cartDisplay = useContext(cartContxt)
-  const dontdisplay = useContext(screensizecontext)
   const[cartCombined, setCartCombined]= useState({})
 
   const logIn= useContext(AuthContext)
@@ -30,7 +28,7 @@ function CartContainer(props) {
     if(logIn?.user){
       userDetails=jwt_decode(logIn?.user?.access)
     } 
-  console.log(cartDisplay)
+  
 
 function clickToRemove(item){
   removeItemsFromCart({
@@ -41,7 +39,7 @@ function clickToRemove(item){
   
 }
 function clickToAdd(item){
-  console.log(item.seller)
+  
   addItemsToCart({
     id:item.id,
     category:item.category,
@@ -60,13 +58,13 @@ function remove(item){
 }
 
 const {items, cartId}= cartDisplay
-console.log(cartId)
+
 
 useEffect(()=>{
   setCartCombined({items, cartId})
 }, [cartId, items])
 
-console.log(cartCombined)
+
 
 
   let formData= new FormData()
@@ -84,16 +82,13 @@ console.log(cartCombined)
   formData.append("cartSize", cartDisplay?.cartSize)      
   formData.append("cartId", cartDisplay?.cartId)      
 
-console.log(arr, arr2);
-console.log(formData.get("owners"));
-console.log(formData.get("item_qty"));
-console.log(formData.get("cartSize"));
+;
 
 function order(){
   if(!userDetails?.user_id){ 
     navigate("/login")
     props.onToglle()
-    console.log("hy")
+    
   }else{
     fetch("http://127.0.0.1:8000/product/placeorder/", {
       method: 'POST',
@@ -107,13 +102,13 @@ function order(){
       return res.json();
     })
     .then((result)=>{
-      console.log(result)
-      // console.log(result.link)
-      // console.log(result.code)
+      
+      // 
+      // 
       if(result.code===200){
         window.location.href=result.link
       }else{
-        console.log(result.message)
+        
       }
     })
     // .then(data=>{
@@ -123,11 +118,16 @@ function order(){
  
   }
 }
-console.log(items)
+
  
   return (
-    <CartPortal click={props.onToglle}>
-      {lengthOfCart ? <div className={theme? styles['nothing-in-cart-dark']:styles['nothing-in-cart']}> <h3>Nothing added to the cart yet</h3></div>:
+    <CartPortal >
+      {lengthOfCart ? <div className={theme? styles['nothing-in-cart-dark']:styles['nothing-in-cart']}>
+        <div className={styles.cancelfirst}>
+          <p  onClick={props.onToglle}>X</p>
+        </div>
+         <h3 id={styles.nothing}>Nothing added to the cart yet</h3>
+      </div>:
       <div className={theme?styles["box-dark"]:styles.box}>
         <div className={styles["ribbon-dark"]}>
             <div className={styles.item}>

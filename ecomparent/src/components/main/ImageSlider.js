@@ -3,9 +3,9 @@
 // import Swiper from 'swiper';
 // import {SwiperSlide } from "swiper/react";
 import image from "../../ecom_images/3.jpg"
-import image2 from "../../ecom_images/3.jpg"
 import image3 from "../../ecom_images/R.jpg"
 import bag from "../../ecom_images/bag.jpg"
+import coat from "../../ecom_images/R.jpg"
 // import 'swiper/css/autoplay';
 
 //           <div className={styles["image-slider-parent"]}>
@@ -30,21 +30,39 @@ export function Images() {
 }} pagination={{
   "clickable": true
 }} navigation={true} className="mySwiper" style={{marginTop:"1.6rem"}}>
-  <SwiperSlide>
-    <img src={image} alt="img" />
-    <h2 style={{color:"cyan",position:"absolute", top:"50%", left:"40%"}}>This is a test text</h2>
+    <SwiperSlide>
+      <img src={coat} alt="img" />
+        <h2 style={{color:"white",position:"absolute", top:"70%", left:"10%"}}>
+            WELCOME TO OUR STORE<br/>
+            <p style={{width:"fit-content", backgroundColor:"cyan", color:"white", cursor:"pointer", padding:"10px", borderRadius:"5px"}}>
+            Shop Now!</p>
+        </h2>
+    </SwiperSlide>
+    <SwiperSlide>
+      <img src={bag} alt="img" />
+        <h2 style={{color:"white",position:"absolute", top:"70%", left:"10%"}}>
+          Prices that rocks! <br /> 
+          <p style={{width:"fit-content", backgroundColor:"cyan", color:"white", cursor:"pointer", padding:"10px", borderRadius:"5px"}}>
+            View Products
+          </p>
+        </h2>
+        
+    </SwiperSlide>
+    <SwiperSlide>
+      <img src={image3} alt="img" style={{objectFit:"cover/center"}} />
+      <h2 style={{color:"white",position:"absolute", top:"80%", left:"5%"}}>
+        Huge sales ongoing...<br/>
+        <p style={{width:"fit-content", backgroundColor:"cyan", color:"white", cursor:"pointer", padding:"10px", borderRadius:"5px"}}>
+          Learn More
+        </p>
+      </h2>
     </SwiperSlide>
     <SwiperSlide>
       <img src={image} alt="img" />
-      <h2 style={{color:"cyan",position:"absolute", top:"50%", left:"40%"}}>This is a test text</h2>
-      </SwiperSlide>
-    <SwiperSlide>
-      <img src={image} alt="img" />
-      <h2 style={{color:"cyan",position:"absolute", top:"50%", left:"40%"}}>This is a test text</h2>
-      </SwiperSlide>
-    <SwiperSlide>
-      <img src={image} alt="img" />
-      <h2 style={{color:"cyan",position:"absolute", top:"50%", left:"40%"}}>This is a test text</h2>
+      <h2 style={{color:"white",position:"absolute", top:"70%", left:"10%"}}>
+        New Products daily<br />
+        <p style={{width:"fit-content", backgroundColor:"cyan", color:"white", cursor:"pointer", padding:"10px", borderRadius:"5px"}}>Sell Now!</p>
+      </h2>
       </SwiperSlide>
   </Swiper>
     </>

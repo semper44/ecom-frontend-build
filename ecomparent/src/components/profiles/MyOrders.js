@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, memo } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {IconButton, Typography} from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
@@ -8,7 +8,7 @@ import { ThemeData } from "../../App";
 import Loading from "../extra comp/Loading";
 import { AuthContext } from "../profiles/login/LoginFetch"
 import jwt_decode from "jwt-decode"
-import Delete from "../admin/Delete";
+import Delete from "../admin/DeleteComp";
 import EditProduct from "../admin/EditProduct";
 import Message from "../extra comp/Message";
 import { screensizecontext } from "../../stores/CartContxt";
@@ -25,6 +25,7 @@ function MyOrders() {
     const[msgFn, setMsgFn]=useState(false)
     const {dontdisplay}= useContext(screensizecontext)
     const{id}=useParams()
+    ;
     const {theme}= useContext(ThemeData)
 
   useEffect(()=>{
@@ -41,12 +42,12 @@ function MyOrders() {
         }
         return res.json()})
     .then((result)=>{
-      console.log(result)
+      
       if(result){
           result.forEach((data) => {
             const itemQty= JSON.parse(data.item_qty)
-            // console.log(Array.isArray(itemQty))
-            // console.log(Object.values(data))
+            // )
+            // )
             data.serializer.map((obj, index)=>{
               if(Array.isArray(itemQty)){
                 obj.qty=itemQty[index]
@@ -55,7 +56,7 @@ function MyOrders() {
 
               }
               setData(prev=>[...prev, obj])
-              console.log(obj)
+              
 
             })
           })
@@ -67,7 +68,7 @@ function MyOrders() {
         setMsgFn(true)
     })
     }, [])
-  console.log(data)
+  
 
   const {user}= useContext(AuthContext)
   let userDetail
@@ -94,7 +95,7 @@ function MyOrders() {
       filterable: false,      
       flex:dontdisplay?undefined: 1,
       renderCell: (params) => {
-        // console.log(params.row.image);
+        // ;
         return <Avatar src={params.row.image} />;
       },
     },
@@ -155,10 +156,13 @@ function MyOrders() {
       },
     },
   ];
+
+  useEffect(()=>{document.title="Orders"
+  },[])
   return (
     <div style={{ height: "60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>
       {msgFn && <Message value={error} code={"error"} fn={setMsgFn}/>}
-      {data && !loading? (
+      {!loading? (
         <Box m="35px 0 0 0" height="60vh">
           <DataGrid
             rows={data}
@@ -189,4 +193,4 @@ function MyOrders() {
   );
 }
 
-export default MyOrders;
+export default memo(MyOrders);

@@ -18,7 +18,7 @@ function Delete({setblock, url}) {
   function cancel(){
     setblock(false)
   }
-  console.log(url)
+  
 
   return (
     <DeleteModals>
@@ -38,7 +38,7 @@ function Delete({setblock, url}) {
           Are you sure you want to block?
         </Typography>
         <Box m="11px 0">
-        <Button variant="outlined" sx={{':hover':{opacity:0.6}}} startIcon={<DeleteIcon />} onClick={()=>{console.log("delworking");console.log(fetchData(url, method))}}>
+        <Button variant="outlined" sx={{':hover':{opacity:0.6}}} startIcon={<DeleteIcon />} onClick={()=>{;)}}>
           Block
         </Button>
         <Button variant="contained" sx={{ml:"5px", ':hover':{opacity:0.6}}} startIcon={<CancelIcon />} onClick={cancel}>

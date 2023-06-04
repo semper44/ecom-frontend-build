@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import {useParams } from 'react-router-dom'
 import { IconButton } from '@mui/material'
 import { PhotoCamera } from '@mui/icons-material'
 import styles from "../profiles/poductcreation/createproduct.module.css"
-// import Modals from '../extra comp/Modals'
-import DeleteModals from './DeleteModal'
+import Modals from '../extra comp/Modals'
 
 
 
-function EditProduct({edit}) {
-  const[editDetail, seteditDetail]=useState()
-  const {id}= useParams()
+function EditProduct({edit, id,category, description, price, colors, size}) {
+  // const[editDetail, seteditDetail]=useState()
   const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-  console.log(token)
-  console.log(token.access)
+  
+  
 
   function close(){
     edit(false)
@@ -23,11 +20,6 @@ function EditProduct({edit}) {
     document.title="Edit"
   },[])
 
-  // useEffect(()=>{
-    
-  //   editProduct()
-  // }, [])
-
   const editProduct= async ()=>{
     let response= await fetch(`http://127.0.0.1:8000/product/editproduct/${id}`,
     {method:'GET',
@@ -36,7 +28,6 @@ function EditProduct({edit}) {
        'Authorization': 'Bearer '+ token.access
     }})
     let data = await response.json()
-    seteditDetail(data)
   }
   function change(){
 
@@ -47,7 +38,7 @@ function EditProduct({edit}) {
   }
 
   return(
-      <DeleteModals>
+      <Modals>
         <div className={styles['all-items']}>
         <button id={styles.cancel} onClick={close}>&#10005;</button>
 
@@ -56,51 +47,50 @@ function EditProduct({edit}) {
               className={styles.product} 
               placeholder='category'
               onChange={change}
-              value={editDetail?.category}
+              value={category}
               name='category'/>
 
               <input type="text" 
               className={styles.product} 
               placeholder='description'
               onChange={change}
-              value={editDetail?.description}
+              value={description}
               name='description'/>
 
               <input type="text" 
               className={styles.colors} 
               placeholder='colors'
               onChange={change}
-              value={editDetail?.colors}
+              value={colors}
               name='colors'/>
 
               <input type="text" 
               className={styles.colors} 
               placeholder='price'
               onChange={change}
-              value={editDetail?.price}
+              value={price}
               name='price'/>
 
               <input type="text" 
               className={styles.colors} 
               placeholder='size'
               onChange={change}
-              value={editDetail?.size}
+              value={size}
               name='size'/>
 
-              <IconButton variant="outlined" component="label" sx={{color:'cyan'}}>
+            <div className={styles["send-button"]}>
+              <IconButton variant="outlined" component="label" sx={{color:'cyan', mt:"1.5rem", display:"flex", justifyContent:"center"}}>
               <input hidden accept='image/*' type="file"
               className={styles.colors} 
               onChange={change}
-              // value={editDetail.image}
               name='image'/>
               <PhotoCamera />
               </IconButton>
-              <div className={styles["send-button"]}>
-                <button className={styles.searchcreate} onClick={handleSubmit} >Upload</button>
-              </div> 
+              <button className={styles.searchcreate} onClick={handleSubmit} >Upload</button>
+            </div>
           </div> 
         </div> 
-      </DeleteModals>
+      </Modals>
   )
 }
 

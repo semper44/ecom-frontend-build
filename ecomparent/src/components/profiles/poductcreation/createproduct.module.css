@@ -1,17 +1,14 @@
 .all-items{
     background-color: white;
-    width: 70%;
+    width: 50%;
     height: fit-content;
-    position: absolute;
     border-radius: 10px;
-    z-index: -1;
 }
 .all-items-dark{
     background-color: gainsboro;
-    width: 70%;
+    width: 50%;
     height: fit-content;
     border-radius: 10px;
-    z-index: 80;
 }
 
 #cancel{
@@ -25,25 +22,6 @@
     cursor: pointer;
     float: right;
     margin-top: -0.3%;
-}
-#pcancel{
-    color: black;
-    font-weight: 500;
-    font-size: large;
-    position: absolute;
-    right: 37.2rem;
-    top: 6.1rem;
-    border: none;
-    outline: none;
-    background: 0;
-    padding: 0 0.4rem;
-    cursor: pointer;
-}
-#pcancel:hover{
-    background-color: red;
-    padding:0 0.4rem ;
-    color: white;
-    border-radius: 3px;
 }
 #cancel:hover{
     background-color: red;
@@ -66,17 +44,7 @@
     /* height: 35px; */
     border-bottom: 1px solid black;
 }
-.search-items input:focus{
-    outline: none;
-    background: 0;
-    border: none;
-    border-bottom: 1px solid black;
-}
-.search-items input:focus::placeholder{
-    color: cyan;
-    position: absolute;
-    bottom: 10px;
-}
+
 .send-button{
     display: grid;
     width: 90%;
@@ -102,24 +70,31 @@
     opacity: 0.5;
 }
 
+.product-loading{
+    position: absolute;
+}
 
-/*
-@media (max-width:1132px){
+@media (max-width:500px){
     .all-items{
         background-color: white;
-        width: 30%;
-      height: 60%;
+        width: 70%;
+        height: fit-content;
         border-radius: 10px;
     }
-    .specific-search::before{
-        content: "Product Specific Search";
-        color: cyan;
-        position: absolute;
-        letter-spacing: 0.5px;
-        top: 39%;
-        left: 41%;
+    .all-items-dark{
+        background-color: gainsboro;
+        width: 70%;
+        height: fit-content;
+        border-radius: 10px;
+    }
+    .search-items{
+        display: grid;
+        row-gap: 10px;
+        margin-left: 1rem;
+        width: 90%;
     }
 }
+/*
 @media (max-width:910px){
     .all-items{
         background-color: white;

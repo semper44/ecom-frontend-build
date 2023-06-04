@@ -3,16 +3,26 @@ import styles from "./Body.module.css";
 import Footer from "../components/footer/Footer";
 import { Outlet} from "react-router-dom";
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { Box, Typography,  } from "@mui/material";
+import { ThemeData } from "../App";
 import { AuthContext } from "../components/profiles/login/LoginFetch";
+import { screensizecontext } from "../stores/CartContxt";
+import jwt_decode from "jwt-decode"
+
 
 function Body(props) {
   // const[show, setShow]= useState(true)
-  console.log(props)
-  const userdetails = useContext(AuthContext);
-  let user;
-  if (userdetails) {
-    user = userdetails.user;
-  }
+  
+  const logIn = useContext(AuthContext);
+  const {theme} = useContext(ThemeData);
+  const {dontdisplay} = useContext(screensizecontext);
+  ;
+  let userDetails;
+  if(logIn?.user){
+    userDetails=jwt_decode(logIn?.user?.access)
+  } 
+
   return (
     <>
       <div className={styles["styles-body"]}>
@@ -23,11 +33,31 @@ function Body(props) {
           headernotif={props.socket}
         />
       </div>
+      
       {/* {(window.location.pathname ==="/") && <Outlet />} */}
-      <Outlet />
+      <div className="outlet" style={{marginTop:dontdisplay?"190px":"240px" }}>
+        <Box sx={{width:"100%", display:dontdisplay?"flex":"none", gap:"7.2%", alignItems:"center", justifyContent:"center", mt:"6%", "& a":{textDecoration:"none"}}}>
+        <Link to={"/categories"}>
+          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
+            Categories
+          </Typography>
+        </Link>
+        <Link to={`/profile/${userDetails?.username}/yourorders`}>
+          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
+            Orders
+          </Typography>
+        </Link>
+        <Link to={"/allsellers"}>
+          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
+            Sellers
+          </Typography>
+        </Link>
+        </Box>
+        <Outlet />
+        <Footer />
+      </div>
       {/* {user ?  <Outlet /> :<Navigate to="/login" />} */}
 
-      <Footer />
     </>
   );
 }

@@ -16,7 +16,7 @@ const StatBox = ({ title, subtitle, icon, progress, increase }) => {
   const{TotalUsers}=useContext(adminOverview)
   const {collapsed} = useProSidebar();
 
-  console.log(collapsed)
+  
 
  
   // useEffect(()=>{
@@ -38,7 +38,7 @@ const StatBox = ({ title, subtitle, icon, progress, increase }) => {
   //     setdontDisplay(false)
   //   }
   // }, [screenWidth])
-  console.log(TotalUsers)
+  
   return (
     <Box sx={{
       width:"100%", boxShadow:"3"

@@ -1,8 +1,8 @@
 .holder{
     width: 100%;
     height: fit-content;
-    background-color: rgb(249,250,251);
     border-radius: 10px;
+    position: relative;
     /* box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px rgb(249,250,251);   
     overflow: hidden; */
 
@@ -61,7 +61,6 @@
     margin-left: 2%;
     margin-top: 10px;
     margin-bottom: 15px;
-    border-radius: 10px;
 
 }
 
@@ -96,6 +95,12 @@
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
+}
+.product-details-dark h3:hover{
+    opacity:0.5
+}
+.product-details-dark h3:active{
+    transform: scale(0.7);
 }
 .pre-link-text{
     display: flex;
@@ -135,20 +140,24 @@
 
 .related-products-image{
     border-radius: 10px;
-    height: 250px;
-    width: 250px;
-    /* overflow: hidden; */
+    height: 262px;
+    width: 245px;
+    overflow: hidden;
 }
 
 .related-products-image img{
     border-radius: 10px;
-    height: 80%;
-    width: 80%;
+    height: 95%;
+    width: 90%;
     /* transform: scale(0.8); */
 }
-#minus-plus{
-    padding-top: 1rem;
+.position-button-add{
     opacity: 0;
+}
+#minus-plus{
+    padding-top: 0.5rem;
+    opacity: 0;
+    cursor: pointer;
 }
 .holder:hover #minus-plus{
     opacity: 1
@@ -236,6 +245,31 @@
         grid-column-gap: 1.5rem;
     }
 }
+@media(max-width:1002px){
+    #related-products-parents{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(10%, 1fr));
+        grid-column-gap: 2%;
+        grid-row-gap: 7%;
+        margin-left: 5.5%;
+        margin-right: 4.5%;
+        margin-top: 25px;
+        margin-bottom: 13rem;
+    }
+    .related-products-image{
+        border-radius: 10px;
+        height: 270px;
+        width: 250px;
+        overflow: hidden;
+    }
+    .related-products-image img{
+        border-radius: 10px;
+        height: 100%;
+        width: 100%;
+    }
+ 
+} 
+
 @media(max-width:900px){
     #related-products-parents{
         display: grid;
@@ -250,15 +284,15 @@
     }
     .related-products-image{
         border-radius: 10px;
-        height: 180px;
-        width: 180px;
+        height: 250px;
+        width: 230px;
+        overflow: hidden;
         /* transform: scale(0.8); */
     }
     .related-products-image img{
         border-radius: 10px;
         height: 100%;
-        width: 100%;
-        /* transform: scale(0.8); */
+        width: 100%;        /* transform: scale(0.8); */
     }
  
     .holder:hover .related-products-image img{
@@ -274,7 +308,7 @@
         grid-column-gap: 2.5rem;
     }
 }
-@media(max-width:600px){
+@media(max-width:800px){
     #related-products-parents{
         display: grid;
         grid-template-columns: repeat(3, minmax(10%, 1fr));
@@ -284,18 +318,43 @@
         margin-left: 5.5%;
         margin-right: 4.5%;
         margin-top: 25px;
-        margin-bottom: 10rem;
+        margin-bottom: 13rem;
     }
     .related-products-image{
         border-radius: 10px;
-        height: 150px;
-        width: 150px;
+        height: 220px;
+        width: 200px;
+        overflow: hidden;
         /* transform: scale(0.8); */
     }
     .related-products-image img{
         border-radius: 10px;
         height: 100%;
-        width: 80%;
+        width: 100%;
+    }
+ 
+}
+@media(max-width:680px){
+    #related-products-parents{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(10%, 1fr));
+        /* grid-template-columns: 90px 90px 90px 90px 90px; */
+        grid-column-gap: 4%;
+        grid-row-gap: 7%;
+        margin-left: 5.5%;
+        margin-right: 4.5%;
+        margin-top: 25px;
+        margin-bottom: 10rem;
+    }
+    .related-products-image{
+        border-radius: 10px;
+        height: 230px;
+        width: 170px;
+    }
+    .related-products-image img{
+        border-radius: 10px;
+        height: 100%;
+        width: 100%;
         /* transform: scale(0.8); */
     }
     .holder:hover .related-products-image img{
@@ -308,6 +367,36 @@
         width: 95%;
         height: 250px;
     }
+}
+@media(max-width:500px){
+    #related-products-parents{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(10%, 1fr));
+        grid-column-gap: 4%;
+        grid-row-gap: 7%;
+        margin-left: 5.5%;
+        margin-right: 4.5%;
+        margin-top: 25px;
+        margin-bottom: 10rem;
+    }
+    .related-products-image{
+        border-radius: 10px;
+        height: 230px;
+        width: 190px;
+    }
+    .related-products-image img{
+        border-radius: 10px;
+        height: 100%;
+        width: 100%;
+    }
+    .position-button-add{
+        position: absolute;
+        top: 1.5%;
+        left: 72%;
+        width: 220px;
+        opacity: 1;
+    }
+
 }
 @media(min-width:1500px){
     .slides-parent{

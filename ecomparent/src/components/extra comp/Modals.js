@@ -3,7 +3,7 @@ import  ReactDOM  from 'react-dom'
 import styles from "./modal.module.css"
 
 function Backdrop(props){
-  console.log(props)
+  
     return(
         <div className={styles.backdrop} onClick={props.onClose}>
              {props.children}
@@ -21,7 +21,7 @@ function Backdrop(props){
 
 const portalElement = document.getElementById("modals")
 function Modals(props) {
-  console.log(props)
+  
   return (
     <>
     {ReactDOM.createPortal(<Backdrop  onClose={props.click}>{props.children}</ Backdrop >, portalElement)}

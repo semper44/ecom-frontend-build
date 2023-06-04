@@ -25,7 +25,7 @@ function useAuthFetch(url, method) {
     let datum = await response.json()
     setData(datum)
     }
-    console.log(token)
+    
   return {data}
    
   

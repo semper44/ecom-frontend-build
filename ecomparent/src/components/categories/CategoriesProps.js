@@ -16,7 +16,7 @@ function CategoriesProp(props) {
   const {theme}= useContext(ThemeData)
   
   useEffect(()=>{document.title="Categories"
-},[])
+  },[])
 
   useEffect(()=>{
 
@@ -29,7 +29,7 @@ function CategoriesProp(props) {
         }
         return res.json()})
     .then((result)=>{
-      console.log(result)
+      
       if(result){
         setData(result)
         }

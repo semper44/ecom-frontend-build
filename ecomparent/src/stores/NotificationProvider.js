@@ -34,7 +34,7 @@
 //       })
 //       .then(response => {
 //             setData(response)
-//             console.log(response)
+//             
 //             for(let i of response){
 //               if(i.seen==="unseen"){
 //                arrayNotification.current.push(i)
@@ -75,22 +75,22 @@
 //     //   .then(([resCart, resFollowingNotif, resProductNotif])=>
 //     //     Promise.all([resCart.json(), resFollowingNotif.json(), resProductNotif.json()]))
 //     //   .then(([dataCart, dataFollowingNotif,dataProductNotif])=>{
-//     //     console.log(dataCart)
-//     //     console.log(dataProductNotif)
-//     //     console.log(dataFollowingNotif)
+//     //     
+//     //     
+//     //     
 //     //     if(dataCart){
 //     //       dataCart.serializer.forEach((obj, index) => {
 //     //         obj.qty=JSON.parse(dataCart.item_qty)[index]
             
 //     //       })
 //     //     }
-//     //     console.log(dataCart)
+//     //     
 //     //     setCart(dataCart)
 //     //     // setPost(dataPosts)
 //     //     })
 //     //    },  [token?.access])
-//     //     console.log(notifications)
-//     //     console.log(data)
+//     //     
+//     //     
 //     //     useEffect(()=>{
 //     //         setNotifications(arrayNotification)
 

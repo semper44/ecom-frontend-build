@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 
 function ProfileProvider(props) {
   const[profileNotification, setProfileNotification]= useState([])
+  const[seller, setSeller]= useState(false)
     
     const users= useContext(AuthContext)
     let userDetails;
@@ -17,7 +18,7 @@ function ProfileProvider(props) {
 
     useEffect(()=>{
         try{
-           fetch(`http://127.0.0.1:8000/profile/profdetails/${userDetails.user_id}`)
+           fetch(`http://127.0.0.1:8000/profile/profdetails/${userDetails.username}`)
           .then(res =>{
               if(!res.ok){
                   throw Error('could not fetch the data for that resource')
@@ -26,23 +27,31 @@ function ProfileProvider(props) {
           })
           .then(data => {
             data?.map((item)=>{
+              if(item.tags==="seller"){
+                setSeller(true)
+              }else{
+                setSeller(false)
+
+              }
               setProfileNotification(item.notification)
-            })
-            console.log(data.followers, userDetails?.user_id )
-    
+            })    
     });
   }catch(error){
-    // console.log(error)
+    // 
   }
-  }, [userDetails?.user_id])
-  console.log(profileNotification)
+  }, [userDetails?.user_id, userDetails?.username])
+
+
+  console.log(seller);
+  const profilecontextvalue = {
+    setProfileNotifications:setProfileNotification,
+    profileNotification:profileNotification,
+    seller:seller
+    };
+
   return (
     <>
-        <profileContext.Provider value={{
-            setProfileNotifications:setProfileNotification,
-            profileNotification:profileNotification
-
-            }}>
+        <profileContext.Provider value={profilecontextvalue}>
             {props.children}
         </profileContext.Provider>
     </>

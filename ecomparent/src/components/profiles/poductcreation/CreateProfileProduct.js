@@ -35,8 +35,9 @@ function AdminCreate({setproduct, socket, followers}) {
     const [socketData, setSocketData] = useState(false)
     const [unsuccessful, setUnsuccessful] = useState(false)
     const [responseData, setResponseData] = useState(false)
+    const [reload, setReload] = useState(false)
     const [loading, isLoading] = useState(false)
-    // const [full, setFull] = useState(false)
+    const [error, setError] = useState(null)
     const {user}= useContext(AuthContext)
     const {theme}= useContext(ThemeData)
     let userDetail
@@ -45,25 +46,25 @@ function AdminCreate({setproduct, socket, followers}) {
     }
     function changeFile(e){
       setimageState({image:e.target.files})
-      console.log(e.target.files[0])
-      // console.log(e.data.urlOrBlob)
+      
+      // 
       setPreviewImage(window.URL.createObjectURL(e.target.files[0]))
     } 
     useEffect(()=>{
       socket?.on("offlineproductnotif", (data)=>{
         if(data){
-        console.log(data)   
+           
         setSocketData(true)
       }
   })
     }, [socket])
 
     useEffect(()=>{
-      console.log(socket)   
+         
       socket?.on("userproductnotif", (data)=>{
-        console.log(socket)   
+           
         if(data){
-        console.log(data)   
+           
         setSocketData(true)
       }
   })
@@ -76,18 +77,10 @@ function AdminCreate({setproduct, socket, followers}) {
     if(responseData && socketData){
       isLoading(false)
       window.location.reload()
+      setReload(true)
     }
     }, [responseData, socketData])
     
-
-  useEffect(()=>{
-    if(unsuccessful){
-      isLoading(false)
-      // window.location.reload()
-
-    }
-    }, [unsuccessful])
-  console.log(loading)
 
     const URL="http://127.0.0.1:8000/product/create/"
     const config= {headers:{
@@ -113,25 +106,27 @@ function AdminCreate({setproduct, socket, followers}) {
       imageState && formData.append("image", imageState.image[0])
       axios.post(URL, formData, config)
         .then(res=>{
-          console.log(res.status)
-          console.log(res)
-          console.log("res")
+          
+          
+          
           if(res.status===200){
             productNotif()
             setResponseData(true)
-            // window.location.reload()
           }else{
             setUnsuccessful(true)
+            isLoading(false)
           }
         })
-          .catch(error=>{
-            setUnsuccessful(true)
-            console.log(error)
-          })
+        .catch(error=>{
+          setUnsuccessful(true)
+          setError(error)
+          isLoading(false)
+          
+        })
          
-      // console.log(res.status )
+      // 
     }
-    console.log(loading)
+    
 
     const productNotif= async()=>{
       socket?.emit("newproduct", {
@@ -154,23 +149,29 @@ function AdminCreate({setproduct, socket, followers}) {
         }
         dispatch(action)
     }
-    console.log(previewImage)
-    console.log(loading)
+    
+    
     // let space = ""
     // let value= space.concat("sorry, something went wrong, please try again ")
   
 
   return (
     // <></>
-    <Modals>
+    <Modals >
       {unsuccessful && <Message 
-      value={" sorry, something went wrong, please try again "}
+      value={"Sorry, request failed"}
       code={"error"}
       fn={setUnsuccessful}
        />
 }
+      {reload && <Message 
+      value={"product created"}
+      code={"success"}
+      fn={setResponseData}
+       />
+}
         <div className={theme?styles['all-items-dark']:styles['all-items']}>
-          <button id={previewImage?styles.pcancel:styles.cancel} onClick={()=>setproduct(false)}>&#10005;</button>
+          <button id={styles.cancel} onClick={()=>setproduct(false)}>&#10005;</button>
           <div className={styles['search-items']}>
             <input type="text" 
             className={styles.product} 
@@ -217,7 +218,10 @@ function AdminCreate({setproduct, socket, followers}) {
             </div>
           </div>
         </div>
-        {loading && <Loading />}
+        <div className={styles["product-loading"]}>
+          {loading && <Loading />}
+
+        </div>
     </Modals>
   
   )

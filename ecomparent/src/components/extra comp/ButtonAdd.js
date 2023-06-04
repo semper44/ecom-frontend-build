@@ -6,7 +6,7 @@ function ButtonAdd({item}) {
    const addOrRemoveCart=useContext(cartContxt)
   const clickObject = (value)=>{
       // addOrRemoveCart is the connection to the cart reducer
-      //  console.log(value)
+      //  
       addOrRemoveCart.addItemsToCart({
       id:value?.id,
       category:value?.category,

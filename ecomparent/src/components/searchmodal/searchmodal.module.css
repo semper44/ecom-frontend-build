@@ -94,20 +94,13 @@
     /* height: 35px; */
     border-bottom: 1px solid black;
 }
-.specific-search-child input:focus{
-    outline: none;
-    background: 0;
-    border: none;
-    border-bottom: 1px solid black;
-}
-.specific-search-child input:focus::placeholder{
-    color: cyan;
-    position: absolute;
-    bottom: 10px;
-}
+
  .radio{
     margin-top:10px;
     margin-left:30px;
+}
+.radio span{
+    color:rgb(52, 49, 49)
 }
 
 /* .specific-search::before{

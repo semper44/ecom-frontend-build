@@ -11,9 +11,11 @@ import { screensizecontext } from '../../stores/CartContxt';
 
 
 function MainProducts() {
+  const[data, setData]= useState()
   const {theme}= useContext(ThemeData)
-  const {gridlg, gridbxlxl,gridxl, gridxlxl}= useContext(screensizecontext)
-  const {featuredata, loading, error}= useContext(mainproductContext)
+  const {screenWidth}= useContext(screensizecontext)
+  // const[screenWidth, setScreenWidth]= useState(window.innerWidth)
+  const {featureData, loading, error}= useContext(mainproductContext)
 
     // if(gridbxlxl){
     //   featuredata.slice(0,10)
@@ -25,15 +27,41 @@ function MainProducts() {
     //   featuredata.slice(0,6)
 
     // }
+    ;
+    
+    // useEffect(()=>{
+    //   const handleResize = () => {
+    //     setScreenWidth(window.innerWidth)
+    //   }
+    //   window.addEventListener("resize", handleResize);
+  
+    //   return ()=>{
+    //     window.removeEventListener("resize", handleResize)
+    //  }
+    // }, [screenWidth])
 
 
-  console.log(gridlg, gridbxlxl,gridxlxl);
+    useEffect(()=>{
+      if(screenWidth>810){
+        setData(featureData.slice(0,6))}
+      // else if(screenWidth>1225 && screenWidth<=1500){
+      //   setData(featureData.slice(0,8))}
+      if(screenWidth>1225 && screenWidth<=1500){
+        ;
+        setData(featureData.slice(0, 8))
+      }
+      if(screenWidth>1500){
+        ;
+        setData(featureData.slice(0, 10))
+      }
+    }, [featureData, screenWidth])
+
 
   return (
     <>
      {error && <h1 id={styles.errors}>{error}</h1> }
-  {!loading && featuredata?<div className={styles["slides-parent"]}>
-   {(((gridxl &&!gridxlxl)&&featuredata.slice(0,8))||((gridlg&&!gridxlxl && !gridxl)&&featuredata.slice(0,6))||(gridxlxl &&featuredata.slice(0,10))).map((item)=>{
+  {!loading?<div className={styles["slides-parent"]}>
+   {data && data.map((item)=>{
   return(
       <>
       <div className={theme? styles["slides-holder-dark"]:styles["slides-holder"]} key={item.id}>

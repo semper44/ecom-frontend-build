@@ -1,24 +1,64 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import styles from "./reviews.module.css"
 import CriticalRating from "../../extra comp/CriticalRating"
-import useFetchToken from '../../../usequery/useFetchToken'
-import Message from '../../extra comp/Message'
 import Loading from '../../extra comp/Loading'
 
 function Critical() {
+  const[data, setData]=useState()
+  const[error, setError]=useState(null)
+  const[loading, setLoading]=useState(true)
     // const [data, setData]= useState()
-    const {id}= useParams()
-    let url= `http://127.0.0.1:8000/profile/criticalrating/${id}/`
-    let method = "GET"
-    const {data, loading, error, setMsgFn, msgFn}= useFetchToken(url, method)
-
+    const {username}= useParams()
+    
+    useEffect(()=>{
+      let errorStatus=false
+      let url= `http://127.0.0.1:8000/profile/criticalrating/${username}/`
+      let method = "GET"
+      fetch(url,
+        {method:method,
+        headers:{
+        'Content-Type':'application/json',
+        }})
+        .then((response)=>{
+            if(!response.ok){
+                setLoading(false)
+                if(response.status===417){
+                    errorStatus=true
+                }else{
+                    throw Error("Couldn't fetch data, please retry")
+                }
+            }
+            if (response.status===200){
+                setLoading(false)
+            }       
+            ;     
+            return response.json()
+        })
+        .then((data)=>{
+            ;     
+            if(errorStatus){
+                setError(data.msg)
+            }else{
+                setData(data)
+            }
+        })
+        .catch(err=>{
+            setLoading(false)
+            setError(err.message)
+    })  }, [username])
+    
+    useEffect(()=>{document.title="Critical Reviews"
+    },[])
   return (
     <>
-  {msgFn && <Message value={error} code={"error"} fn={setMsgFn}/>}
-  { data && !loading ?<div className={styles.parent}>
-
-    {data.map((item)=>{
+{!loading?
+      <>
+      {error && <h1 style={{display: "flex", justifyContent: "center", alignItems: "center", padding:" 15% 0", color: "cyan",}}>
+        {error}
+      </h1>}
+      {data && <div className={styles.parent}>
+        {data.map((item)=>{
         return(
             <>
             <div className={styles["container"]}>
@@ -36,7 +76,7 @@ function Critical() {
             </>
         )
     })}
-    </div>: <Loading />}
+    </div>}</>: <Loading />}
     </>
   )
 }

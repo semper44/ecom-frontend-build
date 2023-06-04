@@ -37,9 +37,9 @@ function ChangePassword() {
       redirect: 'follow'
     };
     let fetchrequest= async(e)=>{
-      console.log(password)
+      
       let data= await fetch("http://127.0.0.1:8000/profile/password-reset-complete/", requestOptions)
-      console.log(data)
+      
       if(data.ok){
         setShowResetPasswordMsg(true)
         setStatus(true)
@@ -51,7 +51,7 @@ function ChangePassword() {
 
       }
       let res= await data.json()
-      console.log(res)
+      
   }
 
   return (

@@ -17,7 +17,7 @@ function useFetchProductDetails(url,urls) {
             fetch(urls),
           ])
           .then(([resProductDetails, resData ])=>{
-            // console.log(resData, resProductDetails)
+            // 
 
           if(!resData.ok || !resProductDetails.ok){
               throw Error("Couldn't fetch data, please retry")
@@ -28,19 +28,19 @@ function useFetchProductDetails(url,urls) {
           return Promise.all([ resProductDetails.json(), resData.json()])
 
         }
-          // console.log(resData.json(), resProductDetails.json())
+          // , resProductDetails.json())
         )
           .then(([dataProductDetails,data])=>{
-            console.log(data, dataProductDetails)
-            console.log(loading)
+            
+            
             if(dataProductDetails){
               setProductDetails(dataProductDetails)
             }
             if(data){
               setData(data)
-              console.log(data)
+              
             }
-            // console.log(dataCart.serializer)
+            // 
             // setPost(dataPosts)
             })
             .catch(err=>{

@@ -43,8 +43,8 @@ function AdminCreate({setprofileupdate}) {
     }
     function changeFile(e){
       setimageState({image:e.target.files})
-      console.log(e.target.files[0])
-      // console.log(e.data.urlOrBlob)
+      
+      // 
       setPreviewImage(window.URL.createObjectURL(e.target.files[0]))
     } 
     const URL="http://127.0.0.1:8000/product/create/"
@@ -75,10 +75,10 @@ function AdminCreate({setprofileupdate}) {
           }
         })
           .catch(error=>{
-            console.log(error)
+            
           })
          
-      // console.log(res.status )
+      // 
     }
     function change(e){
         const {name, value}=e.target
@@ -89,8 +89,8 @@ function AdminCreate({setprofileupdate}) {
         }
         dispatch(action)
     }
-    console.log(previewImage)
-    console.log(loading)
+    
+    
 
   
 
@@ -102,46 +102,12 @@ function AdminCreate({setprofileupdate}) {
           <div className={styles['search-items']}>
             <input type="text" 
             className={styles.product} 
-            placeholder='category'
+            placeholder='Location'
             onChange={change}
-            name='category'/>
+            name='location'/>
 
-            <input type="text" 
-            className={styles.product} 
-            placeholder='description'
-            onChange={change}
-            name='description'/>
-
-            <input type="text" 
-            className={styles.colors} 
-            placeholder='colors'
-            onChange={change}
-            name='colors'/>
-
-            <input type="text" 
-            className={styles.colors} 
-            placeholder='price'
-            onChange={change}
-            name='price'/>
-
-            <input type="text" 
-            className={styles.colors} 
-            placeholder='size'
-            onChange={change}
-            name='size'/>
-            
-            {previewImage &&  <div className={styles.preview} style={{width:"140px", height:"100px", marginTop:"10px", cursor:"pointer"}}>
-              <img src={previewImage} alt='' style={{width:"100%", height:"100%"}}></img>
-            </div>}
             <div className={styles["send-button"]}>
-              <IconButton variant="outlined" component="label" sx={{color:'cyan', mt:"1.5rem", display:"flex", justifyContent:"center"}}>
-                <input hidden accept='image/*' type="file"
-                className={styles.colors} 
-                onChange={changeFile}
-                name='image'/>
-                <PhotoCamera />
-              </IconButton>
-              <button className={styles.searchcreate} onClick={handleSubmit} >Upload</button>
+              <button className={styles.searchcreate} onClick={handleSubmit} >Update</button>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
  
 
 function SearchModal(props) {
-  console.log("search")
+  
     const[disabled, isDisabled]= useState(true)
     const[mainSearch, setMainSearch]= useState(undefined)
     const[realData, setRealData]= useState()
@@ -30,7 +30,7 @@ function SearchModal(props) {
     }
     
 
-    console.log(mainSearch)
+    
     useEffect(()=>{
       if(data.search !== ""){
         setRealData({...realData, search:data.search})
@@ -84,317 +84,317 @@ function SearchModal(props) {
    
       function send(){
       if(realData.search && realData.price && realData.color && realData.category && realData.size){
-        console.log("sent1")
+        
         fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&$price=${realData.price}&category=${realData.category}&size=${realData.size}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       // search combinations
 
       else if(!realData.search && realData.price && !realData.color && !realData.category && !realData.size){
-        console.log("sent2")
+        
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && !realData.price && realData.color && !realData.category && !realData.size){
-        console.log("sent2")
+        
         fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && !realData.price && !realData.color && realData.category && !realData.size){
-        console.log("sent2")
+        
         fetch(`http://127.0.0.1:8000/product/search?category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && !realData.price && !realData.color && !realData.category && realData.size){
-        console.log("sent2")
+        
         fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && !realData.price && !realData.color && !realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && realData.price && !realData.color && !realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&price${realData.price}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && !realData.price && realData.color && !realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&color${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && !realData.price && !realData.color && realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&category${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && !realData.price && !realData.color && !realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&size${realData.size}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       // price combinations
 
       else if(!realData.search && realData.price && realData.color && realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&color=${realData.color}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && realData.price && realData.color && !realData.category && realData.size){
-        console.log("sent3")
+        
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&search=${realData.search}&color=${realData.color}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && realData.price && realData.color && !realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && realData.price && !realData.color && realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && realData.price && !realData.color && realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}&search=${realData.search}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && realData.price && !realData.color && realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && realData.price && realData.color && !realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && realData.price && !realData.color && !realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && realData.price && realData.color && realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
 
       // color combination
 
       else if(!realData.search && !realData.price && realData.color && realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && !realData.price && realData.color && realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&category=${realData.category}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && !realData.price && realData.color && !realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && !realData.price && realData.color && realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}&category=${realData.category}&color=&size=${realData.size}${realData.color}&search=${realData.search}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(!realData.search && !realData.price && !realData.color && realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && realData.price && realData.color && realData.category && !realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       
       // search combination
       else if(realData.search && realData.price && !realData.color && !realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
       else if(realData.search && !realData.price && realData.color && !realData.category && realData.size){
-        console.log("sent3")
+        
 
         fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&search=${realData.search}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
         .then(response=>{
-          console.log(response)
+          
         })
       }
 
 
       // testing
       // else if(realData.search && !realData.price && realData.color && !realData.category && realData.size){
-      //   console.log("sent3")
+      //   
 
       //   fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
       //   .then(res=>{
       //       return res.json()
       //   })
       //   .then(response=>{
-      //     console.log(response)
+      //     
       //   })
       // }
 
@@ -402,7 +402,7 @@ function SearchModal(props) {
 
 
   return (
-    <Modals click={props.onHide}>
+    <Modals>
     {/* <div className='modal-bg' > */}
         <div className={theme?styles["theme-dark"]:styles['all-items']}>
           <button id={styles.cancel} onClick={props.onHide}>&#10005;</button>
@@ -421,8 +421,8 @@ function SearchModal(props) {
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
               value={mainSearch} onChange={handleChange} >
-                <FormControlLabel value="profile"  control={<Radio />} label="Profiles" />
-                <FormControlLabel value="product"  control={<Radio />} label="Products" />
+                <FormControlLabel value="profile" sx={{color:"black"}} control={<Radio />} label="Profiles" />
+                <FormControlLabel value="product" sx={{color:"black"}} control={<Radio />} label="Products" />
               </RadioGroup>
             </FormControl>
           </div>

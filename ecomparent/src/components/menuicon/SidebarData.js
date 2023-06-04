@@ -12,12 +12,12 @@ if(token){
   id=jwt_decode(token?.access)
 
 }
-console.log(id)
+
 export const SidebarData = [
   
   {
     title: 'Profile',
-    path: `/profile/${id?.user_id}`,
+    path: `/profile/${id?.username}`,
     icon: <AccountBoxIcon />,
     cName: 'nav-text'
   },

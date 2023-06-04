@@ -12,7 +12,6 @@ import YourOrders from "../YourOrders";
 import { AuthContext } from '../login/LoginFetch';
 import jwt_decode from "jwt-decode";
 import CreateProfileProduct from "../poductcreation/CreateProfileProduct"
-import axios from 'axios';
 import Critical from '../reviews/Critical';
 import Positive from '../reviews/Positive';
 import Loading from '../../extra comp/Loading';
@@ -23,6 +22,9 @@ import RatingProfile from '../../extra comp/RatingsProfile';
 import SellersProduct from '../SellersProduct';
 import MyOrders from '../MyOrders';
 import { showsidebarcontext } from '../../../stores/CartContxt'
+import DeleteComp from '../../admin/DeleteComp';
+import throttle from 'lodash.throttle';
+
 
 
 let Successful= false
@@ -49,6 +51,7 @@ function UserProfile({socket}) {
   const[userFollowers, setUserFollowers]= useState()
   const[followed, setFollowed]= useState(false)
   const[errors, setErrors]= useState(false)
+  const[deleteState, setDeleteState]= useState(false)
   const[combinedOrder, setCombinedOrders]= useState(undefined)
   // const[fullpage, setFullPage]= useState(true)
   const[combinedReviews, setCombinedReviews]= useState(undefined)
@@ -57,11 +60,6 @@ function UserProfile({socket}) {
   const {theme}= useContext(ThemeData)
   const {dontdisplay}= useContext(screensizecontext)
 
-  let modalRatings= useRef(false)
-  let lengthOfReviews= useRef(false)
-
-
-  console.log(combinedOrder)
   let navigate= useNavigate()
 
   const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
@@ -71,34 +69,33 @@ function UserProfile({socket}) {
   if(users.user){
     userDetails=jwt_decode(users?.user?.access)
   }
-  const{id}= useParams() 
-  console.log(id)
+  const{username}= useParams()  
   
+  function deletefn(){
+    setDeleteState(true)
+  }
+
   // to keep the socket.io on once the pofile page tab is active
   // useEffect(()=>{
   //   mounted.current=true;
   //   let beating;
   //   beating= setInterval(()=>{
   //     socket?.emit("heartbeat", {data:"a"})  
-  //     console.log("runheartbeat")
+      
   //   }, 1000)
   //   return ()=>{
-  //     console.log("heartbeat")
+      
   //     setTimeout(()=>clearInterval(beating), 1500) 
   //     mounted.current=false 
   //   }
   // }, [socket]) 
-
-  // screen size to resize 1092
+  
   
   // fetching user profiledetails
-  useEffect(()=>{
+    useEffect(()=>{
     try{
-       fetch(` https://cras.serveo.net/profile/profdetails/${id}`)
+      fetch(`http://127.0.0.1:8000/profile/profdetails/${username}`)
       .then(res =>{
-          // if(!res.ok){
-          //     throw Error('could not fetch the data for that resource')
-          // }
         if(res.status===200){
           setResponse(true)
         }
@@ -131,10 +128,9 @@ function UserProfile({socket}) {
 
 });
 }catch(error){
-// console.log(error)
-// setError(error)
+
 }
-}, [errors, id, userDetails?.user_id])
+}, [userDetails?.user_id, username])
 
   // getting all reviews and setting rating based on response
   
@@ -147,15 +143,15 @@ function UserProfile({socket}) {
 //     (async ()=>{
 //     let res= await fetch(`http://127.0.0.1:8000/profile/allreviews/${id}/`, requestOptions)
 //     let response= await res.json()
-//     console.log(response)
+//     
 //     if(response.length<1 && userDetails?.user_id !== parseInt(id) && userDetails?.user_id ){
 //       lengthOfReviews.current= true
 //     }else{
-//       console.log(response)
+//       
 //       for(let i of response){
-//         console.log(typeof(i.sender))
+//         )
 //         if((i.sender===userDetails?.user_id) && userDetails?.user_id && (userDetails?.user_id !== parseInt(id)) && !followAndRate){
-//           console.log("matched")
+//           
 //           modalRatings.current = true
 //           break
 //         }
@@ -165,33 +161,12 @@ function UserProfile({socket}) {
 //   })()
 // }, [followAndRate, id, userDetails?.user_id])
 
-  useEffect(()=>{
-    if(modalRatings.current && lengthOfReviews.current){
-      const interval=setInterval(()=>{
-      }, 30000)      
-      setTimeout(()=>clearInterval(interval), 40000)
-      setRatings(true)
-    }
-  }, [])
-
-
-function showFollowers(){
- 
-}
-
 useEffect(()=>{
-  if(userDetails?.user_id !== parseInt(id)){
+  if(userDetails?.username !== username){
     setsameusers(false)
   }
   document.title="Profile";
-},[id, userDetails?.user_id])
-
-
-// setting the rating interval
-// useEffect(()=>{
-//   if(
-// }},[])  
-
+},[userDetails?.username, username])
 
   function reportProfile(){
     setstateCheck("reports")
@@ -215,7 +190,7 @@ useEffect(()=>{
       setfetchData(true)
       setCombinedOrders("yourorders")
     }else{
-      navigate(`/profile/${userDetails?.user_id}/yourorders`)
+      navigate(`/profile/${username}/yourorders`)
     }
   }
   function changeFetchDataCustomerOrders(){
@@ -224,7 +199,7 @@ useEffect(()=>{
       setCombinedOrders("customerorders")
 
     }else{
-      navigate(`/profile/${userDetails?.user_id}/customerorders`)
+      navigate(`/profile/${username}/customerorders`)
     }
   }
   function deliveryFetchDatafn(){
@@ -242,7 +217,7 @@ useEffect(()=>{
       setsellersproduct(false)
       setshowAllProduct(true)
     }else{
-      navigate(`/profile/${userDetails?.user_id}/userproducts`)
+      navigate(`/profile/${username}/userproducts`)
     }
   }
   
@@ -258,7 +233,7 @@ useEffect(()=>{
       setcritical(true)
       setCombinedReviews("reviews/critical")
     }else{
-      navigate(`/profile/${userDetails?.user_id}/reviews/critical`)
+      navigate(`/profile/${username}/reviews/critical`)
     }
   }
 
@@ -268,11 +243,9 @@ useEffect(()=>{
       setcritical(true)
       setCombinedReviews("reviews/positive")
     }else{
-      navigate(`/profile/${userDetails?.user_id}/reviews/positive`)
+      navigate(`/profile/${username}/reviews/positive`)
     }
   }
-
-  console.log(combinedReviews, positivereview)
 
   function changeThirtyContainerState(index){
       setThirtyContainerState(!thirtyContainerState)
@@ -299,7 +272,8 @@ useEffect(()=>{
     }
 
   function following(){
-    fetch(`https://cras.serveo.net/profile/follow/${id}/`,
+    // eslint-disable-next-line no-undef
+    fetch(`http://127.0.0.1:8000/profile/follow/${username}/`,
     {method:'POST',
     headers:{
       'Content-Type':'application/json',
@@ -328,13 +302,14 @@ useEffect(()=>{
   }
  
   const unprofileFollow= async ()=>{
-    let response=await fetch(`https://cras.serveo.net/profile/unfollow/${id}/`,
+    let response=await fetch(`http://127.0.0.1:8000/profile/unfollow/${username}/`,
     {method:'POST',
     headers:{
       'Content-Type':'application/json',
-       'Authorization': 'Bearer '+ token.access
+       'Authorization': 'Bearer '+ token.access,
+      
     }})
-    let res= await response.json()
+    await response.json()
     if(response.status===200){
       setFollowed(false)
       setUserFollowers(curr=>curr-1)
@@ -342,7 +317,6 @@ useEffect(()=>{
     }else{
       alert("An error occured, please try again")
     }
-    console.log(res)
   }
 
   function unfollowing(){
@@ -353,7 +327,7 @@ useEffect(()=>{
     setstateCheck("products")
     setThirtyContainerState("products")
   }
-  console.log(stateCheck, thirtyContainerState)
+  
 
   function back(){
     setfetchData(false)
@@ -365,7 +339,6 @@ useEffect(()=>{
       setshowAllProduct(false)
   }
 
-  console.log(id)
 
   // create a reference o the hidden file input using useref
   const hiddenFileInput= useRef(null)
@@ -379,23 +352,32 @@ useEffect(()=>{
 
   function handleChange(e){
     e.preventDefault()
+    ;
     // setImage({image:e.target.files})
     updateProfilePics(e)
    
   }
   function updateProfilePics(e){
-    const URL=`https://cras.serveo.net/profile/update/profilepics/${id}/`
-    const config= {headers:{
-        'Content-Type':'multipart/form-data',
-    }}
     let formData= new FormData()
     formData.append("pics", e.target.files[0],)
-    console.log(formData.get("prof_pics"))
-    axios.patch(URL, formData, config)
-        .then(res=>{
-          setdata({pics:res.data.pics})
-        })
-      } 
+    const URL=`http://127.0.0.1:8000/profile/update/profilepics/${userDetails.user_id}/`
+    let requestOptions = {
+      method: 'PATCH',
+      body: formData,
+      headers: {
+        'Authorization': 'Bearer '+ token?.access
+        },
+      redirect: 'follow'
+    };
+   
+    fetch(URL, requestOptions)
+      .then((result)=>{return result.json()})
+      .then(res=>{
+        ;
+        setdata({pics:res.pics})
+      })
+    } 
+    ;
   
   function showProfileFormModal(){
     setProfileFormstate(true)
@@ -413,7 +395,7 @@ useEffect(()=>{
         <h1> Profile Not Found</h1>
       </div>:
       <div className={styles["profile-profile"]}>
-      {(ratings || followAndRate) && <Ratings later={ratings =>setRatings(ratings)} followandrate={followAndRate =>setFollowAndRate(followAndRate)} id={id}/>}
+      {(ratings || followAndRate) && <Ratings later={ratings =>setRatings(ratings)} followandrate={followAndRate =>setFollowAndRate(followAndRate)} id={username}/>}
       <div id={styles["seventy-container"]} className={theme?styles["class-dark"]:styles.class}>
         <div className={styles["profile-image-container"]}>
           <div className={styles["profile-image"]}>
@@ -422,13 +404,13 @@ useEffect(()=>{
          { sameusers &&<div className={styles["change-prof-pics"]}>
             <p onClick={handleClick} value={"Change Profile Pics"}>
             {/* <p id={styles.profchange}>Change Profile Pics</p> */}
-            Change Profile Pics
               <input 
                 type="file"
                 // name='image' 
                 ref={hiddenFileInput}
                 onChange={handleChange}/>
-              
+                Change Profile Pics
+
               </p>
           </div>}
         </div>
@@ -452,10 +434,10 @@ useEffect(()=>{
               {(data && seller) && <RatingProfile value={data.ratings_value}/>}
               </div>
               <div className={theme?styles["profile-down-part-dark"]:styles["profile-down-part"]}>
-                <Link to={`/profile/${id}/allfollowers`}>
+                <Link to={`/profile/${username}/allfollowers`}>
                   <p id={styles.followers}>{userFollowers}<span> Followers</span></p>
                 </Link>
-                <Link to={`/profile/${id}/allfollowing/`}>
+                <Link to={`/profile/${username}/allfollowing/`}>
                   <p>{data?.following?.length} <span>Following</span></p>
                 </Link>
               </div>
@@ -485,7 +467,7 @@ useEffect(()=>{
             <div className={theme?styles['user-nav-text-dark']:styles['user-nav-text']} onClick={reviews}>
               <ThumbUpOutlinedIcon/><span>Reviews</span>
             </div>
-            {sameusers && seller &&<div className={theme?styles['user-nav-text-dark']:styles['user-nav-text']} onClick={settings}>
+            {sameusers &&<div className={theme?styles['user-nav-text-dark']:styles['user-nav-text']} onClick={settings}>
               <ThumbUpOutlinedIcon/><span>Settings</span>
             </div>}
             {/* {ProfileFormstate && <ProfileForm cancelProfileForm={ProfileFormstate=>setProfileFormstate(ProfileFormstate)} />} */}
@@ -497,20 +479,20 @@ useEffect(()=>{
               {fetchData?
               <div className={styles["back-fullpage"]}>
                 <p className={styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={back}>Back</p>
-                <Link to={`/profile/${userDetails?.user_id}/${combinedOrder}`}>
+                <Link to={`/profile/${username}/${combinedOrder}`}>
                 <p className={styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]}>Full Page</p>
                 </Link>
                 </div>:<p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={changeFetchDataYourOrders}>My Orders </p>}
                {fetchData && seller && combinedOrder==="customerorders" && < YourOrders/>}
               {seller && <p className={fetchData?styles.hide:(theme?styles.thirtydark:styles["thirty-container-buttons"])} id={styles["thirty-container-buttons"]} onClick={changeFetchDataCustomerOrders}>Customer Orders</p>}
-               {fetchData && seller && combinedOrder==="yourorders" &&<MyOrders />}
+               {fetchData  && combinedOrder==="yourorders" &&<MyOrders />}
             </div>: undefined}
 
           {stateCheck === "review"?<div className={thirtyContainerState==="review" ?styles.show: styles["no-show"]}>
           {(!critical && !positivereview) ?<p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={criticalreview}>Critical</p>:
           <div className={styles["back-fullpage"]}>
             <p className={styles["thirty-container-buttons"]} id={styles["critical-back"]} onClick={criticalBack}>Back</p>
-            <Link to={`/profile/${userDetails?.user_id}/${combinedReviews}`}>
+            <Link to={`/profile/${username}/${combinedReviews}`}>
             <p className={styles["thirty-container-buttons"]} id={styles["critical-back"]} onClick={criticalBack}>Full Page</p>
             </Link>
             </div>}
@@ -543,7 +525,7 @@ useEffect(()=>{
               <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={allproduct}>All Products </p>:
               <div className={styles["back-fullpage"]}>
                 <p className={styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={sellersback}>Back</p>
-                <Link to={`/profile/${userDetails?.user_id}/userproducts`}>
+                <Link to={`/profile/${username}/userproducts`}>
                 <p className={styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]}>Full Page</p>
                 </Link>
                 </div>}
@@ -555,12 +537,14 @@ useEffect(()=>{
 
             {stateCheck === "settings" ?<div className={thirtyContainerState==="settings" ?styles.show: styles["no-show"]}>
               <div className="products-childers">
-                <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={showProfileFormModal}>Become a seller </p>
-                {ProfileFormstate &&<ProfileForm setProfileFormstate={setProfileFormstate}/>}
+                {!seller && <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={showProfileFormModal}>Become a seller </p>}
+                {(ProfileFormstate && !seller) &&<ProfileForm setProfileFormstate={setProfileFormstate}/>}
                 <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={updateProfileFormModal}>Update profile</p>
                 {updateProfile && <ProfileUpdate setprofileupdate={setUpdateProfile}/>}
                 <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={"changepassword"}>Change Password</p>
                 {updateProfile && <ProfileUpdate setprofileupdate={setUpdateProfile}/>}
+                <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={deletefn}>Delete account</p>
+                {deleteState && <DeleteComp setdelete={setDeleteState} url={`http://127.0.0.1:8000/profile/delete/${userDetails.user_id}`} type={"profile"}/>}
               </div>
             </div>:undefined}            
           </div>

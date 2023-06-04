@@ -13,7 +13,7 @@
 //     initialData:()=>{
 //         const feature= queryClient.getQueryData("featured")?.data?.find((item)=>item.id===parseInt(id))
 //         const f= queryClient.getQueryData("featured")?.data?.filter((item)=>item.id!==parseInt(id))
-//         console.log(feature)
+//         
 //         if(feature && f){
 //           return{data:feature, df:f}  
 //         }else{

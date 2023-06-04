@@ -1,7 +1,6 @@
 .parent{
     margin-left: 6%;
-    margin-top:6% ;
-    margin-bottom:6% ;
+    padding:11% 0;
     /* margin-bottom: ; */
 }
 .parent a{
@@ -11,6 +10,15 @@
 .followers{
     padding: 2% 0;
 }
-.followers h2{
+.followersdark{
+    padding: 2% 0;
+}
+.followersdark h2, .followers h2{
     color: cyan;
+}
+.followers p{
+    color: black;
+}
+.followersdark p{
+    color:white
 }

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export let AuthContext = React.createContext();
 
 // const userAuthState=JSON.parse(window.localStorage.getItem("authToken"))||undefined
-// console.log(userDecodedAuth)
+// 
 const d=JSON.parse(window.localStorage.getItem("authToken"))||undefined
 
 
@@ -13,7 +13,7 @@ function LoginFetch(props) {
     const[interval, setIntervalF]= useState(false)
     const[loginState, setLoginState]= useState(false)
     const [message, setMessage] = useState({status:false, message:"", code:undefined});
-    console.log(props)
+    
     const [user, setUser] = useState(d);
     const navigate = useNavigate();
 
@@ -27,28 +27,28 @@ function LoginFetch(props) {
         
         body:JSON.stringify({ username: e.target.username.value, password: e.target.password.value })
         };
-        console.log(e.target.username.value, e.target.password.value)
+        
             fetch( "http://127.0.0.1:8000/profile/token/", fetchRequestOptions)
             .then((res)=>{
                 return res.json()})
             .then((result)=>{
-                console.log(result)
+                
                 setAuthToken(result);
-                let userToken;
-                // console.log(dataToken)
-                // console.log(dataCart)
+                let userToken; 
                 if (result.access){
                     setUser(result);
-                    console.log("jwt")
+                    
                     userToken= jwt_decode(result.access)
-                    console.log(userToken)
+                    
                     localStorage.setItem("authToken", JSON.stringify(result));
+                    setMessage({status:true, message:"Login successful", code:"success"})
+                    setIntervalF(true)
                 }
                 if(result.detail){
                     setMessage({status:true, message:result.detail, code:"error"})
                     setIntervalF(true)
                 }
-                console.log(userToken?.is_staff, userToken?.is_superuser)
+                
 
                 if (userToken?.is_staff === false && userToken?.is_superuser === false) {
                     (async()=>{
@@ -62,8 +62,8 @@ function LoginFetch(props) {
                         };
                         let res = await fetch('http://127.0.0.1:8000/product/retrievecart/', retrieveCartOptions)
                         const response = await res.json();
-                        console.log("response")
-                        console.log(res.ok)
+                        
+                        
                         if(res.status===200){
                             response.serializer.forEach((obj, index) => {
                             obj.qty=JSON.parse(response.item_qty)[index]
@@ -71,20 +71,20 @@ function LoginFetch(props) {
                             })
                             // let others={cartSize:JSON.parse(dataCart.cartSize), cartId:JSON.parse(dataCart.id)}
                             let cart={items:response.serializer, cartSize:JSON.parse(response.cartSize), cartId:JSON.parse(response.id)}
-                            console.log(cart)
+                            
                             const cartState= JSON.parse(window.localStorage.getItem("MY_CARTSTATE"))|| null
-                            console.log(cartState)
+                            
                             if(!cartState || cartState===undefined || cartState.items===null ||  cartState?.items?.length===0 ){
                                 localStorage.setItem("MY_CARTSTATE", JSON.stringify(cart))
-                                console.log("trole")
-                                console.log("trouble")
+                                
+                                
                             }
                             setLoginState(true)
                         }
                         if(res.status===201){
                             setLoginState(true)
-                            const cartState= JSON.parse(window.localStorage.getItem("MY_CARTSTATE"))|| null
-                            console.log(cartState)
+                            // const cartState= JSON.parse(window.localStorage.getItem("MY_CARTSTATE"))|| null
+                            
 
                         }
                     })()
@@ -123,7 +123,7 @@ function LoginFetch(props) {
         //                 localStorage.setItem("MY_CARTSTATE", JSON.stringify(cart))
         //             }
                 
-        //         console.log(cart)
+        //         
         //     }
             
         // }
@@ -141,14 +141,14 @@ function LoginFetch(props) {
     logout: logout,
     message:message,
     interval:interval,
-    intervalFn:setIntervalF
+    intervalFn:setIntervalF,
     };
 
     let four= 1000* 60*2
     useEffect(()=>{
         if(user){let interval = setInterval(()=>{
             updateToken()
-            console.log("updated")
+            
         }, four)
         return ()=>clearInterval(interval)}
     },
@@ -167,23 +167,23 @@ function LoginFetch(props) {
                 });
                 let data= await res.json()
                 if(res.status===200){
-                    console.log(data)
+                    
                 setAuthToken(data);
                 setUser(data);
-                console.log("op")
+                
                 localStorage.setItem("authToken", JSON.stringify(data))
-                console.log("now refreshed")
+                
                 }else{
                 logout()
                 }
                 
             } catch (error) {
-            console.log(error);
+            ;
             }
 
         }
 
-    console.log("end")
+    
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   return (

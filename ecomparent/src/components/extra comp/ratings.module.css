@@ -30,6 +30,24 @@
     align-items: center;
     justify-content: center;
 }
+.container-dark .rate{
+    margin-top: -4rem;
+    border: 1px solid gainsboro;
+    height: 90px;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: gainsboro;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input-review{
+    display: flex;
+    justify-content: center;
+    margin-bottom:1rem;
+}
+
 .rated p{
     padding: 10px 25px;
     background-color: cyan;

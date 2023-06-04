@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DataGrid} from "@mui/x-data-grid";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import axios from "axios";
-import { CustomUseQuery } from "../../usequery/useQueryNo";
-import Delete from "./Delete";
-import EditProduct from "./EditProduct";
+import Delete from "./DeleteComp";
 import styles from "./usersandproducts.module.css"
 import { GridToolbarContainer,
   GridToolbarDensitySelector,
@@ -23,19 +20,17 @@ import { useLocation } from "react-router-dom";
 
 // http://127.0.0.1:8000/
 
-const fetcher = () => {
-  return axios.get(" http://127.0.0.1:8000/product/getproduct");
-};
+
 
 function AllProduct() {
   const [productData, setproductData] = useState("");
   const [deleteState, setdeleteState] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   // const [fullscreen, setFullscreen] = useState(false);
   const [id, setdId] = useState(null);
   const {theme}= useContext(ThemeData)
   const {dontdisplay, gridlg, gridxl, gridxlxl}= useContext(screensizecontext)
-  const { data } = CustomUseQuery(fetcher);
   const location= useLocation()
   let fullscreen= false
   const{pathname}=location
@@ -46,23 +41,32 @@ function AllProduct() {
     fullscreen=false
 
   }
-  console.log(location)
+  
   // const fullscreen=false
+  const getData= async()=>{
+    try{
+      const res= await axios.get("http://127.0.0.1:8000/product/getproduct")
+      if(res.status===200){
+        ;
+        setLoading(false)
+        setproductData(res.data)
+      }
 
-  console.log(data?.data)
-
-  useEffect(() => {
-    if (data) {
-      setproductData(data.data);
+    }catch(error){
+      setLoading(false)
+      setError(error)
     }
-  }, [data]);
+  }
+
+
+  useEffect(()=>{
+    window.location.pathname==="/users"&&getData()
+  },[])
+
+
 
   function del(params) {
     setdeleteState(true)
-    setdId(params.id)
-  }
-  function editing(params) {
-    setEdit(true)
     setdId(params.id)
   }
 
@@ -75,7 +79,7 @@ function AllProduct() {
       width:dontdisplay?60: undefined,
       flex:dontdisplay?0: 1,
       renderCell: (params) => {
-        // console.log(params.row.image);
+        // ;
         return <Avatar src={params.row.image} />;
       },
     },
@@ -110,19 +114,6 @@ function AllProduct() {
                 Edit
               </Typography>
             </IconButton> */}
-            {(!dontdisplay && ((gridlg &&fullscreen)||(gridxl && gridlg))) &&<IconButton
-              aria-label="Edit"
-              size="small"
-              className=""
-              onClick={()=>editing(params)}
-            >
-              <EditOutlinedIcon sx={{color:theme?"cyan":undefined}} />
-              <Typography color={"grey"} sx={{ ml: "5px" }}>
-                Edit
-              </Typography>
-            </IconButton>}
-            {edit &&<EditProduct edit={setEdit} id={id}/>}
-
             <IconButton
               aria-label="Delete"
               size="small"
@@ -134,15 +125,16 @@ function AllProduct() {
                 Delete
               </Typography>
             </IconButton>
-            {deleteState &&<Delete setdelete={setdeleteState} url={`http://127.0.0.1:8000/product/admin/deleteproduct/${id}`}/>}
+            {deleteState &&<Delete setdelete={setdeleteState} url={`http://127.0.0.1:8000/product/admin/deleteproduct/${id}`} type={"admin"}/>}
           </Box>
         );
       },
     },
   ];
 
-    console.log(gridlg)
-    console.log(gridxl)
+  useEffect(()=>{document.title="Users"
+    },[])
+    
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
@@ -156,8 +148,10 @@ function AllProduct() {
   }
   return (
     <div className={styles["usersandproduct"]} >
-      {productData ? (
-        <Box m="0 0 0 4%" height={dontdisplay?"75vh":"80vh"} pt="2%">
+      {!loading ?
+      <> 
+        {error && <h1 id={styles.errors}>{error}</h1> }
+        {productData&&<Box m="0 0 0 4%" height={dontdisplay?"75vh":"80vh"} pt="2%">
           <DataGrid
             rows={productData}
             columns={columns}
@@ -183,8 +177,7 @@ function AllProduct() {
           }}
             
           />
-        </Box>
-      ): <Loading />}
+        </Box>}</>: <Loading />}
     </div>
   );
 }

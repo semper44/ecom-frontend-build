@@ -1,46 +1,47 @@
-import React, {useContext, useEffect, useState} from 'react'
-import { AuthContext } from '../login/LoginFetch'
+import React, {useContext, useEffect} from 'react'
 import { headerdata } from '../../../stores/CartContxt'
 // import { notificationProvider } from '../../../stores/CartContxt'
-import jwt_decode from "jwt-decode"
 import styles from "./productandfollowingnotification.module.css"
 import Loading from "../../extra comp/Loading"
 import {ThemeData} from "../../../App"
+import { AuthContext } from '../login/LoginFetch'
+import jwt_decode from "jwt-decode"
 import { showsidebarcontext } from '../../../stores/CartContxt'
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 // import useFetchToken from '../../../usequery/useFetchToken'
 
 
 function AllFollowingNotification() {
-    const [error, setError]=useState(null)
-    const logIn= useContext(AuthContext)
-    const {setnotificationcontext, notificationcontext, notificationData}= useContext(headerdata)
+    const {setNotificationsstore, notificationData, notificationsstore}= useContext(headerdata)
     // const {notificationData}= useContext(generalNotification)
-    const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-   
     const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
-    function open(){
-      if(sidebar){
-        hideSidebar()
-      }
-    }
-  
-
-    const {theme}= useContext(ThemeData)
+    const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
+    const logIn= useContext(AuthContext)
 
     let userDetails;
     if(logIn?.user){
       userDetails=jwt_decode(logIn?.user?.access)
     } 
-
-    useEffect(()=>{document.title="Notifications"
-    },[])
     
 
+    //al>h, h<a&i a>al&i
+
+
+    function open(){
+      if(sidebar){
+        hideSidebar()
+      }
+    }
+    
+
+    const {theme}= useContext(ThemeData)
+    useEffect(()=>{document.title="Followers Notifications"
+    },[]) 
+    
     useEffect(()=>{
-      (async()=>{
-      localStorage.removeItem("gottenNotification")
-        if(notificationcontext.length>=1){
+    (async()=>{
           try{
             let res= await fetch(`http://127.0.0.1:8000/profile/editnotifications/${userDetails.user_id}/`, {
               method: 'PATCH',
@@ -49,37 +50,37 @@ function AllFollowingNotification() {
                 'Authorization': 'Bearer '+ token?.access
 
                 },      
-                body:JSON.stringify(notificationcontext)}
+                body:JSON.stringify(notificationData)}
               )
-            let response= await res.json()
-            if(!res.ok){
-              throw Error("Couldn't fetch data, please retry")
+            await res.json()
+            if(res.ok){
+              console.log(res.ok);
+              window.localStorage.removeItem("gottenNotification")
+              setNotificationsstore([])
             }
-            console.log(response)
-            }catch(err){
-              // setError(false)
-              setError(err.message)
-          }  
-        }
-        // setCombinedNotification(notificationData)
-        setnotificationcontext([]);
-    })()
+          }catch(err){
+            // setError(false)
+        }  
+        
+    })();  
+    }, [notificationData, setNotificationsstore]) 
     
-    }, []) 
-    
-    console.log(error)
-    console.log(notificationData)
-   
+
+    console.log(notificationsstore)    
+
   return (
     <>
-      {notificationData?<div className={styles.parent} onClick={open}
->
+      {notificationData?<div className={styles.parent} onClick={open}>
       <div className={theme?styles["children-dark"]:styles.children}>
         { notificationData?.length>= 1 ? notificationData.map((notifs)=>{
           return(
             <>
-            <div className={notifs.seen==="unseen"? styles.unseen: styles.text}>
+            <div className={styles.text}>
               <p>{notifs.text}-{notifs.time}</p>  
+              
+              <div className={styles.eye}>
+                {notifs.seen !=="seen" ?<VisibilityOffOutlinedIcon sx={{color:"red"}}/>:<RemoveRedEyeOutlinedIcon sx={{color:theme?"azure":"cyan"}} /> }
+              </div>
             </div>
             </>
           )

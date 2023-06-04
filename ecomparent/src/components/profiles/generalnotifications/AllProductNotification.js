@@ -7,6 +7,9 @@ import styles from "./productandfollowingnotification.module.css"
 import Loading from '../../extra comp/Loading'
 import {ThemeData} from "../../../App"
 import { showsidebarcontext } from '../../../stores/CartContxt'
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+
 
 
 
@@ -15,7 +18,6 @@ function AllProductNotification() {
     // const { productNotifications, productNotificationsFn}= useContext(generalNotification)
     const { profileNotification, setProfileNotifications}= useContext(profileContext)
     const { ProductnotificationData}= useContext(headerdata)
-    const [markedNotifications, setMarkedNotifications]= useState(profileNotification)
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
     
     const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
@@ -34,7 +36,7 @@ function AllProductNotification() {
       userDetails=jwt_decode(logIn?.user?.access)
     } 
 
-    console.log(markedNotifications)
+    
 
     useEffect(()=>{document.title="Notifications"
     },[])
@@ -53,29 +55,35 @@ function AllProductNotification() {
              }
               )
           let response= await res.json()
-          console.log(response)
+          console.log(response);
         }
         setProfileNotifications([]);    
       })() 
-    }, [])
+    }, [profileNotification.length, setProfileNotifications, token?.access, userDetails.user_id])
 
-    console.log(ProductnotificationData)
+    
    
      
   return (
     <>
      { ProductnotificationData? <div className={styles.parent} onClick={open}>
+     <div className={theme?styles["children-dark"]:styles.children}>
     { ProductnotificationData?.length> 1 ? ProductnotificationData.map((notifs)=>{
       return(
         <>
-        <div className={markedNotifications.includes(notifs.id)? styles.unseen: styles.text}>
-          {notifs.text}-{notifs.time}
+        <div className={styles.text}>
+              <p>{notifs.text}-{notifs.time}</p>  
+              
+              <div className={styles.eye}>
+                {notifs.seen !=="seen" ?<VisibilityOffOutlinedIcon sx={{color:"red"}}/>:<RemoveRedEyeOutlinedIcon sx={{color:theme?"azure":"cyan"}} /> }
+                </div>
         </div>
         </>
       )
     }): <div className={theme?styles["no-notifications-dark"]:styles["no-notifications"]}>
        <h1> No Notifications yet</h1>
        </div> }
+    </div>
       </div>: <Loading />}
     </>
   )

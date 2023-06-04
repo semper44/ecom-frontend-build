@@ -5,10 +5,12 @@ function ShowSidebar(props) {
     const [sidebar, setSidebar] = useState(false);
     const showSidebar = () => setSidebar(!sidebar);
     const hideSidebar = () => setSidebar(false);
+    
+    const contextValue = { sidebar, showSidebar, hideSidebar };
 
   return (
     <>
-     <showsidebarcontext.Provider value={{sidebar:sidebar, showSidebar:showSidebar, hideSidebar:hideSidebar}}>
+     <showsidebarcontext.Provider value={contextValue}>
             {props.children}
         </showsidebarcontext.Provider>
     </>

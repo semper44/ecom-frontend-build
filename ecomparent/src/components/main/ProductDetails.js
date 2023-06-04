@@ -11,23 +11,40 @@ import { ThemeData } from '../../App';
 import useFetchProductDetails from '../../usequery/useFetchProductDetails';
 import ShareOutlinedIcon from  '@mui/icons-material/ShareOutlined';
 import SocialMediaShare from '../extra comp/social/SocialMediaShares';
-
+import { cartContxt } from '../../stores/CartContxt';
 
 
 
 function ProductDetails() {
     const[share, setShare]=useState(false)
     const {id}= useParams()
-    let url= `https://talus.serveo.net/product/listproductdetails/${id}/`
-    let urls2= "https://talus.serveo.net/product/allproducts/electronics/"
+
+    useEffect(()=>{document.title="Product Details"
+    },[])
+
+    let url= `http://127.0.0.1:8000/product/listproductdetails/${id}/`
+    let urls2= "http://127.0.0.1:8000/product/allproducts/electronics/"
   const{data, error, productDetails, loading}=useFetchProductDetails(url, urls2)
-  console.log(data)
-  console.log(error)
-  console.log(loading)
+  const{addItemsToCart}=useContext(cartContxt)
+
+  
+  
   // const[localdata, setLocaldata]= useState( parseddataLocalStorage?.data)
 //   const {addItemsToCart, removeItemsFromCart}=useContext(cartContxt)
-  const convertedId= Number(id)
   
+function clickToAdd(item){
+  addItemsToCart({
+    id:item.id,
+    category:item.category,
+    image:item.image,
+    price:item.price,
+    // totalPrice:item.totalPrice,
+    // seller:"semper",
+    qty:0,
+    
+    })
+    // addItemsToCart.seeSetDisplay(false)
+}
   function toggleShare(){
     setShare((prev)=> !prev)
   }
@@ -49,7 +66,7 @@ function ProductDetails() {
                     <h1>{item.category}</h1>
                     <p>{item.description}</p>
                     <h2>N{item.price}</h2>
-                    <h3> ADD TO CART </h3>
+                    <h3 onClick={clickToAdd}> ADD TO CART </h3>
                     </div>
                 </div>)
                 })}     

@@ -42,7 +42,7 @@ function AdminCreate(props) {
       setPreviewImage(window.URL.createObjectURL(e.target.files[0]))
 
     } 
-    console.log(imageState.image[0])
+    
     
     const URL="http://127.0.0.1:8000/product/create/"
     const config= {headers:{
@@ -64,9 +64,9 @@ function AdminCreate(props) {
           }
         })
           .catch(error=>{
-            console.log(error)
+            
           })
-      // console.log(res.status )
+      // 
     }
 
     useEffect(()=>{

@@ -5,7 +5,7 @@
 //     const [data, setdata]=useState(null)
 //     const [isLoading, setIsLoading]=useState(true)  
 //     const {isLoadingContextVal, isLoadingContextFunc}= useContext(isLoadingContext)
-//     console.log(isLoadingContextVal)
+//     
 
     
 //     useEffect(()=>{

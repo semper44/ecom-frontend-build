@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { ProSidebarProvider } from "react-pro-sidebar";
 
 // const theme= window.localStorage.getItem("themes")
 // let body= document.body
-// console.log(body)
+// 
 // let theme= false
 // const toggleTheme= ()=>{
 //   theme= !theme;
@@ -21,7 +20,7 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-// console.log(body);
+// ;
 root.render(
   <React.StrictMode>
         <App />

@@ -45,10 +45,22 @@
     background-color: white;
     color: cyan;
     border-radius: 10px;
-    height: fit-content;
-    width: fit-content;
-    padding:2% 5% 5% 5%;
+    height: 70px;
+    width: 300px;
+    /* padding:2% 5% 5% 5%; */
     
+}
+.cancelfirst{
+    float: right;
+    background-color: red;
+    color:black;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+
+#nothing{
+    text-align: center;
+    margin-top: 9%;
 }
 .nothing-in-cart-dark{
     background-color: gainsboro;

@@ -52,15 +52,19 @@ function Ratings(props) {
     createReview()
   }
 
+  const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
+
   let requestOptions = {
     method: 'POST',
     body: formData,
+    headers: {
+      'Authorization': 'Bearer '+ token?.access
+      },
     redirect: 'follow'
   };
   const createReview= async ()=>{
-    let response=await fetch('http://127.0.0.1:8000/profile/createreview',requestOptions
+    await fetch('http://127.0.0.1:8000/profile/createreview/',requestOptions
     )   
-    console.log(response)
   }
 
 

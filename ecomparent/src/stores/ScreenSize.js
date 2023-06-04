@@ -20,7 +20,7 @@ function ScreenSize(props) {
 
 
     }
-    else if(screenWidth>810 && screenWidth<=1023 ){
+    if(screenWidth>810 && screenWidth<=1023 ){
       setgridlg(true)
       setGridxl(false)
       setdontDisplay(undefined)
@@ -30,7 +30,7 @@ function ScreenSize(props) {
 
 
     }
-    else if(screenWidth>1023 && screenWidth<=1223 ){
+      if(screenWidth>1023 && screenWidth<=1223 ){
       setgridlg(true)
       setGridxl(false)
       setdontDisplay(undefined)
@@ -40,7 +40,7 @@ function ScreenSize(props) {
 
 
     }
-    else if(screenWidth>1223 && screenWidth<=1505 ){
+     if(screenWidth>1223 && screenWidth<=1505 ){
       setgridlg(true)
       setGridxl(false)
       setdontDisplay(undefined)
@@ -50,7 +50,7 @@ function ScreenSize(props) {
 
 
     }
-    else if(screenWidth>1620){
+     if(screenWidth>1620){
       setGridbxlxl(true)
 
     }
@@ -90,7 +90,8 @@ function ScreenSize(props) {
           gridlg:gridlg, 
           gridxl:gridxl, 
           gridxlxl:gridxlxl,
-          gridbxlxl:gridbxlxl
+          gridbxlxl:gridbxlxl,
+          screenWidth:screenWidth
           }}>
             {props.children}
         </screensizecontext.Provider>

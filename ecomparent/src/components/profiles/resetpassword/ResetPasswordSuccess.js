@@ -18,7 +18,7 @@ function ResetPasswordSuccess({status, setshow, type, error}) {
       }
     }, [error])
 
-  console.log(passwordReset, passwordSent)
+  
 
   const navigate= useNavigate()
 
@@ -29,10 +29,11 @@ function ResetPasswordSuccess({status, setshow, type, error}) {
       }
     }
 
-    console.log(error)
+  useEffect(()=>{document.title="Reset Password"
+  },[])
   return (
     <>
-    <Modals>
+    <Modals click={ok}>
         <div className={styles.parent}>
             <div className={styles.container}>
                 <p id={status?styles["reset-password-message-success"]:styles["reset-password-message-error"]}>

@@ -12,7 +12,7 @@ import { ThemeData } from '../../../App';
 function Section() {
   const {theme}= useContext(ThemeData)
   const screenWidth= useRef(window.innerWidth)
-  console.log(screenWidth.current);
+  ;
 
   
 

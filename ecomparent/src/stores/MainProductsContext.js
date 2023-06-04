@@ -1,22 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, memo ,useMemo} from 'react'
 import { mainproductContext } from './CartContxt'
 
 
-function MainProductsContext(props) {
-    const[revieweData, setrevieweData]=useState()    
+const MainProductsContext=(props)=> {
     const[featuredData, setfeatureData]=useState()    
     const[loading, setLoading]=useState(true)    
     const[error, setError]=useState(null)    
     
   
     useEffect(()=>{
-      Promise.all([
-        fetch("https://cras.serveo.net/product/allproducts/electronics/"),
-        fetch("https://cras.serveo.net/product/allproducts/electronics/"),
+       Promise.all([
+        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch("http://127.0.0.1:8000/product/allproducts/electronics/"),
+        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch("http://127.0.0.1:8000/product/allproducts/electronics/"),
        
       ])
       .then(([resfeatured, resReviewed])=>{
-  console.log(resfeatured.status, resReviewed.status)
+      
   
         if(!resfeatured.ok || !resReviewed.ok){
           throw Error("Couldn't fetch data, please retry")
@@ -26,41 +25,36 @@ function MainProductsContext(props) {
       }
       return Promise.all([resfeatured.json(), resReviewed.json()])})
       .then(([datafeatured, dataReviewed])=>{
-        console.log(datafeatured)
-        console.log(dataReviewed)
+        
+        
         if(datafeatured ){
           setfeatureData(datafeatured)
-
-          // setrevieweData(dataReviewed)
         }
-        // if(dataReviewed && dataReviewed){
-        //   setfeatureData(datafeatured)
-        //   setrevieweData(dataReviewed)
-        // }
         })
         .catch(err=>{
           setLoading(false)
           setError(err.message)
-      })  
-      
-        
-       },  [])
+      })   
+    },  [])
 
-       console.log(featuredData)
-       console.log(revieweData)
+       const memoizedValue = useMemo(
+        () => ({
+          featureData: featuredData,
+          loading: loading,
+          error: error,
+        }),
+        [featuredData, loading, error]
+      );
+
+       
 
   return (
     <>
-    <mainproductContext.Provider value={{
-        reviewedata:revieweData, 
-        featuredata:featuredData,
-        loading:loading,
-        error:error
-        }} >
+    <mainproductContext.Provider value={memoizedValue}>
           {props.children}
     </mainproductContext.Provider >
     </>
   )
 }
 
-export default MainProductsContext
+export default memo(MainProductsContext)

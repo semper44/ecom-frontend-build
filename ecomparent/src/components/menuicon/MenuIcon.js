@@ -50,7 +50,7 @@ function MenuIcon({showSidebar, notif}) {
       let arr2=[]
       // let arr3=[]
       cartCount.items.map((item)=>{
-      // console.log(item)
+      // 
       // let ids={qty: item.qty}
       arr.push(item.qty)
       arr2.push(item.id)
@@ -71,7 +71,7 @@ function MenuIcon({showSidebar, notif}) {
         redirect: 'follow'
       };
     const res= await fetch('http://127.0.0.1:8000/product/addtocart/', requestOptions)
-      console.log(res.ok)  
+        
       if(res.ok){
         window.localStorage.removeItem("MY_CARTSTATE")
         userdetails?.logout();
@@ -94,9 +94,9 @@ function MenuIcon({showSidebar, notif}) {
       })
     }
   }
-  console.log("user")
-  console.log(user)
-  console.log(userdetails)
+  
+  
+  
 
   
   return (
@@ -111,7 +111,7 @@ function MenuIcon({showSidebar, notif}) {
             width="160px"
             height="160px"
             src={R}
-            style={{ cursor: "pointer", borderRadius: "50%", marginTop:"2rem" }}/>
+            style={{ cursor: "pointer", borderRadius: "50%",  }}/>
           <div className={styles["prof-others"]}>
             <Switch onClick={toggleAndCloseSidebar} />
             <h3 id={theme?styles["username-dark"]:styles.username}>{ userDetail?.username} </h3>

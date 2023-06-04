@@ -16,7 +16,7 @@ export function PieChart() {
   const{ MostBoughtCategory}  =useContext(adminOverview)
   
   let mostbought=undefined
-  console.log(MostBoughtCategory)
+  
   if(MostBoughtCategory){
     mostbought = {
       labels: ["electronics","computing","home & office","fashion","baby product","game",],

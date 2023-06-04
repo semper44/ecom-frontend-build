@@ -1,9 +1,9 @@
-import React, {useEffect, useContext} from 'react'
+import React, {useEffect, useContext, memo} from 'react'
 import styles from "./main.module.css"
 import { ThemeData } from '../../App'
 import pexels from "../../ecom_images/pexels1.jpeg"
 import  Section from "../extra comp/section/Section"
-import CategoriesProp from '../categories/CategoriesProps'
+import Categories from '../categories/Categories'
 import{Link} from "react-router-dom"
 // import ProductsFromCategories from "./ProductsFromCategories"
 import { showsidebarcontext } from '../../stores/CartContxt'
@@ -26,18 +26,14 @@ function Main() {
   const {dontdisplay}= useContext(screensizecontext)
   // const {promoloading}= useContext(promoData)
   const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
-  const {featuredata,loading, error}= useContext(mainproductContext)
-
+  const {featureData,loading, error}= useContext(mainproductContext)
+  ;
 
 
   useEffect(()=>{document.title="Home"}, [])
   
  
 
-  const datas={
-    categories:"Shoes",
-    price:`$${4}`
-  }
   function open(){
     if(sidebar){
       hideSidebar()
@@ -49,21 +45,21 @@ function Main() {
     }, [])
   return (
     <>
+    {!loading?
+    <>
     {error && <h1 id={styles.errors}>{error}</h1> }
-    {(!loading && featuredata)?<div className="parent" onClick={open}>
-      <div className={theme?styles['main-space-dark']:styles['main-space']}></div>
+    {featureData &&<div className={styles.parent} onClick={open}>
       {/* <div className={styles['main-pics']}></div> */}
       <div className={styles["image-slide"]}>
         <Images />
-
       </div>
       <div className={styles['pre-link-text']} id={theme?styles.id:styles.light}>
         <h1>Catego<span>ries</span></h1>
       </div>
 
       <div className={styles['category-props']}>
-        <CategoriesProp img={pexels} category={datas.categories} price={datas.price}/> 
-        <CategoriesProp img={pexels} category={datas.categories} price={datas.price}/> 
+        <Categories img={pexels} category={"Electronics"}/> 
+        <Categories img={pexels} category={"Featured"}/> 
         {/* <CategoriesProp img={pexels} category={data.categories} price={data.price}/> 
         <CategoriesProp img={pexels} category={data.categories} price={data.price}/>  */}
       </div>
@@ -106,9 +102,9 @@ function Main() {
           </div>   
         </Link>
       </div>
-    </div>: <Loading />}
+    </div>}</>: <Loading />}
     </>
   )
 }
 
-export default Main
+export default memo(Main)

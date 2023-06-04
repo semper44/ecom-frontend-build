@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense, memo } from "react";
 import "./App.css";
 // import SocialMediaShare from "./components/extra comp/social/SocialMediaShares";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -6,7 +6,6 @@ import CartContainer from "./components/carts/CartContainer";
 import SearchModal from "./components/searchmodal/SearchModal";
 import CartProviders from "./stores/CartProviders";
 import GeneralProviders from "./stores/GeneralProviders";
-import AdminOverviewFetch from "./stores/AdminOverviewFetch";
 import ScreenSize from "./stores/ScreenSize";
 import MainProductsContext from "./stores/MainProductsContext";
 import ShowSidebar from "./stores/ShowSidebar";
@@ -21,9 +20,8 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import NotFound from "./components/extra comp/NotFound";
 import PageLayout from "./pagelayouts/PageLayout";
 import Body from "./pagelayouts/Body";
-import axios from "axios";
 // import AdminTry from "./components/admin/AdminTry";
-import Delete from "./components/admin/Delete";
+import Delete from "./components/admin/DeleteComp";
 // import Login from "./components/profiles/login/Login";
 // import EditDetails from "./components/admin/EditDetails";
 // import ImageLists from "./images/ImageList";
@@ -49,7 +47,11 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 // import Orders from "./components/profiles/Orders";
 // import DashBoard from "./components/admin/DashBoard";
 // import Users from "./components/admin/Users";
+// import  from "./components/profiles/resetpassword/ResetPassword";
+// import AllSellers from "";
 
+const AllSellers = lazy(() => import("./components/extra comp/Allsellers"));
+const ResetPassword = lazy(() => import("./components/profiles/resetpassword/ResetPassword"));
 const CategoriesProps = lazy(() => import("./components/categories/CategoriesProps"));
 const DashBoard = lazy(() => import("./components/admin/DashBoard"));
 const Users = lazy(() => import("./components/admin/Users"));
@@ -67,6 +69,9 @@ const AllProductNotification = lazy(() => import("./components/profiles/generaln
 // const FeaturedDetails = lazy(() =>
 //   import("./components/featured/FeaturedDetails")
 // );
+// import AdminOverviewFetch from "./stores/AdminOverviewFetch";
+
+const AdminOverviewFetch = lazy(() => import("./stores/AdminOverviewFetch"));
 const Register = lazy(() => import("./components/profiles/register/Register"));
 const AllProduct = lazy(() => import("./components/admin/AllProduct"));
 const ProductDetails = lazy(() => import("./components/main/ProductDetails"));
@@ -111,11 +116,10 @@ let themeState;
   let body= document.body
 
   if(check === undefined || check==="false" || check === null){
-    console.log(check)
+    
     themeState=false
     body.setAttribute("id", "light")
   }else if(check==="true"){
-    console.log("typeof(check)")
     themeState=true
     body.setAttribute("id", "dark")
 
@@ -135,21 +139,21 @@ function App() {
   // const theme= useRef(themeState);
 
   
-  console.log(theme)
-  console.log(typeof(theme))
+  
 
 
-  // console.log(window.location.href.includes("http://localhost:3000/profile/"))
-  // console.log("profile/")
+
+  // )
+  // 
   // useEffect(()=>{
   //   let beating;
   //   if(window.location.href.includes("http://localhost:3000/profile/") && document.hidden===false){
   //   beating= setInterval(()=>{
-  //     console.log("runheartbeat")
+  //     
   //     socket?.emit("heartbeat", {data:"a"})  
   //   }, 1000)
   // }else if(!window.location.href.includes("http://localhost:3000/profile/") && document.hidden!==false){
-  //   console.log("heartbeat")
+  //   
   //   setTimeout(()=>clearInterval(beating), 1500)
 
   // }  
@@ -201,24 +205,9 @@ function App() {
   //   window.localStorage.setItem("data", JSON.stringify(datas));
   // }
 
-  useEffect(() => {
-    getUserIp();
-  }, []);
-
-  const getUserIp = async () => {
-    const ipGet = await axios.get("https://ipapi.co/json");
-    if (!ipState.ip.includes(ipGet.data.ip)) {
-      setIpState({
-        ...ipState,
-        country: ipGet.data.country_name,
-        ip: ipGet.data.ip,
-      });
-    }
-  };
-
   // useEffect(()=>{
   //     const ipSend= axios.post('http://127.0.0.1:8000/admindetails/', ipState);
-  //     console.log(ipSend)
+  //     
   // }, [ipState])
 
 //   arr=["me", "you"]
@@ -298,23 +287,26 @@ function App() {
                                                     />
                                                   }
                                                 >
-                                                  <Route path="/" element={<Main />} />
+                                                  {/* <Route path="/" element={<Main />} /> */}
                                                   <Route path="/categories" element={<CategoriesProps />} />
                                                   {/* <Route path="/featured" element={<Featured />} /> */}
                                                   <Route path="/featured" element={<ProductsFromCategories 
                                                   url={urls2} />} />
+                                                  <Route path="/allsellers" element={<AllSellers />} />
                                                   <Route path="/promodeals" element={<ProductsFromCategories 
+                                                  url={urls2} />} />
+                                                  <Route path="/" element={<Main 
                                                   url={urls2} />} />
                                                   <Route path="/electronics" element={<ProductsFromCategories 
                                                   url={urls2} />} />
-                                                  <Route path="/categories" element={<ProductsFromCategories 
-                                                  url={urls2} />} />
+                                                  {/* <Route path="/categories" element={<ProductsFromCategories 
+                                                  url={urls2} />} /> */}
                                                   <Route path="/productdetails/:id/" element={<ProductDetails/>} />
                                                   <Route path="/confirmandupdateorder/:cart_id/" element={<ConfirmAndUpdateOrder />} />
 
                               
                                                   {/* <Route path="/Products" element={<SellersProduct />} /> */}
-                                                  <Route path="/profile/:id/">
+                                                  <Route path="/profile/:username/">
                                                     <Route index element={<UserProfile socket={socket} />} /> 
                                                     <Route path="followernotifications" element={<AllFollowingNotification />}/>
                                                     <Route path="productnotifications" element={<AllProductNotification />}/>
@@ -340,6 +332,7 @@ function App() {
                                                 </Route>
                                                 <Route path="/register" element={<Register />} />
                                                 <Route path="/login" element={<Login />} />
+                                                <Route path="/resetpassword" element={<ResetPassword />} />
                                                 <Route path="admin/products/fullpage" element={<AllProduct />} />
                                                 <Route path="admin/users/fullpage" element={<Users />} /> 
                                                 {/* <Route path="/cartretrieve" element={<CartRetrive socket={socket}/>} /> */}
@@ -370,4 +363,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

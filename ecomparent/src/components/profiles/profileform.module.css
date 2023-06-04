@@ -2,36 +2,25 @@
     background-color: white;
     width: fit-content;
     height: fit-content;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-55%, -50%);
     border-radius: 10px;
 }
 .form-holder-dark{
     background-color: gainsboro;
     width: fit-content;
     height: fit-content;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-55%, -50%);
     border-radius: 10px;
 }
 .theme-dark{
     background-color:rgb(249, 249, 249, 0.7);
     width: fit-content;
     height: fit-content;
-    position: absolute;
-    top: 40%;
-    left: 37%;
-    transform: translate(-50%, -60%);
     border-radius: 10px;
 }
 .input {
     display: grid;
     gap: 3rem;
     justify-items: center;
+    margin-top: 2.5rem;
 
     
     /* border-radius: 10px; */
@@ -42,7 +31,7 @@
     padding: 5px 10px;
     cursor: pointer;
     width: 30px;
-    margin-left: 89.3%;
+    float: right;
 }
 .input input{
     background: 0;
@@ -75,4 +64,28 @@ input::placeholder{
 }
 .cancel:hover{
     opacity: 0.4;
+}
+@media(max-width:500px){
+    .form-holder{
+        background-color: white;
+        width: 50%;
+        height: fit-content;
+        border-radius: 10px;
+    }
+    .form-holder-dark{
+        background-color: gainsboro;
+        width: 70%;
+        height: fit-content;
+        border-radius: 10px;
+    }
+    .input input{
+        background: 0;
+        /* margin-top: 3.2rem; */
+        border: none;
+        outline: none;
+        border-bottom: 1px solid black;
+        width: 200px;
+        margin: 0 2rem;
+    
+    }
 }

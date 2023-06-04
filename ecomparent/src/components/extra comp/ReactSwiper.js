@@ -12,9 +12,9 @@ register();
 
 export const Slider = () => {
   const {theme}= useContext(ThemeData)
-  const {featuredata}= useContext(mainproductContext)
+  const {featureData}= useContext(mainproductContext)
 
-  console.log(featuredata)
+  
     // const {data, loading, error}= useFetch(url)
 
   // const[share, setShare]=useState(false)
@@ -47,7 +47,7 @@ export const Slider = () => {
   return (
     <div className="swiper-container" style={{ display: 'flex', overflow: 'hidden' }}>
       <div className="swiper-wrapper">
-      {(featuredata.slice(0, 5)).map((slide) => (
+      {featureData&&(featureData.slice(0, 5)).map((slide) => (
         <div key={slide.image} className="swiper-slide" style={{ width: '80%', height: '80%', maxWidth: '300px', }}>
            <Link to={""}>
           <div className={styles["related-products-pics"]}>

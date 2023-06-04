@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo, memo } from 'react'
 import { adminOverview } from './CartContxt'
 
 function AdminOverviewFetch(props) {
@@ -22,10 +22,10 @@ function AdminOverviewFetch(props) {
           }
       };
       Promise.all([
-        fetch(" https://cras.serveo.net/product/mostboughtcategory/", requestOptions),
-        fetch(" https://cras.serveo.net/product/monthlyorders/", requestOptions),
-        fetch(" https://cras.serveo.net/profile/monthlyusers/", requestOptions),
-        fetch(" https://cras.serveo.net/profile/totalusers/", requestOptions),
+        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/product/mostboughtcategory/", requestOptions),
+        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/product/monthlyorders/", requestOptions),
+        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/profile/monthlyusers/", requestOptions),
+        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/profile/totalusers/", requestOptions),
       ])
       .then(([resMostBoughtCategory, resMonthlyOrders, resMonthlyUsers, resTotalUsers])=>
         Promise.all([resMostBoughtCategory.json(), resMonthlyOrders.json(), resMonthlyUsers.json(), resTotalUsers.json()]))
@@ -36,13 +36,16 @@ function AdminOverviewFetch(props) {
         SetMostBoughtCategory(dataCategory)
       })}, [token?.access])
 
+      const adminData=useMemo(
+        () => ({MostBoughtCategory:MostBoughtCategory, 
+          TotalUsers:TotalUsers, MonthlyUsers:MonthlyUsers, Orders:Orders}))
   return (
     <adminOverview.Provider 
-    value={{MostBoughtCategory:MostBoughtCategory, TotalUsers:TotalUsers, MonthlyUsers:MonthlyUsers, Orders:Orders}}>
+    value={adminData}>
     {props.children}
     </adminOverview.Provider>
   )
     
 }
 
-export default AdminOverviewFetch
+export default memo(AdminOverviewFetch)

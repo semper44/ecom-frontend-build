@@ -45,7 +45,7 @@ export const fetchData =(url, method)=>{
     let error=null
     let data;
     let stat
-    console.log("tired")
+    
        const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
         fetch(url,
         {method:method,
@@ -60,7 +60,7 @@ export const fetchData =(url, method)=>{
             }
             if (response.status===200){
                 loading=false
-                console.log("po")
+                
                 window.location.reload()
             }
             return response.json()

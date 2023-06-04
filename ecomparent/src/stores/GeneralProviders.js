@@ -3,7 +3,7 @@ import {adminDataContext} from "./CartContxt"
 
 const Addata= JSON.parse(window.localStorage.getItem("ADMIN"))|| ""
 const{featured, category, promoDeals, users}= Addata
-console.log(Addata)
+
 let csFeatured= featured||0;
 let cscategory= category||0;
 let cspromoDeals= promoDeals||0;

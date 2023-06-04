@@ -1,11 +1,11 @@
-import React, {useEffect, useState, useContext}from 'react'
+import React, {useEffect, useContext}from 'react'
 import {useReducer} from 'react'
-import {Link} from "react-router-dom"
+import { useNavigate } from 'react-router-dom'
 import {AuthContext} from "../login/LoginFetch"
 import Message from '../../extra comp/Message'
 import { ThemeData } from '../../../App'
-import styles from "../login/login.module.css"
-
+import styles from "./register.module.css"
+import register from "../../../ecom_images/register.jpg"
 
 
 const initialState={
@@ -26,31 +26,32 @@ function validate(state){
   state.checkbox
 }
 
+
+
 function Register() {
   
   useEffect(()=>{document.title="Register"
 },[])
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [validState, setValidState] = useState(false)
   let sendData= useContext(AuthContext)
   let {theme}= useContext(ThemeData)
+  const navigate= useNavigate()
   const{message, status, code}=sendData.message
   const interval=sendData.interval
   const intervalFn=sendData.intervalFn
-  console.log(intervalFn, interval)
-  console.log(sendData.loginUser)
+  
+  
 
 
   useEffect(()=>{
     const interval=setInterval(()=>{
-      console.log("hyr")
+      
       intervalFn(false)
-      console.log("hy")
+      
     }, 5000)      
     setTimeout(()=>clearInterval(interval), 6000)
   }, [interval, intervalFn])
 
-  // console.log(sendData)
     
   function Change(e){
     const {name, value, checked}=e.target
@@ -60,15 +61,39 @@ function Register() {
     }
     dispatch(action)
   }
+
+  ;
+
+  let loginUser= (e)=>{
+    e.preventDefault();
+    let fetchRequestOptions={
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+    
+    body:JSON.stringify({ username: state.username, password: state.password1, password2: state.password2 })
+    };
+      fetch( "http://127.0.0.1:8000/profile/register/", fetchRequestOptions)
+      .then((res)=>{
+          if(res.ok){
+            navigate("/login")
+          }
+        })
+  }
+
   return (
       <>
       {(interval && status) &&<Message value={message} code={code}/>}
-      <div className={theme?styles["background-dark"]:styles.background}>
-        <div className={styles["login-container"]}>
+      <div className={theme?styles["register-background-dark"]:styles.registerbackground}>
+        <div className={styles["register-image"]}>
+          <img src={register} alt="" />
+        </div>
+        <div className={styles["login-container-register"]}>
           <div className={styles.login}>
-              <h1>Login</h1>
+              <h1>Register</h1>
           </div>
-          <form onSubmit={sendData?.loginUser}>
+          <form >
             <div className={styles.box}>
               <input type="text" 
               className="input-username" 
@@ -99,20 +124,11 @@ function Register() {
             </label>
             <div className={styles["login-button"]}> 
               <button 
-              // onClick={()=>console.log("op")}
+              onClick={loginUser}
               disabled={!validate(state)}
               id={validate(state)?styles['login-button']:styles['login-button-disabled']} >Register</button>
             </div>
           </form>
-          <div className={styles["login-text"]}>
-            <p>Not yet a member? 
-              <span>
-                <Link to="/register">
-                  Register
-                </Link>
-              </span>
-            </p>
-        </div>  
         </div>
       </div>
       </>

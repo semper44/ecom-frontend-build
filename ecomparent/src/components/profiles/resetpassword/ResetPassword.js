@@ -1,28 +1,28 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect, useContext} from 'react'
 import styles from "./resetpassword.module.css"
 import ResetPasswordSuccess from './ResetPasswordSuccess'
+import { ThemeData } from '../../../App'
 
 function ResetPassword() {
     const[email, setEmail]= useState({email:""})
     const[showResetPasswordMsg, setShowResetPasswordMsg]= useState(false)
     const[status, setStatus]= useState(false)
     const[error, setError]= useState(null)
+    const{theme}=useContext(ThemeData)
     
+  useEffect(()=>{document.title="Confirm Order"
+  },[])
 
     function change(e){
       setEmail({[e.target.name]:e.target.value})
     }
 
     let formdata= new FormData()
-    const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
     let fetchrequest= async()=>{
-        console.log(email)
+        
         formdata.append("email", email.email)
         const requestOptions = {
           method: 'POST',
-          headers:{
-            'Authorization': 'Bearer '+ token?.access
-            },
           body: formdata,
           // redirect: 'follow'
         };
@@ -36,11 +36,11 @@ function ResetPassword() {
           setStatus(false)
           setShowResetPasswordMsg(true)
           setError("Couldn't fetch data, please retry")
-          console.log("error")
+          
 
         }
-        let res= await data.json()
-        console.log(res)
+      await data.json()
+        
     }
    
     function submit(e){    
@@ -54,7 +54,7 @@ function ResetPassword() {
     type={"passwordsent"}
     error={error}
     />}
-    <div className={styles["change-password-parent"]}>
+    <div className={theme?styles["change-password-parent-dark"]:styles["change-password-parent"]}>
         <h1>Reset your Password</h1>
         <p>Enter your email address below, and we'll email instructions for setting a new one.</p>
         <div className={styles.inputparent}>
@@ -67,8 +67,8 @@ function ResetPassword() {
               />
           </div>
         </div>
-        <div className={styles["login-button"]}>
-          <h1 onClick={submit} id={styles.resetbutton}>Reset Password</h1>
+        <div className={theme?styles["login-button-dark"]:styles["login-button"]}>
+          <p onClick={submit} id={styles.resetbutton}>Reset Password</p>
         </div>
     </div>
     </>

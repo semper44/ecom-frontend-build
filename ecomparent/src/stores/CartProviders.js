@@ -18,11 +18,11 @@ if(typeof(data) === "undefined" || data === null){
     localItemData=item
     cartS=cartSize
     cartId=cartIds
-    console.log(item, cartS)
+    
   
 }
-console.log(cartS)
-console.log(localItemData)
+
+
 
 const inistialState={
     cartSize:cartS,
@@ -33,11 +33,11 @@ const inistialState={
 }
 
 function reduce(state, action){
-  console.log(state)
-  console.log(action.type)
+  
+  
   if(action.type==="ADD"){
-    console.log(state)
-    console.log(state.cartSize)
+    
+    
     let existingCartItemIndex;
     let existingCartItem;
     let sizeofcart;
@@ -48,7 +48,7 @@ function reduce(state, action){
     }
     if(existingCartItem){
       const updatedItem={...existingCartItem, qty:existingCartItem?.qty+1}
-      // console.log(itemQty)
+      // 
       updatedItems=[...state.items]
       updatedItems[existingCartItemIndex]=updatedItem;
       sizeofcart=state.cartSize++
@@ -68,25 +68,25 @@ function reduce(state, action){
     
   }
 
-  console.log(state)
+  
   if(action.type==="REMOVE"){
     let updatedItems;
     let sizeofcart;
     let existingCartItemIndex;
     let existingCartItem;
-    // console.log(action.id.id)
+    // 
 
     if(state.items.length>=1){
       existingCartItemIndex= state.items.findIndex((item)=>item.id===action.id.id)
       existingCartItem= state.items[existingCartItemIndex]
-      console.log(existingCartItem?.qty)
+      
 
 
       if(existingCartItem?.qty<=1){
         updatedItems= state.items.filter((item)=>item.id !== action.id.id)
-        console.log(existingCartItem?.qty)
+        
         sizeofcart=state.cartSize-existingCartItem?.qty
-        console.log(state.cartSize)
+        
         }
       else if(existingCartItem?.qty>1){
         const updatedItem={...existingCartItem, qty:existingCartItem?.qty-1}
@@ -97,7 +97,7 @@ function reduce(state, action){
       else{
         updatedItems=[...state.items]
         sizeofcart=state.cartSize
-        console.log(existingCartItem?.qty)
+        
   
       }
       return{
@@ -117,7 +117,7 @@ function reduce(state, action){
     const existingCartItemIndex= state?.items.findIndex((item)=>item.id===action.id.id)
     const existingCartItem= state?.items[existingCartItemIndex]
     const existingCartItemQty= existingCartItem.qty
-    console.log(existingCartItemQty)
+    
     const updatedItems= state?.items.filter((item)=>item.id !== action.id.id)
     const sizeofcart=state?.cartSize-existingCartItemQty    
     return{
@@ -147,7 +147,7 @@ function CartProviders(props) {
   const [cartState, dispatch]=useReducer(reduce,inistialState)
   
 
-  console.log(cartState)
+  
 
   useEffect(()=>{
     if(cartState.cartSize>=1){
