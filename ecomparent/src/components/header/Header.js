@@ -65,9 +65,9 @@ function Header(props) {
       {sidebar  &&<MenuIcon showSidebar={showSidebar}/>}
       </Box>
 
-      <Box sx={{width:"100%",display:"flex",  padding:"3rem 0 0 15px", paddingLeft:"5.5%",justifyContent:!gridlg?"space-between":"end",paddingRight:"5%",   }} >
-       {!gridlg &&<MenuOutlinedIcon fontSize='large' notif={props.headernotif} onClick={showSidebar} sx={{color:theme ? "cyan":"black", cursor:"pointer", opacity:sidebar&&"0"}} />}
-       {gridlg &&<img src={logo} alt="" style={{height:"100px", position:"absolute", left:"3%", top:"14%"}}/>}
+      <Box sx={{width:"100%",display:"flex",  padding:"3rem 0 0 15px", paddingLeft:"5.5%",justifyContent:"space-between",paddingRight:"5%",   }} >
+       <MenuOutlinedIcon fontSize='large' notif={props.headernotif} onClick={showSidebar} sx={{color:theme ? "cyan":"black", cursor:"pointer", opacity:sidebar&&"0"}} />
+       {/* {gridlg &&<img src={logo} alt="" style={{height:"100px", position:"absolute", left:"3%", top:"14%"}}/>} */}
         <Box >
           <HeaderContainer onShow={props.onCart} onReveal={props.onSearch} notif={props.headernotif}/>
         </Box>

@@ -17,7 +17,7 @@ function AllProductNotification() {
     const logIn= useContext(AuthContext)
     // const { productNotifications, productNotificationsFn}= useContext(generalNotification)
     const { profileNotification, setProfileNotifications}= useContext(profileContext)
-    const { ProductnotificationData}= useContext(headerdata)
+    const [ ProductnotificationData, setProductnotificationData]= useState(null)
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
     
     const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
@@ -42,24 +42,40 @@ function AllProductNotification() {
     },[])
 
     useEffect(()=>{
-      (async()=>{
-        // navigate(`/profile/${userDetails?.user_id}/notifications`)
-        localStorage.removeItem("productNotification")
-        if(profileNotification.length>=1){
-          let res= await fetch(`http://127.0.0.1:8000/profile/productedit/${userDetails.user_id}/`, {
-            method: 'PATCH',
-            headers: {
-              "Content-Type": "application/json",
-              'Authorization': 'Bearer '+ token?.access
-              },      
-             }
-              )
-          let response= await res.json()
-          console.log(response);
+      let productEditOption={
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer '+ token?.access
+          }
+      }
+      let ProductNotificationRequestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization': 'Bearer '+ token?.access
+          }
+  };
+      Promise.all([
+        fetch(`http://127.0.0.1:8000/profile/productedit/${userDetails.user_id}/`,productEditOption),
+        fetch('http://127.0.0.1:8000/profile/getproductnotifications/', ProductNotificationRequestOptions)
+      ])
+      .then(([productEdit, ProductNotifData])=>{
+        if(productEdit.ok){
+          localStorage.removeItem("productNotification")
+          setProfileNotifications([]);  
         }
-        setProfileNotifications([]);    
-      })() 
-    }, [profileNotification.length, setProfileNotifications, token?.access, userDetails.user_id])
+
+        return Promise.all([productEdit.json(), ProductNotifData.json()])})
+        .then(([dataProductEdit, dataProductNotification ])=>{
+            if(dataProductNotification){
+              dataProductNotification.map(()=>{
+                setProductnotificationData(dataProductNotification)
+              })
+            }
+        }) 
+    }, [profileNotification?.length, setProfileNotifications, token?.access, userDetails.user_id])
 
     
    

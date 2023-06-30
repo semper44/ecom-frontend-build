@@ -18,12 +18,17 @@ import { cartContxt } from '../../stores/CartContxt';
 import { Switch } from '@mui/material';
 import { notificationscontext } from '../../App';
 import styles from "./menuicon.module.css"
+import { screensizecontext } from '../../stores/CartContxt';
+
 
 
 
 
 function MenuIcon({showSidebar, notif}) {
   const {showNotifFn}= useContext(notificationscontext)
+  const {dontdisplay}= useContext(screensizecontext)
+
+  console.log(dontdisplay);
 
 
   const userdetails= useContext(AuthContext)
@@ -118,7 +123,7 @@ function MenuIcon({showSidebar, notif}) {
           </div>
         </div>
         <div className={styles['nav-text-parent']} onClick={showSidebar}>                  
-          {SidebarData.map((item, index) => {
+          {dontdisplay &&SidebarData.map((item, index) => {
             return (
               <li key={index} className={styles['nav-text']}>
                 <Link to={item.path}>
@@ -129,6 +134,24 @@ function MenuIcon({showSidebar, notif}) {
             );
             
           })} 
+          {!dontdisplay &&<li className={styles['nav-text']}>
+          <Link to={"/categories"}>
+              <NotificationsNoneOutlinedIcon />
+              <span>Cateories</span>
+              </Link>
+          </li>}
+          {!dontdisplay &&<li className={styles['nav-text']}>
+          <Link to={""}>
+              <NotificationsNoneOutlinedIcon />
+              <span>Vouchers</span>
+              </Link>
+          </li>}
+          {!dontdisplay &&<li className={styles['nav-text']}>
+          <Link to={"/sellers"}>
+              <NotificationsNoneOutlinedIcon />
+              <span>Sellers</span>
+              </Link>
+          </li>}
           <li className={styles['nav-text']} onClick={showNotifFn}>
           <Link to={""}>
               <NotificationsNoneOutlinedIcon />

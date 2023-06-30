@@ -41,7 +41,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-scripts build && terser --compress --mangle --output-file=build/static/js/main.js -- build/static/js/main.*.chunk.js",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },
@@ -66,6 +66,7 @@
   "devDependencies": {
     "babel-plugin-import": "^1.13.6",
     "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.2.1"
+    "react-app-rewired": "^2.2.1",
+    "terser": "^5.18.2"
   }
 }

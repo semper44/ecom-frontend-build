@@ -37,7 +37,6 @@ function ResetPassword() {
           setShowResetPasswordMsg(true)
           setError("Couldn't fetch data, please retry")
           
-
         }
       await data.json()
         

@@ -1,22 +1,29 @@
-import React, { useState, useEffect, useRef, useContext} from 'react'
+import React, { useState, useEffect, useContext} from 'react'
 import { headerdata } from './CartContxt'
+import { AuthContext } from '../components/profiles/login/LoginFetch'
+import jwt_decode from "jwt-decode";
+
 
 
 
 
 function HeaderContainerData(props) {
   const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-  const localStorageProductNotification= JSON.parse(window.localStorage.getItem("productNotification"))|| null
+  // const localStorageProductNotification= JSON.parse(window.localStorage.getItem("productNotification"))|| null
   // const localStorageFollowersNotification= JSON.parse(window.localStorage.getItem("gottenNotification"))|| null
 
     const[followingNotifications, setFollowingNotifications]=useState([])
     const[followingSideData, setFollowingSideData]=useState([])
-    const[productNotifications, setpPoductNotifications]=useState([])
     const[notificationsstore, setNotificationsstore]=useState([])
 
-    
+    const users= useContext(AuthContext)
+    let userDetails;
+    if(users.user){
+      userDetails=jwt_decode(users?.user?.access)
+    }
 
-    console.log(notificationsstore)    
+
+    
     useEffect(()=>{
       const arrayNotification=[]
       let followingrequestOptions = {
@@ -37,8 +44,6 @@ function HeaderContainerData(props) {
                 arrayNotification.push(i)
               }
             }
-            console.log(notificationsstore)
-            console.log(arrayNotification)
             setNotificationsstore(arrayNotification)
           
           }
@@ -46,32 +51,30 @@ function HeaderContainerData(props) {
       })()
     }, [followingNotifications])
 
-    useEffect(()=>{
-      let ProductNotificationRequestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-        headers:{
-          'Content-Type':'application/json',
-          'Authorization': 'Bearer '+ token?.access
-          }
-      };
-      (async()=>{
-        const response= await fetch(`http://127.0.0.1:8000/profile/getproductnotifications/`, ProductNotificationRequestOptions)
-        let res= await response.json();
-          console.group(res)
-          if(res){
-            setpPoductNotifications(res)
-          }
+    // useEffect(()=>{
+    
+    //   (async()=>{
+    //     const response= await fetch(`http://127.0.0.1:8000/profile/profdetails/${userDetails.username}/`)
+    //     let res= await response.json();
+    //           //           //       setpPoductNotifications("item.notification")
+    //       if(res){
+    //         // res.map((item)=>{
+    //         //   console.log(item.notification);
+    //         //   if(item.tags==="seller"){
+    //         //     setSeller(true)
+    //         //   }else{
+    //         //     setSeller(false)
+    //         //   }
+    //         // })
+            
+    //     }
+    //   })()
+    // }, [userDetails.username])
 
-      })()
-    }, [])
-
-    console.log(productNotifications);
         
 
   return (
     <headerdata.Provider value={{
-      ProductnotificationData:productNotifications,
       notificationData:followingSideData, 
       setdata:setFollowingSideData, 
       notificationcontext:followingNotifications, 

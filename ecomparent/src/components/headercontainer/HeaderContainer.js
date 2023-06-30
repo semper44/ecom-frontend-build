@@ -1,15 +1,12 @@
 import {React, memo, useContext, useEffect,useState} from 'react'
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { SearchOutlined } from "@mui/icons-material";
+import { CallMergeRounded, SearchOutlined } from "@mui/icons-material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
-import RedeemOutlinedIcon from '@mui/icons-material/RedeemOutlined';
-import { Switch } from '@mui/material';
+
 
 // import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 // import styles from "./headercontainer.module.css"
@@ -36,9 +33,9 @@ function HeaderContainer(props) {
   const activeContxt= useContext(isActive)
   const cartCount= useContext(cartContxt)
   const logIn= useContext(AuthContext)
-  const {setnotificationcontext, notificationcontext,ProductnotificationData, notificationsstore}= useContext(headerdata)
+  const {setnotificationcontext, notificationsstore}= useContext(headerdata)
   const {notification,showNotifFn}= useContext(notificationscontext)
-  const { profileNotification, setProfileNotifications}= useContext(profileContext)
+  const { profileNotification, setProfileNotifications, changed}= useContext(profileContext)
   const[size, setSize]= useState(null)
   const[screenWidth, setScreenWidth]= useState(window.innerWidth)
   const navigate= useNavigate()
@@ -89,6 +86,7 @@ function HeaderContainer(props) {
    }
   }, [screenWidth])
 
+    console.log(profileNotification);
 
 
   // const worker = useMemo(
@@ -223,7 +221,6 @@ function HeaderContainer(props) {
         axios.post('http://127.0.0.1:8000/profile/postnotifications/', formdata,config)
         .then(res=>{
           setnotificationcontext(prev=>[...prev, res.data])
-          console.log(res.data);
         })
       }
       notif?.once("getfollowingnotif", handleFollowingNotification);
@@ -266,16 +263,16 @@ function HeaderContainer(props) {
   }, [notificationsstore])
 
   useEffect(()=>{
-    localStorage.setItem("productNotification",JSON.stringify(ProductnotificationData))       
-  }, [ProductnotificationData])
+    localStorage.setItem("productNotification",JSON.stringify(profileNotification))       
+  }, [profileNotification])
 
-  console.log(notificationsstore)
- 
+  
 
+  const productnotification= JSON.parse(window.localStorage.getItem("productNotification"))|| null
   useEffect(()=>{
     const userfollowingnotif= JSON.parse(window.localStorage.getItem("gottenNotification"))|| null
     const productnotif= JSON.parse(window.localStorage.getItem("productNotification"))|| null
-    
+    console.log(changed);
     if (userfollowingnotif===null){
       setCount(productnotif?.length)
     }else if(productnotif===null){
@@ -284,8 +281,7 @@ function HeaderContainer(props) {
     }else if(productnotif && userfollowingnotif){
       setCount(userfollowingnotif?.length+productnotif?.length)
     }
-    console.log(userfollowingnotif);
-  },[profileNotification?.length, notificationsstore]) 
+  },[profileNotification,profileNotification.length, notificationsstore,productnotification, changed]) 
   
   
   function logout(){
@@ -300,6 +296,8 @@ function HeaderContainer(props) {
       })
     }
     window.localStorage.removeItem("gottenNotification")
+    window.localStorage.removeItem("productNotification")
+    window.localStorage.removeItem("themes")
   }
 
   async function sendCartData(){
@@ -347,42 +345,24 @@ function HeaderContainer(props) {
   return (
     <Stack direction={"row"} spacing={{xs:1.5, sm:2}} sx={{cursor:"pointer"}}>
       {/* <div className={theme?styles.id:styles.light} id={styles.headercontainer}> */}
-      <Box sx={{"& a":{mt:"3px", display:screenWidth<700?"none":"flex",color:theme?"cyan":"black",textDecoration:flag==="home"?"underline":"none"},
+      <Box onClick={()=>navigate("/")} sx={{"& a":{mt:"3px", display:screenWidth<700?"none":"flex",color:theme?"cyan":(flag==="home"&& (!cartActive.cartActivestate && !activeContxt.showSearchState && !notification))?"cyan":"black",textDecoration:flag==="home" &&(!cartActive.cartActivestate && !activeContxt.showSearchState && !notification)?"underline":"none"},
          }}>
-          <NavLink to="/">
+          <NavLink to="">
             <HomeOutlinedIcon sx={{mt:"3px"}} /> 
             <Typography sx={{mt:"5px"}}>Home</Typography>
           </NavLink>  
       </Box>
-      <Box sx={{display:screenWidth<1050&&"none", "& a":{mt:"3px",display:"flex", color:theme?"cyan":"black",textDecoration:flag==="categories"?"underline":"none"},
-         }}>
-          <NavLink to="/categories"><AddCircleOutlineOutlinedIcon sx={{mt:"3px"}}/> 
-          <Typography sx={{mt:"5px"}}>Categories</Typography>
-          </NavLink>  
-      </Box>
-      <Box sx={{display:screenWidth<1100&&"none", "& a":{mt:"3px",display:"flex", color:theme?"cyan":"black",textDecoration:flag==="sellers"?"underline":"none"},
-         }}>
-          <NavLink to="/allsellers"><GroupsOutlinedIcon sx={{mt:"3px"}}/> 
-          <Typography sx={{pl:"3px",mt:"5px"}}>Sellers</Typography>
-          </NavLink>  
-      </Box>
-      <Box sx={{display:screenWidth<1200&&"none", "& a":{mt:"3px",display:"flex", color:theme?"cyan":"black",textDecoration:flag==="voucher"?"underline":"none"},
-         }}>
-          <NavLink to=""><RedeemOutlinedIcon sx={{mt:"3px"}}/> 
-          <Typography sx={{mt:"5px"}}>Vouchers</Typography>
-          </NavLink>  
-      </Box>
       {/* className={`${theme? styles.themesearchcontainer:styles.searchcontainer} ${activeContxt.showSearchState && styles['searchcontainer-active'] */}
-        <Box sx={{display:"flex",color:theme?"cyan":"black", textDecoration:activeContxt.showSearchState?"underline":"none"}} onClick={props.onReveal}>
+        <Box sx={{display:"flex",color:theme?"cyan":activeContxt.showSearchState?"cyan":"black", textDecoration:activeContxt.showSearchState?"underline":"none"}} onClick={props.onReveal}>
           <SearchOutlined sx={{mt:"5px"}}/>
           <Typography sx={{mt:"8px"}}>Search</Typography>
         </Box>
-        <Box  onClick={profnav} sx={{display:screenWidth<800?"none":"flex",color:theme?"cyan":"black",textDecoration:flag==="profile"?"underline":"none"}}>
+        <Box  onClick={profnav} sx={{display:screenWidth<800?"none":"flex",color:theme?"cyan":(flag==="profile"&& (!cartActive.cartActivestate && !activeContxt.showSearchState && !notification))?"cyan":"black",textDecoration:(flag==="profile"&& (!cartActive.cartActivestate && !activeContxt.showSearchState && !notification))?"underline":"none"}}>
           <AccountBoxIcon sx={{mt:"5px"}}/>
           <Typography sx={{mt:"7px"}}>Profile</Typography>
         </Box>
 
-        <Box sx={{display:screenWidth<600?"none":"flex", color:theme?"cyan":"black",textDecoration:flag==="notification"?"underline":"none"}}onClick={showNotifFn}>
+        <Box sx={{display:screenWidth<600?"none":"flex", color:theme?"cyan":notification?"cyan":"black",textDecoration:notification?"underline":"none"}}onClick={showNotifFn}>
             <Box sx={{position:"relative"}}>
               <NotificationsNoneOutlinedIcon sx={{mt:"5px"}}/>
               <Typography sx={{position:"absolute",top:"-7%", left:"31%", color:"white", backgroundColor:"red", borderRadius:"50%", p:"0 3px" }} >{count>=1?count:null}</Typography>
@@ -390,10 +370,10 @@ function HeaderContainer(props) {
             <Typography sx={{mt:"8px"}}>Notifications</Typography>
         </Box>
 
-        <Box sx={{display:"flex", color:theme?"cyan":"black", }}onClick={props.onShow} >
-            <ShoppingCartOutlinedIcon sx={{mt:"5px"}}/>
-            <Typography sx={{mt:"8px", textDecoration:cartActive.cartActivestate?"underline":"none"}}>Cart</Typography>
-            <Typography sx={{mt:"5px",ml:"5px", p:"0 3px", color:"white", borderRadius:"50%", backgroundColor:"rgb(11, 214, 214)"}}>{cartCount.cartSize}</Typography>
+        <Box sx={{display:"flex", color:theme?"cyan":cartActive.cartActivestate?"cyan":"black", }}onClick={props.onShow} >
+          <ShoppingCartOutlinedIcon sx={{mt:"5px"}}/>
+          <Typography sx={{mt:"8px", textDecoration:cartActive.cartActivestate?"underline":"none"}}>Cart</Typography>
+          <Typography sx={{mt:"5px",ml:"5px", p:"0 3px", color:"white", borderRadius:"50%", backgroundColor:"rgb(11, 214, 214)"}}>{cartCount.cartSize}</Typography>
         </Box>
 
         <Box sx={{display:"flex", color:theme?"cyan":"black",}}onClick={logout}>
@@ -401,8 +381,6 @@ function HeaderContainer(props) {
           <Typography sx={{mt:"8px"}}>Logout</Typography></>:<><LoginOutlinedIcon sx={{mt:"5px"}}/><Typography sx={{pl:"3px",mt:"8px"}}>Login</Typography></>}
           
         </Box>
-        {screenWidth>810 &&<Switch onClick={toggleTheme} />}
-
     </Stack>
   )
 }

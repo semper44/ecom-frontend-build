@@ -161,8 +161,9 @@ function MyOrders() {
   },[])
   return (
     <div style={{ height: "60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>
-      {msgFn && <Message value={error} code={"error"} fn={setMsgFn}/>}
-      {!loading? (
+     {error && <h1 style={{display: "flex", justifyContent: "center", alignItems: "center", padding:" 22% 0", color: "cyan",}}>
+        {error}
+      </h1> }      {!loading? (
         <Box m="35px 0 0 0" height="60vh">
           <DataGrid
             rows={data}

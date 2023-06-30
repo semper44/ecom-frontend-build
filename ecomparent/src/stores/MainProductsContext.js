@@ -15,14 +15,12 @@ const MainProductsContext=(props)=> {
        
       ])
       .then(([resfeatured, resReviewed])=>{
-      
-  
         if(!resfeatured.ok || !resReviewed.ok){
           throw Error("Couldn't fetch data, please retry")
         };
-      if (resfeatured.status===200 && resReviewed.status===200){
-          setLoading(false)
-      }
+        if (resfeatured.status===200 && resReviewed.status===200){
+            setLoading(false)
+        }
       return Promise.all([resfeatured.json(), resReviewed.json()])})
       .then(([datafeatured, dataReviewed])=>{
         

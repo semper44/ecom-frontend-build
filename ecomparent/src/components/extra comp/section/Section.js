@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react'
+import React, {useContext} from 'react'
 import sxs from "./section.module.css"
 import {NavLink} from "react-router-dom"
 import PanToolAltOutlinedIcon from '@mui/icons-material/PanToolAltOutlined';
@@ -11,7 +11,6 @@ import { ThemeData } from '../../../App';
 
 function Section() {
   const {theme}= useContext(ThemeData)
-  const screenWidth= useRef(window.innerWidth)
   ;
 
   

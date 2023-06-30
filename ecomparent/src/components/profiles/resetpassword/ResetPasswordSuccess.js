@@ -25,7 +25,7 @@ function ResetPasswordSuccess({status, setshow, type, error}) {
     function ok(){
       setshow(false)
       if(status){
-        navigate("/")
+        navigate("/resetpassword")
       }
     }
 

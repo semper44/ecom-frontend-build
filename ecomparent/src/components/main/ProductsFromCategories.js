@@ -16,7 +16,6 @@ function ProductFromCategories({url}) {
   const {theme}= useContext(ThemeData)
 //   const {promoloading, promodata}= useContext(promoData)
   const {data, loading, error}= useFetch(url)
-  const params= useParams()
   let word= url.split("/")
   let title=word[word.length-2]
   // console.log(url);

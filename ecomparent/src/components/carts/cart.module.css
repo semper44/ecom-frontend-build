@@ -1,6 +1,6 @@
 .box{
     background-color:white;
-    width: 80%;
+    width: 40%;
     height: 73%;
     display:flex;
     gap:2%;
@@ -10,7 +10,7 @@
 }
 .box-dark{
     background-color:gainsboro;
-    width: 80%;
+    width: 40%;
     height: 73%;
     display:flex;
     gap:2%;
@@ -221,7 +221,7 @@
 @media (min-width:1100px){
     .box{
         background-color:white;
-        width: 50%;
+        width: 35%;
         height: 73%;
         display:flex;
         gap:2%;
@@ -231,13 +231,25 @@
     }
     .box-dark{
         background-color:gainsboro;
-        width: 50%;
+        width: 35%;
         height: 73%;
         display:flex;
         gap:2%;
         flex-direction:column;
         border-radius: 10px;
         z-index:3
+    }
+    
+}
+@media (max-width:810px){
+    .box{
+        width: 65%;
+        height: 73%;
+    }
+    .box-dark{
+        width: 65%;
+        height: 73%;
+
     }
     
 }

@@ -1,12 +1,12 @@
 .all-items{
     background-color: white;
-    width: 50%;
+    width: 30%;
     height: fit-content;
     border-radius: 10px;
 }
 .all-items-dark{
     background-color: gainsboro;
-    width: 50%;
+    width: 30%;
     height: fit-content;
     border-radius: 10px;
 }
@@ -74,6 +74,14 @@
     position: absolute;
 }
 
+@media (max-width:700px){
+    .all-items{    
+        width: 50%;
+     }
+    .all-items-dark{    
+        width: 50%;
+     }
+}
 @media (max-width:500px){
     .all-items{
         background-color: white;
