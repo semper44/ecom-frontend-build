@@ -3,9 +3,10 @@
 // import Swiper from 'swiper';
 // import {SwiperSlide } from "swiper/react";
 import image from "../../ecom_images/3.jpg"
-import image3 from "../../ecom_images/R.jpg"
+import image3 from "../../ecom_images/trendy.jpg"
 import bag from "../../ecom_images/bag.jpg"
-import coat from "../../ecom_images/R.jpg"
+import three from "../../ecom_images/happy.jpg"
+import coat from "../../ecom_images/pretty.jpg"
 // import 'swiper/css/autoplay';
 
 //           <div className={styles["image-slider-parent"]}>
@@ -31,7 +32,7 @@ export function Images() {
   "clickable": true
 }} navigation={true} className="mySwiper" style={{marginTop:"1.6rem"}}>
     <SwiperSlide>
-      <img src={coat} alt="img" />
+      <img src={image3} alt="img" />
         <h2 style={{color:"white",position:"absolute", top:"70%", left:"10%"}}>
             WELCOME TO OUR STORE<br/>
             <p style={{width:"fit-content", backgroundColor:"cyan", color:"white", cursor:"pointer", padding:"10px", borderRadius:"5px"}}>
@@ -49,7 +50,7 @@ export function Images() {
         
     </SwiperSlide>
     <SwiperSlide>
-      <img src={image3} alt="img" style={{objectFit:"cover/center"}} />
+      <img src={three} alt="img" style={{objectFit:"cover/center"}} />
       <h2 style={{color:"white",position:"absolute", top:"80%", left:"5%"}}>
         Huge sales ongoing...<br/>
         <p style={{width:"fit-content", backgroundColor:"cyan", color:"white", cursor:"pointer", padding:"10px", borderRadius:"5px"}}>
@@ -58,7 +59,7 @@ export function Images() {
       </h2>
     </SwiperSlide>
     <SwiperSlide>
-      <img src={image} alt="img" />
+      <img src={coat} alt="img" />
       <h2 style={{color:"white",position:"absolute", top:"70%", left:"10%"}}>
         New Products daily<br />
         <p style={{width:"fit-content", backgroundColor:"cyan", color:"white", cursor:"pointer", padding:"10px", borderRadius:"5px"}}>Sell Now!</p>

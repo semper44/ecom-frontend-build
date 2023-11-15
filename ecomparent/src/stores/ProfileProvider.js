@@ -33,7 +33,7 @@ function ProfileProvider(props) {
     });
   }catch(error){
     //   }
-  }, [userDetails?.user_id, userDetails?.username])
+  }}, [userDetails?.user_id, userDetails?.username])
 
   console.log(changed);
 

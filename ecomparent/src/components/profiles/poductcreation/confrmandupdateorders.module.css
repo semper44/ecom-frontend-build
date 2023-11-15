@@ -1,7 +1,7 @@
 .purchase-successful, .purchase-failed{
     color: cyan;
     text-align: center;
-    padding: 4% 0;
+    padding: 15% 0;
 }
 .purchase-failed p{
     color: red;

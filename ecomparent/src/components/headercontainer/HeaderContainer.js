@@ -347,7 +347,7 @@ function HeaderContainer(props) {
       {/* <div className={theme?styles.id:styles.light} id={styles.headercontainer}> */}
       <Box onClick={()=>navigate("/")} sx={{"& a":{mt:"3px", display:screenWidth<700?"none":"flex",color:theme?"cyan":(flag==="home"&& (!cartActive.cartActivestate && !activeContxt.showSearchState && !notification))?"cyan":"black",textDecoration:flag==="home" &&(!cartActive.cartActivestate && !activeContxt.showSearchState && !notification)?"underline":"none"},
          }}>
-          <NavLink to="">
+          <NavLink>
             <HomeOutlinedIcon sx={{mt:"3px"}} /> 
             <Typography sx={{mt:"5px"}}>Home</Typography>
           </NavLink>  

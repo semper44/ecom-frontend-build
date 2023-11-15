@@ -6,19 +6,12 @@ import { Link } from 'react-router-dom';
 import { mainproductContext } from '../../stores/CartContxt';
 import 'swiper/swiper.min.css';
 import Swiper from 'swiper';
-// import { fData } from '../main/MainProducts';
 
 register();
 
 export const Slider = () => {
   const {theme}= useContext(ThemeData)
   const {featureData}= useContext(mainproductContext)
-
-  
-    // const {data, loading, error}= useFetch(url)
-
-  // const[share, setShare]=useState(false)
-
 
   useEffect(() => {
     const swiper = new Swiper('.swiper-container', {
