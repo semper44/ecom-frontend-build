@@ -63,7 +63,7 @@ function Ratings(props) {
     redirect: 'follow'
   };
   const createReview= async ()=>{
-    await fetch('http://127.0.0.1:8000/profile/createreview/',requestOptions
+    await fetch(`${process.env.REACT_APP_URLS}/profile/createreview/`,requestOptions
     )   
   }
 

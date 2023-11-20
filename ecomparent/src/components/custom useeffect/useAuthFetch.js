@@ -5,13 +5,13 @@ import {useEffect, useState} from "react"
 
 function useAuthFetch(url, method) {
     const[data, setData]= useState()
-    let token
+    const[token, settoken]= useState()
+     
     useEffect(()=>{
-      token= JSON.parse(window.localStorage.getItem("authToken"))|| null
+      settoken(JSON.parse(window.localStorage.getItem("authToken"))|| null)
 
     }, [])
-    useEffect(()=>{
-  
+    useEffect(()=>{ 
         editProduct()
       }, [])
       

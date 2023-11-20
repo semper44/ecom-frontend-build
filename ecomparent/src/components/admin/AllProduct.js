@@ -50,7 +50,7 @@ function AllProduct() {
 
   const getData= async()=>{
     try{
-      const res= await axios.get("http://127.0.0.1:8000/product/getproduct")
+      const res= await axios.get(`${process.env.REACT_APP_URLS}/product/getproduct`)
       if(res.status===200){
         ;
         setLoading(false)
@@ -170,7 +170,7 @@ function AllProduct() {
                 Delete
               </Typography>
             </IconButton>
-            {deleteState &&<DeleteComp setdelete={setdeleteState} url={`http://127.0.0.1:8000/product/admin/deleteproduct/${params.id}`} type={"admin"}/>}
+            {deleteState &&<DeleteComp setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${params.id}`} type={"admin"}/>}
           </Box>
         );
       },

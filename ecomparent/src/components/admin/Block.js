@@ -9,7 +9,7 @@ import { fetchData } from "../../usequery/useFetchFunction";
 // import { useNavigate } from "react-router-dom";
 
 // const fetcher=(productId)=>{
-//   return axios.delete(`http://127.0.0.1:8000/product/deleteproduct/${productId}`)
+//   return axios.delete(`${process.env.REACT_APP_URLS}/product/deleteproduct/${productId}`)
 // }
 
 function Delete({setblock, url}) {
@@ -38,7 +38,7 @@ function Delete({setblock, url}) {
           Are you sure you want to block?
         </Typography>
         <Box m="11px 0">
-        <Button variant="outlined" sx={{':hover':{opacity:0.6}}} startIcon={<DeleteIcon />} onClick={()=>{;)}}>
+        <Button variant="outlined" sx={{':hover':{opacity:0.6}}} startIcon={<DeleteIcon />} onClick="{()=>()}">
           Block
         </Button>
         <Button variant="contained" sx={{ml:"5px", ':hover':{opacity:0.6}}} startIcon={<CancelIcon />} onClick={cancel}>

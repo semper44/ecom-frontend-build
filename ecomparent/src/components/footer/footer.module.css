@@ -9,6 +9,24 @@
     letter-spacing: 2px;
 
 }
+#footer-sub{
+    border-radius: 10px;
+    height: fit-content;
+    outline: none;
+    border: none;
+    padding: 5px 0;
+}
+#footer-sub::placeholder{
+    padding-left: 5px;
+}
+#footer-submit{
+    border: none;
+    background: cyan;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 2px;
+}
 .logo-sub{
     display: flex;
     padding-top: 1rem;
@@ -45,7 +63,7 @@
 @media(max-width:500px){
     .footer h1, .footer h2, .footer h4, .footer p{
         letter-spacing: 0;
-        font-size: 10px;
+        font-size: 15px;
     
     }
 

@@ -85,7 +85,7 @@ function SearchModal(props) {
       function send(){
       if(realData.search && realData.price && realData.color && realData.category && realData.size){
         
-        fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&$price=${realData.price}&category=${realData.category}&size=${realData.size}&color=${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&$price=${realData.price}&category=${realData.category}&size=${realData.size}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -97,7 +97,7 @@ function SearchModal(props) {
 
       else if(!realData.search && realData.price && !realData.color && !realData.category && !realData.size){
         
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}`)
         .then(res=>{
             return res.json()
         })
@@ -107,7 +107,7 @@ function SearchModal(props) {
       }
       else if(!realData.search && !realData.price && realData.color && !realData.category && !realData.size){
         
-        fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -117,7 +117,7 @@ function SearchModal(props) {
       }
       else if(!realData.search && !realData.price && !realData.color && realData.category && !realData.size){
         
-        fetch(`http://127.0.0.1:8000/product/search?category=${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -127,7 +127,7 @@ function SearchModal(props) {
       }
       else if(!realData.search && !realData.price && !realData.color && !realData.category && realData.size){
         
-        fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
@@ -138,7 +138,7 @@ function SearchModal(props) {
       else if(realData.search && !realData.price && !realData.color && !realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}`)
         .then(res=>{
             return res.json()
         })
@@ -149,7 +149,7 @@ function SearchModal(props) {
       else if(realData.search && realData.price && !realData.color && !realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&price${realData.price}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&price${realData.price}`)
         .then(res=>{
             return res.json()
         })
@@ -160,7 +160,7 @@ function SearchModal(props) {
       else if(realData.search && !realData.price && realData.color && !realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&color${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&color${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -171,7 +171,7 @@ function SearchModal(props) {
       else if(realData.search && !realData.price && !realData.color && realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&category${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&category${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -182,7 +182,7 @@ function SearchModal(props) {
       else if(realData.search && !realData.price && !realData.color && !realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?search=${realData.search}&size${realData.size}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&size${realData.size}`)
         .then(res=>{
             return res.json()
         })
@@ -195,7 +195,7 @@ function SearchModal(props) {
       else if(!realData.search && realData.price && realData.color && realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&color=${realData.color}&category=${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&color=${realData.color}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -205,7 +205,7 @@ function SearchModal(props) {
       }
       else if(realData.search && realData.price && realData.color && !realData.category && realData.size){
         
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&search=${realData.search}&color=${realData.color}&size=${realData.size}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&search=${realData.search}&color=${realData.color}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
@@ -216,7 +216,7 @@ function SearchModal(props) {
       else if(!realData.search && realData.price && realData.color && !realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&color=${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -227,7 +227,7 @@ function SearchModal(props) {
       else if(!realData.search && realData.price && !realData.color && realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&category=${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -238,7 +238,7 @@ function SearchModal(props) {
       else if(realData.search && realData.price && !realData.color && realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}&search=${realData.search}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}&search=${realData.search}`)
         .then(res=>{
             return res.json()
         })
@@ -249,7 +249,7 @@ function SearchModal(props) {
       else if(!realData.search && realData.price && !realData.color && realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -260,7 +260,7 @@ function SearchModal(props) {
       else if(!realData.search && realData.price && realData.color && !realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -271,7 +271,7 @@ function SearchModal(props) {
       else if(!realData.search && realData.price && !realData.color && !realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
@@ -282,7 +282,7 @@ function SearchModal(props) {
       else if(!realData.search && realData.price && realData.color && realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}&category=${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -296,7 +296,7 @@ function SearchModal(props) {
       else if(!realData.search && !realData.price && realData.color && realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&category=${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -307,7 +307,7 @@ function SearchModal(props) {
       else if(!realData.search && !realData.price && realData.color && realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&category=${realData.category}&size=${realData.size}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&category=${realData.category}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
@@ -318,7 +318,7 @@ function SearchModal(props) {
       else if(!realData.search && !realData.price && realData.color && !realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&size=${realData.size}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&size=${realData.size}`)
         .then(res=>{
             return res.json()
         })
@@ -329,7 +329,7 @@ function SearchModal(props) {
       else if(realData.search && !realData.price && realData.color && realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}&category=${realData.category}&color=&size=${realData.size}${realData.color}&search=${realData.search}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}&category=${realData.category}&color=&size=${realData.size}${realData.color}&search=${realData.search}`)
         .then(res=>{
             return res.json()
         })
@@ -340,7 +340,7 @@ function SearchModal(props) {
       else if(!realData.search && !realData.price && !realData.color && realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}&category=${realData.category}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}&category=${realData.category}`)
         .then(res=>{
             return res.json()
         })
@@ -351,7 +351,7 @@ function SearchModal(props) {
       else if(realData.search && realData.price && realData.color && realData.category && !realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?size=${realData.size}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -364,7 +364,7 @@ function SearchModal(props) {
       else if(realData.search && realData.price && !realData.color && !realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -375,7 +375,7 @@ function SearchModal(props) {
       else if(realData.search && !realData.price && realData.color && !realData.category && realData.size){
         
 
-        fetch(`http://127.0.0.1:8000/product/search?color=${realData.color}&search=${realData.search}&color=${realData.color}`)
+        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&search=${realData.search}&color=${realData.color}`)
         .then(res=>{
             return res.json()
         })
@@ -389,7 +389,7 @@ function SearchModal(props) {
       // else if(realData.search && !realData.price && realData.color && !realData.category && realData.size){
       //   
 
-      //   fetch(`http://127.0.0.1:8000/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
+      //   fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
       //   .then(res=>{
       //       return res.json()
       //   })

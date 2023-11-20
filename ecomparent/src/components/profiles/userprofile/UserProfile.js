@@ -94,7 +94,7 @@ function UserProfile({socket}) {
   // fetching user profiledetails
     useEffect(()=>{
     try{
-      fetch(`http://127.0.0.1:8000/profile/profdetails/${username}`)
+      fetch(`${process.env.REACT_APP_URLS}/profile/profdetails/${username}`)
       .then(res =>{
         if(res.status===200){
           setResponse(true)
@@ -141,7 +141,7 @@ function UserProfile({socket}) {
 //       redirect: 'follow'
 //     };
 //     (async ()=>{
-//     let res= await fetch(`http://127.0.0.1:8000/profile/allreviews/${id}/`, requestOptions)
+//     let res= await fetch(`${process.env.REACT_APP_URLS}/profile/allreviews/${id}/`, requestOptions)
 //     let response= await res.json()
 //     
 //     if(response.length<1 && userDetails?.user_id !== parseInt(id) && userDetails?.user_id ){
@@ -273,7 +273,7 @@ useEffect(()=>{
 
   function following(){
     // eslint-disable-next-line no-undef
-    fetch(`http://127.0.0.1:8000/profile/follow/${username}/`,
+    fetch(`${process.env.REACT_APP_URLS}/profile/follow/${username}/`,
     {method:'POST',
     headers:{
       'Content-Type':'application/json',
@@ -302,7 +302,7 @@ useEffect(()=>{
   }
  
   const unprofileFollow= async ()=>{
-    let response=await fetch(`http://127.0.0.1:8000/profile/unfollow/${username}/`,
+    let response=await fetch(`${process.env.REACT_APP_URLS}/profile/unfollow/${username}/`,
     {method:'POST',
     headers:{
       'Content-Type':'application/json',
@@ -360,7 +360,7 @@ useEffect(()=>{
   function updateProfilePics(e){
     let formData= new FormData()
     formData.append("pics", e.target.files[0],)
-    const URL=`http://127.0.0.1:8000/profile/update/profilepics/${userDetails.user_id}/`
+    const URL=`${process.env.REACT_APP_URLS}/profile/update/profilepics/${userDetails.user_id}/`
     let requestOptions = {
       method: 'PATCH',
       body: formData,
@@ -403,10 +403,8 @@ useEffect(()=>{
           </div>
          { sameusers &&<div className={styles["change-prof-pics"]}>
             <p onClick={handleClick} value={"Change Profile Pics"}>
-            {/* <p id={styles.profchange}>Change Profile Pics</p> */}
               <input 
                 type="file"
-                // name='image' 
                 ref={hiddenFileInput}
                 onChange={handleChange}/>
                 Change Profile Pics
@@ -544,7 +542,7 @@ useEffect(()=>{
                 <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={"changepassword"}>Change Password</p>
                 {updateProfile && <ProfileUpdate setprofileupdate={setUpdateProfile}/>}
                 <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={deletefn}>Delete account</p>
-                {deleteState && <DeleteComp setdelete={setDeleteState} url={`http://127.0.0.1:8000/profile/delete/${userDetails.user_id}`} type={"profile"}/>}
+                {deleteState && <DeleteComp setdelete={setDeleteState} url={`${process.env.REACT_APP_URLS}/profile/delete/${userDetails.user_id}`} type={"profile"}/>}
               </div>
             </div>:undefined}            
           </div>

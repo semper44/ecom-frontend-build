@@ -20,7 +20,7 @@ function CategoriesProp(props) {
 
   useEffect(()=>{
 
-    fetch('http://127.0.0.1:8000/product/categories/')
+    fetch(`${process.env.REACT_APP_URLS}/product/categories/`)
     .then((res)=>{
         if(res.ok){
             setLoading(false)

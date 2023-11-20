@@ -28,7 +28,7 @@ function LoginFetch(props) {
         body:JSON.stringify({ username: e.target.username.value, password: e.target.password.value })
         };
         
-            fetch( "http://127.0.0.1:8000/profile/token/", fetchRequestOptions)
+            fetch( `${process.env.REACT_APP_URLS}/profile/token/`, fetchRequestOptions)
             .then((res)=>{
                 return res.json()})
             .then((result)=>{
@@ -60,7 +60,7 @@ function LoginFetch(props) {
                             'Authorization': 'Bearer '+ result?.access
                             }
                         };
-                        let res = await fetch('http://127.0.0.1:8000/product/retrievecart/', retrieveCartOptions)
+                        let res = await fetch(`${process.env.REACT_APP_URLS}/product/retrievecart/`, retrieveCartOptions)
                         const response = await res.json();
                         
                         
@@ -156,7 +156,7 @@ function LoginFetch(props) {
     let updateToken= async()=> {
         try {
             let res = await fetch(
-                "http://127.0.0.1:8000/profile/token/refresh/",
+                `${process.env.REACT_APP_URLS}/profile/token/refresh/`,
                 {
                 method: "POST",
                 headers: {

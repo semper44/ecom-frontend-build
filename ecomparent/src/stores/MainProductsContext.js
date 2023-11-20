@@ -10,8 +10,8 @@ const MainProductsContext=(props)=> {
   
     useEffect(()=>{
        Promise.all([
-        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch("http://127.0.0.1:8000/product/allproducts/electronics/"),
-        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch("http://127.0.0.1:8000/product/allproducts/electronics/"),
+        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch(`${process.env.REACT_APP_URLS}/product/allproducts/electronics/`),
+        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch(`${process.env.REACT_APP_URLS}/product/allproducts/electronics/`),
        
       ])
       .then(([resfeatured, resReviewed])=>{
@@ -33,7 +33,7 @@ const MainProductsContext=(props)=> {
           setLoading(false)
           setError(err.message)
       })   
-    },  [])
+    },  [setfeatureData])
 
        const memoizedValue = useMemo(
         () => ({

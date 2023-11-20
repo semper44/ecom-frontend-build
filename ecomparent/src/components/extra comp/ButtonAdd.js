@@ -1,27 +1,24 @@
-import {useContext} from 'react'
-import {cartContxt} from '../../stores/CartContxt';
+import {useDispatch } from 'react-redux';
+import { addItem} from '../../stores/CartProviders';
+
+
 
 
 function ButtonAdd({item}) {
-   const addOrRemoveCart=useContext(cartContxt)
-  const clickObject = (value)=>{
-      // addOrRemoveCart is the connection to the cart reducer
-      //  
-      addOrRemoveCart.addItemsToCart({
-      id:value?.id,
-      category:value?.category,
-      image:value?.image,
-      price:value?.price,
-      // totalPrice:item.totalPrice,
-      // seller:"semper",
-      qty:0,
-      
-      })
-      addOrRemoveCart.seeSetDisplay(false)
-  }
+   const dispatch = useDispatch();
+
+  const clickToAdd = (item) => {
+   dispatch(addItem({
+      id: item.id,
+      category: item.category,
+      image: item.image,
+      price: item.price,
+      qty: 0,  
+   }));
+   };
 return(
    <>
-   <button className="plus" onClick={()=>clickObject(item)}>+</button>
+   <button className="plus" onClick={()=>clickToAdd(item)}>+</button>
    </>
 )
       

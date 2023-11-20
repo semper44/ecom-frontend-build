@@ -55,7 +55,7 @@
     height: 20px;
 }
 .login h1{
-    color: rgb(48, 162, 162);
+    color: cyan;
     margin-top: 1rem;
 }
 .register-background-dark .login h1{
@@ -94,7 +94,7 @@
         border-radius: 10px;
         border: 1px solid rgb(23, 59, 59);
         width: 40%;
-        height: 70vh;
+        height: 80vh;
         background-color: #fff;
     }
 }

@@ -1,7 +1,8 @@
 import {React, memo, useContext, useEffect,useState} from 'react'
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { CallMergeRounded, SearchOutlined } from "@mui/icons-material";
+import {SearchOutlined } from "@mui/icons-material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { Link } from 'react-router-dom';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
@@ -13,7 +14,6 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 import{NavLink, useNavigate} from "react-router-dom"
 import {isActive, cartActiveContxt } from '../../App'
-import {cartContxt} from '../../stores/CartContxt'
 import { AuthContext } from '../profiles/login/LoginFetch'
 import { headerdata} from '../../stores/CartContxt';
 import { profileContext } from '../../stores/CartContxt';
@@ -22,16 +22,18 @@ import { ThemeData } from '../../App';
 import jwt_decode from "jwt-decode"
 import axios from "axios"
 import { Box, Stack, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+
 
 
 function HeaderContainer(props) {
   const[count, setCount]=useState()
   const[flag, setFlag]=useState("")
+  const cartCount = useSelector((state) => state)
   // const[modalReveal, setModalReveal]=useState(false)
   // const[cartRemovedSuccessfully, setCartRemovedSuccessfully]=useState(false)
   const cartActive= useContext(cartActiveContxt)
   const activeContxt= useContext(isActive)
-  const cartCount= useContext(cartContxt)
   const logIn= useContext(AuthContext)
   const {setnotificationcontext, notificationsstore}= useContext(headerdata)
   const {notification,showNotifFn}= useContext(notificationscontext)
@@ -39,7 +41,7 @@ function HeaderContainer(props) {
   const[size, setSize]= useState(null)
   const[screenWidth, setScreenWidth]= useState(window.innerWidth)
   const navigate= useNavigate()
-  const {theme, toggleTheme}= useContext(ThemeData)
+  const {theme}= useContext(ThemeData)
   const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
 
   useEffect(()=>{
@@ -86,9 +88,6 @@ function HeaderContainer(props) {
    }
   }, [screenWidth])
 
-    console.log(profileNotification);
-
-
   // const worker = useMemo(
   //   () => new Worker(new URL("../extra comp/Workers.js", import.meta.url)),
   //   []
@@ -106,17 +105,7 @@ function HeaderContainer(props) {
       window.location.href=`/profile/${userDetails?.username}`
     }
   }
-  // function notificationNav(){
-  //   if(!logIn.user){
-  //     navigate("/login")
-  //   }
-  //   else{
-  //     window.location.href=`/profile/${userDetails?.user_id}`
-  //   }
-  // }
-  // 
  
-
  useEffect(()=> { 
   if(window.location.pathname==="/" && !activeContxt.showSearchState && !cartActive.cartActivestate){
     setFlag("home")
@@ -158,7 +147,7 @@ function HeaderContainer(props) {
         formdata.append("time", data.time);
         formdata.append("type", data.type)
         formdata.append("seen", data.seen)
-        axios.post('http://127.0.0.1:8000/profile/postproductnotifications/', formdata,config)
+        axios.post(`${process.env.REACT_APP_URLS}/profile/postproductnotifications/`, formdata,config)
         .then(res=>{
           setProfileNotifications(prev=>[...prev, res.data])
         })
@@ -189,7 +178,7 @@ function HeaderContainer(props) {
         formdata.append("time", data.time);
         formdata.append("type", data.type)
         formdata.append("seen", data.seen)
-        axios.post('http://127.0.0.1:8000/profile/postproductnotifications/', formdata,config)
+        axios.post(`${process.env.REACT_APP_URLS}/profile/postproductnotifications/`, formdata,config)
       })()
       notif?.once("offlineproductnotif", handleofflineProductNotification);
 
@@ -218,7 +207,7 @@ function HeaderContainer(props) {
         formdata.append("time", data.time);
         formdata.append("type", data.type)
         formdata.append("seen", data.seen)
-        axios.post('http://127.0.0.1:8000/profile/postnotifications/', formdata,config)
+        axios.post(`${process.env.REACT_APP_URLS}/profile/postnotifications/`, formdata,config)
         .then(res=>{
           setnotificationcontext(prev=>[...prev, res.data])
         })
@@ -247,7 +236,7 @@ function HeaderContainer(props) {
       formdata.append("time", data.time);
       formdata.append("type", data.type);
       formdata.append("seen", data.seen);
-      axios.post('http://127.0.0.1:8000/profile/postnotifications/', formdata, config)
+      axios.post(`${process.env.REACT_APP_URLS}/profile/postnotifications/`, formdata, config)
     };    
     notif?.once("offlinefollowingnotif", handleFollowingofflineNotification);
     return () => {
@@ -272,7 +261,6 @@ function HeaderContainer(props) {
   useEffect(()=>{
     const userfollowingnotif= JSON.parse(window.localStorage.getItem("gottenNotification"))|| null
     const productnotif= JSON.parse(window.localStorage.getItem("productNotification"))|| null
-    console.log(changed);
     if (userfollowingnotif===null){
       setCount(productnotif?.length)
     }else if(productnotif===null){
@@ -285,7 +273,7 @@ function HeaderContainer(props) {
   
   
   function logout(){
-    if(cartCount.cartSize>=1 && token?.access){
+    if(cartCount.cart.cartSize>=1 && token?.access){
       sendCartData()
     }else{
       window.localStorage.removeItem("MY_CARTSTATE")
@@ -305,7 +293,7 @@ function HeaderContainer(props) {
       let arr= []
       let arr2=[]
       // let arr3=[]
-      cartCount.items.map((item)=>{
+      cartCount.cart.items.map((item)=>{
       // 
       // let ids={qty: item.qty}
       arr.push(item.qty)
@@ -315,7 +303,7 @@ function HeaderContainer(props) {
     formData.append("item", JSON.stringify(arr2))      
     formData.append("owners", userDetails?.user_id)
     formData.append("item_qty", JSON.stringify(arr))
-    formData.append("cartSize", cartCount.cartSize)      
+    formData.append("cartSize", cartCount.cart.cartSize)      
       // var myHeaders = new Headers();
       // myHeaders.append("Authorization", "Bearer 
       let requestOptions = {
@@ -326,7 +314,7 @@ function HeaderContainer(props) {
           },
         redirect: 'follow'
       };
-    const res= await fetch('http://127.0.0.1:8000/product/addtocart/', requestOptions)
+    const res= await fetch(`${process.env.REACT_APP_URLS}/product/addtocart/`, requestOptions)
         
       if(res.ok){
         window.localStorage.removeItem("MY_CARTSTATE")
@@ -345,11 +333,11 @@ function HeaderContainer(props) {
   return (
     <Stack direction={"row"} spacing={{xs:1.5, sm:2}} sx={{cursor:"pointer"}}>
       {/* <div className={theme?styles.id:styles.light} id={styles.headercontainer}> */}
-      <Box onClick={()=>navigate("/")} sx={{"& a":{mt:"3px", display:screenWidth<700?"none":"flex",color:theme?"cyan":(flag==="home"&& (!cartActive.cartActivestate && !activeContxt.showSearchState && !notification))?"cyan":"black",textDecoration:flag==="home" &&(!cartActive.cartActivestate && !activeContxt.showSearchState && !notification)?"underline":"none"},
+      <Box onClick={()=>navigate("/")}sx={{"& a":{mt:"3px", display:screenWidth<700?"none":"flex",color:theme?"cyan":(flag==="home"&& (!cartActive.cartActivestate && !activeContxt.showSearchState && !notification))?"cyan":"black",textDecoration:flag==="home" &&(!cartActive.cartActivestate && !activeContxt.showSearchState && !notification)?"underline":"none"},
          }}>
           <NavLink>
             <HomeOutlinedIcon sx={{mt:"3px"}} /> 
-            <Typography sx={{mt:"5px"}}>Home</Typography>
+            <Typography sx={{mt:"5px"}}> Home </Typography>
           </NavLink>  
       </Box>
       {/* className={`${theme? styles.themesearchcontainer:styles.searchcontainer} ${activeContxt.showSearchState && styles['searchcontainer-active'] */}
@@ -373,7 +361,7 @@ function HeaderContainer(props) {
         <Box sx={{display:"flex", color:theme?"cyan":cartActive.cartActivestate?"cyan":"black", }}onClick={props.onShow} >
           <ShoppingCartOutlinedIcon sx={{mt:"5px"}}/>
           <Typography sx={{mt:"8px", textDecoration:cartActive.cartActivestate?"underline":"none"}}>Cart</Typography>
-          <Typography sx={{mt:"5px",ml:"5px", p:"0 3px", color:"white", borderRadius:"50%", backgroundColor:"rgb(11, 214, 214)"}}>{cartCount.cartSize}</Typography>
+          {cartCount.cart.cartSize>0 &&<Typography sx={{mt:"5px",lineHeight:0 ,display:"flex", justifyContent:"center", alignItems:"center", ml:"5px", p:"5px 5px", color:"white", borderRadius:"50%", backgroundColor:"rgb(11, 214, 214)"}}>{cartCount.cart.cartSize}</Typography>}
         </Box>
 
         <Box sx={{display:"flex", color:theme?"cyan":"black",}}onClick={logout}>

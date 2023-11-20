@@ -44,7 +44,7 @@ function AdminCreate(props) {
     } 
     
     
-    const URL="http://127.0.0.1:8000/product/create/"
+    const URL=`${process.env.REACT_APP_URLS}/product/create/`
     const config= {headers:{
        'Content-Type':'multipart/form-data',
     }}

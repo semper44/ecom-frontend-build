@@ -1,7 +1,8 @@
 import React,{useContext, useEffect, useState} from 'react'
 import styles from "./cart.module.css" 
 import CartPortal from './CartPortal'
-import {cartContxt} from '../../stores/CartContxt';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem, removeItem, totalRemoveItem} from '../../stores/CartProviders';
 import { AuthContext } from '../profiles/login/LoginFetch';
 import jwt_decode from "jwt-decode"
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,6 @@ import { Box,} from '@mui/material';
 
 
 function CartContainer(props) {
-  const cartDisplay = useContext(cartContxt)
   const[cartCombined, setCartCombined]= useState({})
 
   const logIn= useContext(AuthContext)
@@ -19,10 +19,11 @@ function CartContainer(props) {
 
   const {theme}= useContext(ThemeData)
 
-  const{addItemsToCart, removeItemsFromCart, removeItemsTotally}=cartDisplay
+   const cartDisplay = useSelector((state) => state);
+   const dispatch = useDispatch();
   const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
 
-  let lengthOfCart= cartDisplay?.items?.length<1
+  let lengthOfCart= cartDisplay.cart?.items?.length<1
 
   let userDetails;
     if(logIn?.user){
@@ -30,34 +31,46 @@ function CartContainer(props) {
     } 
   
 
-function clickToRemove(item){
-  removeItemsFromCart({
-    id:item.id,
-    
-  })
+const clickToAdd = (item) => {
+  dispatch(addItem({
+    id: item.id,
+    category: item.category,
+    image: item.image,
+    price: item.price,
+    qty: 0,  
+  }));
+};
 
+
+const clickToRemove = (item) => {
+  dispatch(removeItem({ id: item.id }));
+};
+
+const remove = (item) => {
+  dispatch(totalRemoveItem({ id: item.id }));
+};
+
+
+// function clickToAdd(item){
   
-}
-function clickToAdd(item){
-  
-  addItemsToCart({
-    id:item.id,
-    category:item.category,
-    image:item.image,
-    price:item.price,
-    // totalPrice:item.totalPrice,
-    // seller:"semper",
-    qty:0,
+//   addItemsToCart({
+//     id:item.id,
+//     category:item.category,
+//     image:item.image,
+//     price:item.price,
+//     // totalPrice:item.totalPrice,
+//     // seller:"semper",
+//     qty:0,
     
-    })
-    // addItemsToCart.seeSetDisplay(false)
-}
+//     })
+//     // addItemsToCart.seeSetDisplay(false)
+// }
 
-function remove(item){
-  removeItemsTotally({id:item.id,})
-}
+// function remove(item){
+//   removeItemsTotally({id:item.id,})
+// }
 
-const {items, cartId}= cartDisplay
+const {items, cartId}= cartDisplay.cart
 
 
 useEffect(()=>{
@@ -71,16 +84,16 @@ useEffect(()=>{
     let arr= []
     let arr2=[]
     // let arr3=[]
-    cartDisplay?.items.map((item)=>{
+    cartDisplay.cart?.items.map((item)=>{
     arr.push(item.qty)
     arr2.push(item.id)
     // formData.append("item", item.id)      
   })
   formData.append("item", JSON.stringify(arr2))      
-  formData.append("owners", userDetails.user_id)
+  formData.append("owners", userDetails?.user_id)
   formData.append("item_qty", JSON.stringify(arr))
-  formData.append("cartSize", cartDisplay?.cartSize)      
-  formData.append("cartId", cartDisplay?.cartId)      
+  formData.append("cartSize", cartDisplay.cart?.cartSize)      
+  formData.append("cartId", cartDisplay.cart?.cartId)      
 
 ;
 
@@ -90,13 +103,13 @@ function order(){
     props.onToglle()
     
   }else{
-    fetch("http://127.0.0.1:8000/product/placeorder/", {
+    fetch(`${process.env.REACT_APP_URLS}/product/placeorder/`, {
       method: 'POST',
       headers: {
         // "Content-Type": "application/json",
         'Authorization': 'Bearer '+ token?.access
         },      
-        body:cartDisplay.cartId==="null"?JSON.stringify(cartCombined):formData}
+        body:cartDisplay.cart.cartId==="null"?JSON.stringify(cartCombined):formData}
         )
     .then((res)=>{
       return res.json();
@@ -138,7 +151,7 @@ function order(){
             <p id={styles.price}>Price</p>
         </div>
         <div className={theme?styles["cart-parent-dark"]:styles["cart-parent"]}>
-        {cartDisplay?.items?.map((item)=>{
+        {cartDisplay.cart?.items?.map((item)=>{
           return( 
            <>
            <div className={styles.class}>
@@ -147,7 +160,7 @@ function order(){
                     <img src={item.image} alt="" />
                 </div>
                 <div className={styles["minus-plus"]}>
-                    <div className={styles.minus} ><p onClick={()=>{clickToRemove(item)}}>-</p></div>
+                    <div className={styles.minus} ><p onClick={()=>{clickToRemove(item);}}>-</p></div>
                     <div className={styles["cart-qty"]}>{item.qty}</div>
                     <div className={styles.plus}><p onClick={()=>{clickToAdd(item)}}>+</p></div>
                 </div>

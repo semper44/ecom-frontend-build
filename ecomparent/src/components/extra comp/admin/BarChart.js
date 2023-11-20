@@ -39,7 +39,6 @@ export const options = {
 
 export function BarChart() {
   const{Orders}=useContext(adminOverview)
-  const{dontdisplay, gridlg}=useContext(screensizecontext)
   
   let ordersDataset=undefined
   if(Orders){

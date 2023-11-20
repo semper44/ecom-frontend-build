@@ -3,8 +3,6 @@ import styles from "../poductcreation/createproduct.module.css"
 import { AuthContext } from '../login/LoginFetch'
 import jwt_decode from "jwt-decode"
 import axios from "axios"
-import { IconButton } from '@mui/material'
-import { PhotoCamera } from '@mui/icons-material'
 import Modals from '../../extra comp/Modals'
 import Loading from '../poductcreation/CreateProductLoading'
 import { ThemeData } from '../../../App';
@@ -47,7 +45,7 @@ function AdminCreate({setprofileupdate}) {
       // 
       setPreviewImage(window.URL.createObjectURL(e.target.files[0]))
     } 
-    const URL="http://127.0.0.1:8000/product/create/"
+    const URL=`${process.env.REACT_APP_URLS}/product/create/`
     const config= {headers:{
        'Content-Type':'multipart/form-data',
     }}

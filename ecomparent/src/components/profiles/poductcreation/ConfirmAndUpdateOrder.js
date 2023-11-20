@@ -30,7 +30,7 @@ function ConfirmAndUpdateOrder() {
     };
     useEffect(()=>{
       (async()=>{
-          let data= await fetch("http://127.0.0.1:8000/product/confirmandupdateorder/", requestOptions)
+          let data= await fetch(`${process.env.REACT_APP_URLS}/product/confirmandupdateorder/`, requestOptions)
           
           if(data.status===200){
             setDataStatus(true)

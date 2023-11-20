@@ -4,7 +4,6 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CartContainer from "./components/carts/CartContainer";
 import SearchModal from "./components/searchmodal/SearchModal";
-import CartProviders from "./stores/CartProviders";
 import GeneralProviders from "./stores/GeneralProviders";
 import ScreenSize from "./stores/ScreenSize";
 import MainProductsContext from "./stores/MainProductsContext";
@@ -104,12 +103,6 @@ export const notificationscontext = React.createContext();
 const queryclient = new QueryClient();
 
 
-const initialIp = {
-  country: [],
-  ip: [],
-};
-
-
 let themeState;
   let check= window.localStorage.getItem("themes")
   
@@ -133,7 +126,6 @@ function App() {
   const [ShowSearch, setShowSearch] = useState(false);
   const [notification, setNotification] = useState(false);
   const [MenuTransform, setMenuTransform] = useState(false);
-  const [ipState, setIpState] = useState(initialIp);
   // const [theme, setTheme] = useState();
   const [socket, setSocket] = useState();
   // const theme= useRef(themeState);
@@ -184,7 +176,7 @@ function App() {
   }
 
   useEffect(()=>{
-     setSocket(io("http://localhost:5000"))
+     setSocket(io(process.env.REACT_APP_JS_SERVER))
   },[])
 
   const  userId= userDetail?.user_id
@@ -213,7 +205,7 @@ function App() {
 //   arr=["me", "you"]
 // n=5
 
-  let urls2= "http://127.0.0.1:8000/product/allproducts/electronics/"
+  let urls2= `${process.env.REACT_APP_URLS}/product/allproducts/electronics/`
 
   const ShowCartToggle = () => {
     SetShowCart(true);
@@ -263,7 +255,6 @@ function App() {
                           {/* <NotificationProvider  socket={socket}> */}
                             <MainProductsContext>
                               <HeaderContainerData>
-                                <CartProviders>
                                   {ShowSearch && <SearchModal onHide={HideSearchModal} />}
                                   {notification && <AllGeneralNotifications  hideNotifFn={hideNotificationModal}/>}
                                   <cart.Provider value={{ cartFunc: HideCartToggle }}>
@@ -295,8 +286,7 @@ function App() {
                                                   <Route path="/allsellers" element={<AllSellers />} />
                                                   <Route path="/promodeals" element={<ProductsFromCategories 
                                                   url={urls2} />} />
-                                                  <Route path="/" element={<Main 
-                                                  url={urls2} />} />
+                                                  <Route path="/" element={<Main />} />
                                                   <Route path="/electronics" element={<ProductsFromCategories 
                                                   url={urls2} />} />
                                                   {/* <Route path="/categories" element={<ProductsFromCategories 
@@ -343,8 +333,6 @@ function App() {
                                         </menuChange.Provider>
                                       </isActive.Provider>
                                     </notificationscontext.Provider>
-
-                                </CartProviders>
                               </HeaderContainerData>
                             </ MainProductsContext>
                           {/* </NotificationProvider> */}

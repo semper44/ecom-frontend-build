@@ -10,8 +10,8 @@ function Footer() {
         <div className={styles.subscribe}>
           <h4>love our products?</h4>
           <p>subscribe to our newsletter to get updates on our latest offer</p>
-          <input type="email" name="" id="" placeholder='Enter Email Address' />
-          <input type="submit" id="submit" />
+          <input type="email" name="" id={styles["footer-sub"]} placeholder='Enter Email Address' />
+          <input type="submit" id={styles["footer-submit" ]}/>
         </div>
       </div>
       <div className={styles["footer-bottom"]}>

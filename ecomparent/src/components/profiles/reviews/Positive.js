@@ -13,7 +13,7 @@ function Positive() {
     
     useEffect(()=>{
       let errorStatus=false
-      let url= `http://127.0.0.1:8000/profile/positiverating/${username}/`
+      let url= `${process.env.REACT_APP_URLS}/profile/positiverating/${username}/`
       let method = "GET"
       fetch(url,
         {method:method,

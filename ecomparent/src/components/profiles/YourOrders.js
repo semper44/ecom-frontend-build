@@ -9,13 +9,13 @@ import useFetchToken from "../../usequery/useFetchToken.js";
 
 function YourOrders() {
     // const method='GET'
-    // let url= `http://127.0.0.1:8000/profile/details/${id}`
+    // let url= `${process.env.REACT_APP_URLS}/profile/details/${id}`
     // const {data}= useAuthFetch(url, method) 
     // 
     // const[data, setData]= useState()
     // const [loading, setLoading] = useState(true);
     // const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-    let url= `http://127.0.0.1:8000/profile/yourorders/`
+    let url= `${process.env.REACT_APP_URLS}/profile/yourorders/`
     let method = "GET"
     const {data, loading, error}= useFetchToken(url, method)
     

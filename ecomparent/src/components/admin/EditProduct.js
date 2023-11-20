@@ -21,7 +21,7 @@ function EditProduct({edit, id,category, description, price, colors, size}) {
   },[])
 
   const editProduct= async ()=>{
-    let response= await fetch(`http://127.0.0.1:8000/product/editproduct/${id}`,
+    let response= await fetch(`${process.env.REACT_APP_URLS}/product/editproduct/${id}`,
     {method:'GET',
     headers:{
       'Content-Type':'application/json',

@@ -43,7 +43,7 @@ function AllFollowingNotification() {
     useEffect(()=>{
     (async()=>{
           try{
-            let res= await fetch(`http://127.0.0.1:8000/profile/editnotifications/${userDetails.user_id}/`, {
+            let res= await fetch(`${process.env.REACT_APP_URLS}/profile/editnotifications/${userDetails.user_id}/`, {
               method: 'PATCH',
               headers: {
                 "Content-Type": "application/json",

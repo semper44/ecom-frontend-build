@@ -27,7 +27,7 @@ function ResetPassword() {
           // redirect: 'follow'
         };
         // const body = JSON.stringify(email);
-        let data= await fetch("http://127.0.0.1:8000/profile/reset_password/", requestOptions)
+        let data= await fetch(`${process.env.REACT_APP_URLS}/profile/reset_password/`, requestOptions)
         if(data.ok){
           setShowResetPasswordMsg(true)
           setStatus(true)

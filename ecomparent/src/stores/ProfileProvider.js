@@ -18,7 +18,7 @@ function ProfileProvider(props) {
 
     useEffect(()=>{
         try{
-           fetch(`http://127.0.0.1:8000/profile/profdetails/${userDetails.username}`)
+           fetch(`${process.env.REACT_APP_URLS}/profile/profdetails/${userDetails.username}`)
           .then(res =>{
               if(!res.ok){
                   throw Error('could not fetch the data for that resource')
@@ -34,9 +34,6 @@ function ProfileProvider(props) {
   }catch(error){
     //   }
   }}, [userDetails?.user_id, userDetails?.username])
-
-  console.log(changed);
-
     
 
   const profilecontextvalue = {

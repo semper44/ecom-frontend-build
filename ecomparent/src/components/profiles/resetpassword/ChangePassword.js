@@ -38,7 +38,7 @@ function ChangePassword() {
     };
     let fetchrequest= async(e)=>{
       
-      let data= await fetch("http://127.0.0.1:8000/profile/password-reset-complete/", requestOptions)
+      let data= await fetch(`${process.env.REACT_APP_URLS}/profile/password-reset-complete/`, requestOptions)
       
       if(data.ok){
         setShowResetPasswordMsg(true)

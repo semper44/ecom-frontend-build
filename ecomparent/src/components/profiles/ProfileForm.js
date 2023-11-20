@@ -77,7 +77,7 @@ function sendFormDetail(){
     }
     else{
       (async()=>{
-       const response= await fetch(`http://127.0.0.1:8000/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
+       const response= await fetch(`${process.env.REACT_APP_URLS}/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
        let res= await response.json();
        if(response.status===400){
         setLoading(false)

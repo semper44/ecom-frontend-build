@@ -58,8 +58,8 @@ function AllProductNotification() {
           }
   };
       Promise.all([
-        fetch(`http://127.0.0.1:8000/profile/productedit/${userDetails.user_id}/`,productEditOption),
-        fetch('http://127.0.0.1:8000/profile/getproductnotifications/', ProductNotificationRequestOptions)
+        fetch(`${process.env.REACT_APP_URLS}/profile/productedit/${userDetails.user_id}/`,productEditOption),
+        fetch(`${process.env.REACT_APP_URLS}/profile/getproductnotifications/`, ProductNotificationRequestOptions)
       ])
       .then(([productEdit, ProductNotifData])=>{
         if(productEdit.ok){

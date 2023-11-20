@@ -9,7 +9,7 @@ function DeleteProfile() {
 
 
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-    const URL="http://127.0.0.1:8000/product/creat/"
+    const URL=`${process.env.REACT_APP_URLS}/product/create/`
     const config= {headers:{
        'Content-Type':'multipart/form-data',
        'Authorization': 'Bearer '+ token?.access

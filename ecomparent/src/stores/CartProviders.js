@@ -1,198 +1,83 @@
-import React, {useReducer, useState} from 'react'
-// import { useCallback } from 'react';
-import { useEffect } from 'react';
-import {cartContxt} from "./CartContxt"
+// cartSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
 const data= window.localStorage.getItem("MY_CARTSTATE")
-let cartS;
-let cartId;
-let localItemData;
+let cartS=0;
+let cartIds= null;
+let localItemData= [];
 
-
-if(typeof(data) === "undefined" || data === null){
+if(data !== null){
+  let r= JSON.parse(data)
+  const{cartSize, items, cartId}=r
+  localItemData=items
+  cartS=cartSize
+  cartIds=cartId
+}
+else if(data !== "undefined"){
   cartS=0;
-  cartId=null
-  localItemData=[];
-}else{
-    const{cartSize, items:item, cartId:cartIds}=JSON.parse(data)
-    localItemData=item
-    cartS=cartSize
-    cartId=cartIds
-    
-  
+  cartIds= null;
+  localItemData= [];
 }
+    
 
-
-
-const inistialState={
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState:{
     cartSize:cartS,
-    cartId:cartId,
-    // qty:1,
-    // totalPrice:0,
+    cartId:cartIds,
     items:localItemData,
-}
+},
+  reducers: {
+    addItem: (state, action) => {
+      const item = action.payload;
+      const existingItem = state.items.find((i) => i.id === item.id);
 
-function reduce(state, action){
-  
-  
-  if(action.type==="ADD"){
-    
-    
-    let existingCartItemIndex;
-    let existingCartItem;
-    let sizeofcart;
-    let updatedItems;
-    if(state.items !== undefined){
-      existingCartItemIndex = state.items.findIndex((item)=>item.id===action.item.id)
-      existingCartItem = state.items[existingCartItemIndex]
-    }
-    if(existingCartItem){
-      const updatedItem={...existingCartItem, qty:existingCartItem?.qty+1}
-      // 
-      updatedItems=[...state.items]
-      updatedItems[existingCartItemIndex]=updatedItem;
-      sizeofcart=state.cartSize++
+      if (existingItem) {
+        existingItem.qty++;
+      } else {
+        state.items.push({ ...item, qty: 1 });
       }
-      else{
-        const updatedAction= {...action.item, qty:action.item.qty+1}
-        updatedItems= state?.items?.concat(updatedAction)
-        sizeofcart=state.cartSize+updatedAction.qty
-      }
-    return {
-      ...state,
-      // totalAmount:updatedPrice,
-      cartSize:sizeofcart,
-      items:updatedItems
-    }
-    
-    
-  }
 
-  
-  if(action.type==="REMOVE"){
-    let updatedItems;
-    let sizeofcart;
-    let existingCartItemIndex;
-    let existingCartItem;
-    // 
+      state.cartSize = state.items.reduce((total, i) => total + i.qty, 0);
+    },
+    removeItem: (state, action) => {
+      const itemId = action.payload.id;
+      const itemIndex = state.items.findIndex((i) => i.id === itemId);
 
-    if(state.items.length>=1){
-      existingCartItemIndex= state.items.findIndex((item)=>item.id===action.id.id)
-      existingCartItem= state.items[existingCartItemIndex]
-      
+      if (itemIndex !== -1) {
+        const item = state.items[itemIndex];
 
-
-      if(existingCartItem?.qty<=1){
-        updatedItems= state.items.filter((item)=>item.id !== action.id.id)
-        
-        sizeofcart=state.cartSize-existingCartItem?.qty
-        
+        if (item.qty === 1) {
+          state.items.splice(itemIndex, 1);
+        } else {
+          item.qty--;
         }
-      else if(existingCartItem?.qty>1){
-        const updatedItem={...existingCartItem, qty:existingCartItem?.qty-1}
-        updatedItems=[...state.items]
-        updatedItems[existingCartItemIndex]=updatedItem;
-        sizeofcart=state.cartSize--
+
+        state.cartSize = state.items.reduce((total, i) => total + i.qty, 0);
       }
-      else{
-        updatedItems=[...state.items]
-        sizeofcart=state.cartSize
-        
-  
+    },
+    totalRemoveItem: (state, action) => {
+      const itemId = action.payload.id;
+      const itemIndex = state.items.findIndex((i) => i.id === itemId);
+
+      if (itemIndex !== -1) {
+        state.cartSize -= state.items[itemIndex].qty;
+        state.items.splice(itemIndex, 1);
       }
-      return{
-        ...state,
-        cartSize:sizeofcart,
-        items:updatedItems
-      }
-    }else{
-      return {...state}
-    }
+    },
+    resetCart: (state) => {
+      state.cartSize = 0;
+      state.cartId = null;
+      state.items = [];
+    },
+  },
+});
 
-    
-    // const removeAction = {...filteredItem}
-  }
+export const {
+  addItem,
+  removeItem,
+  totalRemoveItem,
+  resetCart,
+} = cartSlice.actions;
 
-  if(action.type==="TOTALREMOVE"){
-    const existingCartItemIndex= state?.items.findIndex((item)=>item.id===action.id.id)
-    const existingCartItem= state?.items[existingCartItemIndex]
-    const existingCartItemQty= existingCartItem.qty
-    
-    const updatedItems= state?.items.filter((item)=>item.id !== action.id.id)
-    const sizeofcart=state?.cartSize-existingCartItemQty    
-    return{
-      ...state,
-      cartSize:sizeofcart,
-      items:updatedItems
-    }
-
-  }
-
-  if(action.type==="RESETSTATE"){
-    return{
-      cartSize:0,
-      item:[],
-      cartId:null,
-    }
-  }
-  return inistialState
-
-  
-
-}
-
-function CartProviders(props) {
-  const [displayNothing, setDisplayNothing]=useState(false)
-
-  const [cartState, dispatch]=useReducer(reduce,inistialState)
-  
-
-  
-
-  useEffect(()=>{
-    if(cartState.cartSize>=1){
-    window.localStorage.setItem("MY_CARTSTATE", JSON.stringify(cartState))
-  }}, [cartState])
-
-  const addItems=(item)=>{
-    const action={type:"ADD", item:item}
-    dispatch(action)
-  }
-  const removeItems=(id)=>{
-    const action={type:"REMOVE", id:id}
-    dispatch(action)
-  }
-
-  const totalRemove=(id)=>{
-    const action={type:"TOTALREMOVE", id:id}
-    dispatch(action)
-  }  
-  const cartReset=(id)=>{
-    const action={type:"RESETSTATE"}
-    dispatch(action)
-  }  
-  const cartValue={
-    totalPrice:cartState.totalPrice,
-    cartId:cartState.cartId,
-    // qty:cartState.qty,
-    // totalAmount:cartState.totalAmount,
-    cartSize:cartState.cartSize,
-    items:cartState.items,
-    addItemsToCart: addItems,
-    removeItemsFromCart: removeItems,
-    removeItemsTotally: totalRemove,
-    seeDisplay:displayNothing,
-    seeSetDisplay:setDisplayNothing,
-    cartReset:cartReset
-    
-    
-};
-
-  return (
-    <cartContxt.Provider value={cartValue}>
-        {props.children}
-    </cartContxt.Provider>
-  )
-}
-
-export default React.memo(CartProviders)
+export default cartSlice.reducer;

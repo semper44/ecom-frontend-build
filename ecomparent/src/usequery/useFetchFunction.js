@@ -7,7 +7,7 @@
 
 //     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
 
-//     // let response= await fetch(`http://127.0.0.1:8000/product/editproduct/${id}`,
+//     // let response= await fetch(`${process.env.REACT_APP_URLS}/product/editproduct/${id}`,
 //    function fetchData(url, method){
 //         fetch(url,
 //         {method:method,
@@ -39,7 +39,7 @@
 // export default useTokenFetch
 
 
-// let response= await fetch(`http://127.0.0.1:8000/product/editproduct/${id}`,
+// let response= await fetch(`${process.env.REACT_APP_URLS}/product/editproduct/${id}`,
 export const fetchData =(url, method)=>{
     let loading=true
     let error=null

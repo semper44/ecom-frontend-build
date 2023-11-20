@@ -9,10 +9,6 @@ function useFetch(url, requestOptions) {
     
 
     useEffect(()=>{
-        // let requestOptions = {
-        //     method: 'GET',
-        //     redirect: 'follow'
-        // };
         let errorStatus= false
         fetch(url, requestOptions)
             .then(res=>{
@@ -40,7 +36,7 @@ function useFetch(url, requestOptions) {
                 setLoading(false)
                 setError(err.message)
             })   
-    }, [url]);
+    }, [requestOptions, url]);
     
     
 

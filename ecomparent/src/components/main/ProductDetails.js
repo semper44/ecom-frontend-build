@@ -22,8 +22,8 @@ function ProductDetails() {
     useEffect(()=>{document.title="Product Details"
     },[])
 
-    let url= `http://127.0.0.1:8000/product/listproductdetails/${id}/`
-    let urls2= "http://127.0.0.1:8000/product/allproducts/electronics/"
+    let url= `${process.env.REACT_APP_URLS}/product/listproductdetails/${id}/`
+    let urls2= `${process.env.REACT_APP_URLS}/product/allproducts/electronics/`
   const{data, error, productDetails, loading}=useFetchProductDetails(url, urls2)
   const{addItemsToCart}=useContext(cartContxt)
 

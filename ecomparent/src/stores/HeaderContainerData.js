@@ -35,7 +35,7 @@ function HeaderContainerData(props) {
           }
       };
       (async()=>{
-        const response= await fetch('http://127.0.0.1:8000/profile/getnotifications/', followingrequestOptions)
+        const response= await fetch(`${process.env.REACT_APP_URLS}/profile/getnotifications/`, followingrequestOptions)
         let res= await response.json();
         if(res){
           setFollowingSideData(res)
@@ -54,7 +54,7 @@ function HeaderContainerData(props) {
     // useEffect(()=>{
     
     //   (async()=>{
-    //     const response= await fetch(`http://127.0.0.1:8000/profile/profdetails/${userDetails.username}/`)
+    //     const response= await fetch(`${process.env.REACT_APP_URLS}/profile/profdetails/${userDetails.username}/`)
     //     let res= await response.json();
     //           //           //       setpPoductNotifications("item.notification")
     //       if(res){

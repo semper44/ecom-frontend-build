@@ -22,10 +22,10 @@ function AdminOverviewFetch(props) {
           }
       };
       Promise.all([
-        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/product/mostboughtcategory/", requestOptions),
-        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/product/monthlyorders/", requestOptions),
-        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/profile/monthlyusers/", requestOptions),
-        (window.location.pathname==="/admin")&& fetch("http://127.0.0.1:8000/profile/totalusers/", requestOptions),
+        (window.location.pathname==="/admin")&& fetch(`${process.env.REACT_APP_URLS}/product/mostboughtcategory/`, requestOptions),
+        (window.location.pathname==="/admin")&& fetch(`${process.env.REACT_APP_URLS}/product/monthlyorders/`, requestOptions),
+        (window.location.pathname==="/admin")&& fetch(`${process.env.REACT_APP_URLS}/profile/monthlyusers/`, requestOptions),
+        (window.location.pathname==="/admin")&& fetch(`${process.env.REACT_APP_URLS}/profile/totalusers/`, requestOptions),
       ])
       .then(([resMostBoughtCategory, resMonthlyOrders, resMonthlyUsers, resTotalUsers])=>
         Promise.all([resMostBoughtCategory.json(), resMonthlyOrders.json(), resMonthlyUsers.json(), resTotalUsers.json()]))

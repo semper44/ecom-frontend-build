@@ -30,7 +30,7 @@ function MyOrders() {
 
   useEffect(()=>{
 
-    fetch('https://cras.serveo.net/profile/ordersusersmade/')
+    fetch(`${process.env.REACT_APP_URLS}/profile/ordersusersmade/`)
     .then((res)=>{
         if(res.ok){
             setLoading(false)
@@ -150,7 +150,7 @@ function MyOrders() {
                 Delete
               </Typography>
             </IconButton>
-            {deleteState &&<Delete setdelete={setdeleteState} url={`http://127.0.0.1:8000/product/admin/deleteproduct/${idd}`}/>}
+            {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${idd}`}/>}
           </Box>
         );
       },

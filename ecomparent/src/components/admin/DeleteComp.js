@@ -12,7 +12,7 @@ import Loading from "../extra comp/Loading";
 // import { useNavigate } from "react-router-dom";
 
 // const fetcher=(productId)=>{
-//   return axios.delete(`http://127.0.0.1:8000/product/deleteproduct/${productId}`)
+//   return axios.delete(`${process.env.REACT_APP_URLS}/product/deleteproduct/${productId}`)
 // }
 
 function DeleteComp({setdelete, url, type}) {

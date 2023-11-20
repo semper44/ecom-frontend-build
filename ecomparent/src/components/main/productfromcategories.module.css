@@ -125,15 +125,17 @@
 .id a{
     text-decoration: none;
 }
-
+.socialmediasharedark{
+    color: white;
+}
 #related-products-parents{
     display: grid;
     grid-template-columns: repeat(5, minmax(10%, 1fr));
     /* grid-template-columns: 90px 90px 90px 90px 90px; */
     grid-column-gap: 2%;
-    grid-row-gap: 7%;
     margin-left: 5.5%;
     margin-right: 4.5%;
+    grid-row-gap:1rem;
     margin-top: 25px;
     margin-bottom: 10rem;
 }
@@ -226,7 +228,6 @@
         grid-template-columns: repeat(4, minmax(10%, 1fr));
         /* grid-template-columns: 90px 90px 90px 90px 90px; */
         grid-column-gap: 2%;
-        grid-row-gap: 7%;
         margin-left: 5.5%;
         margin-right: 4.5%;
         margin-top: 25px;
@@ -250,7 +251,6 @@
         display: grid;
         grid-template-columns: repeat(3, minmax(10%, 1fr));
         grid-column-gap: 2%;
-        grid-row-gap: 7%;
         margin-left: 5.5%;
         margin-right: 4.5%;
         margin-top: 25px;
@@ -276,7 +276,6 @@
         grid-template-columns: repeat(3, minmax(10%, 1fr));
         /* grid-template-columns: 90px 90px 90px 90px 90px; */
         grid-column-gap: 2%;
-        grid-row-gap: 7%;
         margin-left: 5.5%;
         margin-right: 4.5%;
         margin-top: 25px;
@@ -314,7 +313,6 @@
         grid-template-columns: repeat(3, minmax(10%, 1fr));
         /* grid-template-columns: 90px 90px 90px 90px 90px; */
         grid-column-gap: 2%;
-        grid-row-gap: 7%;
         margin-left: 5.5%;
         margin-right: 4.5%;
         margin-top: 25px;
@@ -340,7 +338,6 @@
         grid-template-columns: repeat(3, minmax(10%, 1fr));
         /* grid-template-columns: 90px 90px 90px 90px 90px; */
         grid-column-gap: 4%;
-        grid-row-gap: 7%;
         margin-left: 5.5%;
         margin-right: 4.5%;
         margin-top: 25px;
@@ -373,7 +370,6 @@
         display: grid;
         grid-template-columns: repeat(2, minmax(10%, 1fr));
         grid-column-gap: 4%;
-        grid-row-gap: 7%;
         margin-left: 5.5%;
         margin-right: 4.5%;
         margin-top: 25px;

@@ -22,12 +22,23 @@ import "aos/dist/aos.css"
 
 
 function Main() {
+  
   const {theme}= useContext(ThemeData)
   const {dontdisplay}= useContext(screensizecontext)
   // const {promoloading}= useContext(promoData)
   const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
-  const {featureData,loading, error}= useContext(mainproductContext)
-  ;
+  const {featureData,loading, error}= useContext(mainproductContext);
+  
+  let ftd = null ;
+  if(featureData){
+    localStorage.setItem("featuredata", JSON.stringify(featureData))
+  }else{
+    let featureDatalocal = localStorage.getItem("featuredata")
+    if(featureDatalocal !== null){
+      ftd = JSON.parse(featureDatalocal)
+    }
+    
+  }
 
 
   useEffect(()=>{document.title="Home"}, [])
@@ -47,8 +58,8 @@ function Main() {
     <>
     {!loading?
     <>
-    {error && <h1 id={styles.errors}>{error}</h1> }
-    {featureData &&<div className={styles.parent} onClick={open}>
+    {(!featureData && !ftd && error) && <h1 id={styles.errors}>{error}</h1> }
+    {(featureData || ftd) &&<div className={styles.parent} onClick={open}>
       {/* <div className={styles['main-pics']}></div> */}
       <div className={styles["image-slide"]}>
         <Images />

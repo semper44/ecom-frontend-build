@@ -8,7 +8,7 @@ import { ThemeData } from '../../App'
 
 
 function AllSellers() {
-    const {data, loading, error}= useFetch(`http://127.0.0.1:8000/profile/sellers/`)
+    const {data, loading, error}= useFetch(`${process.env.REACT_APP_URLS}/profile/sellers/`)
     const {theme}= useContext(ThemeData)
 
 

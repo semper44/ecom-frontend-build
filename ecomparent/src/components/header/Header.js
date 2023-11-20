@@ -61,7 +61,7 @@ function Header(props) {
       boxSizing: "border-box",
       backgroundColor:theme?"#050c30":"white",
       // boxShadow: theme?'13px 13px 20px rgba(0, 0, 0, 0.6), -13px -13px 20px rgba(0, 0, 0, 0.6)':'10px 2px 12px #cbced1, -13px -13px 20px transparent',}} onClick={close} >
-      boxShadow: theme?'13px 13px 20px rgba(0, 0, 0, 0.6), -13px -13px 20px rgba(0, 0, 0, 0.6)':'10px 2px 12px #cbced1, -10px -2px 12px #cbced1',}} onClick={close} >
+      boxShadow: theme?'13px 13px 20px rgba(0, 0, 0, 0.6), -13px -13px 20px rgba(0, 0, 0, 0.6)':'10px 2px 9px #cbced1, -10px -2px 9px #cbced1',}} onClick={close} >
       <Box>
       {sidebar  &&<MenuIcon showSidebar={showSidebar}/>}
       </Box>

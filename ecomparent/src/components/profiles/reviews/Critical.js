@@ -13,7 +13,7 @@ function Critical() {
     
     useEffect(()=>{
       let errorStatus=false
-      let url= `http://127.0.0.1:8000/profile/criticalrating/${username}/`
+      let url= `${process.env.REACT_APP_URLS}/profile/criticalrating/${username}/`
       let method = "GET"
       fetch(url,
         {method:method,

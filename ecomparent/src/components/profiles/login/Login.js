@@ -6,6 +6,8 @@ import Message from '../../extra comp/Message'
 import { ThemeData } from '../../../App'
 import styles from "./login.module.css"
 import ResetPassword from "../resetpassword/ResetPassword"
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { Box } from '@mui/material'
 
 
 
@@ -26,6 +28,7 @@ function Login() {
   const [state, dispatch] = useReducer(reducer, initialState)
   let sendData= useContext(AuthContext)
   const[passwordChange, setPasswordChange]=useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   let {theme}= useContext(ThemeData)
   const{message, status, code}=sendData.message
   const interval=sendData.interval
@@ -40,11 +43,10 @@ function Login() {
     setTimeout(()=>clearInterval(interval), 6000)
   }, [interval, intervalFn])
 
-  // 
-    
-  function changepasswordfn(){
-    setPasswordChange(true)
-  }
+
+  const toggleShowPassword = () => {
+    setShowPassword((showPassword) => !showPassword);
+  };
 
   function Change(e){
     const {name, value}=e.target
@@ -71,11 +73,16 @@ function Login() {
               onChange={Change}
               name='username'/>
 
-              <input type="password" 
-            className="input-password" 
-            placeholder='Password'
-            onChange={Change}
-            name='password'/>
+              <Box sx={{position:"relative"}}>
+                <input type={showPassword?"text":"password" }
+                className="input-password" 
+                placeholder='Password'
+                onChange={Change}
+                name='password'/>
+
+                <VisibilityOffOutlinedIcon style={{ cursor: 'pointer', position:"absolute", top:"70%", right:"3.2rem" }}
+                  onClick={toggleShowPassword}/>
+              </Box>
             </div>
             <div id='forgotpassword' className={styles["login-text"]}>
               <p>Forgot Password? 

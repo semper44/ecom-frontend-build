@@ -75,7 +75,7 @@ function MenuIcon({showSidebar, notif}) {
           },
         redirect: 'follow'
       };
-    const res= await fetch('http://127.0.0.1:8000/product/addtocart/', requestOptions)
+    const res= await fetch(`${process.env.REACT_APP_URLS}/product/addtocart/`, requestOptions)
         
       if(res.ok){
         window.localStorage.removeItem("MY_CARTSTATE")

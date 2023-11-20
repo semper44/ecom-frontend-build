@@ -11,7 +11,7 @@ function FetchTry(props) {
 
     useEffect(()=>{
 
-        fetch('http://127.0.0.1:8000/profile/ordersusersmade/')
+        fetch(`${process.env.REACT_APP_URLS}/profile/ordersusersmade/`)
         .then((res)=>{return res.json()})
         .then((result)=>{
           

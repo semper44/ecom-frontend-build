@@ -1,6 +1,5 @@
 import React from 'react';
 import GradingOutlinedIcon from '@mui/icons-material/GradingOutlined';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 

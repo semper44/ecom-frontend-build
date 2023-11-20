@@ -49,7 +49,7 @@ function SellersProduct() {
 
   useEffect(()=>{
     let errorStatus=false
-    let url= `http://127.0.0.1:8000/product/listproductsbysellers/${username}`
+    let url= `${process.env.REACT_APP_URLS}/product/listproductsbysellers/${username}`
     let method = "GET"
     fetch(url,
       {method:method,
@@ -96,7 +96,7 @@ function SellersProduct() {
 
   // useEffect(() => {
   //   (async()=>{
-  //     let response= await axios.get(`http://127.0.0.1:8000/product/listproductsnoauthorizatio/${id}`)
+  //     let response= await axios.get(`${process.env.REACT_APP_URLS}/product/listproductsnoauthorizatio/${id}`)
   //     setproductData(response.data)
   //     if(response.status===200){
   //       setLoading(false)}
@@ -178,7 +178,7 @@ function SellersProduct() {
                 Delete
               </Typography>
             </IconButton>
-            {deleteState &&<Delete setdelete={setdeleteState} url={`http://127.0.0.1:8000/product/admin/deleteproduct/${params.id}`}/>}
+            {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${params.id}`}/>}
           </Box>
         );
       },

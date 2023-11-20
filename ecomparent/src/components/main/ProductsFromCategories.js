@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect} from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import {cartContxt} from '../../stores/CartContxt';
 import ButtonAdd from '../extra comp/ButtonAdd';
 import ButtonDelete from '../extra comp/ButtonDelete';
@@ -43,23 +43,19 @@ function ProductFromCategories({url}) {
         <Link to={`/productdetails/${item.id}`}>
           <div className={styles["related-products-image"]}>
             <img src={item.image} alt={item.description} />
-            <div className={styles["position-button-add"]}>
-            <ButtonAdd item={item}/>
-            </div>
           </div>
         </Link>
           <div className={styles["related-products-others"]}>
               <h4 id={styles["p-category"]}>{item.category}</h4>
               {/* <p>{props.description}</p> */}
-              <h2 id={theme?styles["h2-price-dark"]:styles["h2-price"]}>{item.price}</h2>
+              <h2 id={theme?styles["h2-price-dark"]:styles["h2-price"]}>${item.price}</h2>
               <p>{item.tittle}</p>
               <div className="minus-plus" id={styles["minus-plus"]}>
               <ButtonAdd item={item}/>
               <div className="share" onClick={toggleShare}>
-                <ShareOutlinedIcon />
-                {share && <div className="socialmediashare">
-                  <SocialMediaShare />
-                </div>}
+                <ShareOutlinedIcon sx={{color:theme && "white"}} />
+                {share && <SocialMediaShare />}
+                
               </div>
               <ButtonDelete  item={item}/>
              
