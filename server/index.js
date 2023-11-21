@@ -1,8 +1,8 @@
 import { Server } from "socket.io";
-
+// console.log(process.env.REACT_APP_URLS)
 const io = new Server({
     cors:{
-        origin:process.env.REACT_APP_URLS
+        origin:"https://epcommerce.vercel.app"
     }
  });
 let flag= false
