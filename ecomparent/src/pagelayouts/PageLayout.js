@@ -13,7 +13,7 @@ import { Box } from "@mui/material";
 import { Typography } from '@mui/material'
 import {  ThemeProvider, createTheme } from '@mui/material/styles'
 import { Navbars } from "./PageLayoutStyles";
-import { Sidebar, useProSidebar } from "react-pro-sidebar";
+import { useProSidebar } from "react-pro-sidebar";
 import { screensizecontext } from "../stores/CartContxt";
 
 
@@ -69,7 +69,7 @@ function PageLayout(props) {
   return (
     <ThemeProvider theme={{...BreakPointtheme, collapsed:collapsed}}>
     <Box sx={{width:"100%"}}>
-        <Box sx={{display: "flex",
+    {userDetails?.is_staff === true || userDetails?.is_superuser === true ? (<Box sx={{display: "flex",
           flexGrow:1,
           width:" auto ",
           height: "100vh",
@@ -122,7 +122,9 @@ function PageLayout(props) {
               <Outlet />
             </Box>
           </Navbars>
-        </Box>
+        </Box>): (
+        <Typography variant="h1" sx={{color:theme?"white":"cyan", textAlign:"center", marginTop:"30vh"}}>Not authorized</Typography>
+      )}
       {/* {userDetails?.is_staff === true || userDetails?.is_superuser === true ? (
         <Box sx={{display: "flex",
           flexGrow:1,

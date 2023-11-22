@@ -6,9 +6,9 @@ import axios from "axios"
 import { IconButton } from '@mui/material'
 import { PhotoCamera } from '@mui/icons-material'
 import Modals from '../../extra comp/Modals'
-import Loading from './CreateProductLoading'
 import Message from '../../extra comp/Message'
 import { ThemeData } from '../../../App'
+import Loading from '../../extra comp/NewLoadingModal'
 // import FullPage from './FullPage'
 
 
@@ -156,7 +156,6 @@ function AdminCreate({setproduct, socket, followers}) {
   
 
   return (
-    // <></>
     <Modals >
       {unsuccessful && <Message 
       value={"Sorry, request failed"}
@@ -217,10 +216,7 @@ function AdminCreate({setproduct, socket, followers}) {
               <button className={styles.searchcreate} onClick={handleSubmit} >Upload</button>
             </div>
           </div>
-        </div>
-        <div className={styles["product-loading"]}>
           {loading && <Loading />}
-
         </div>
     </Modals>
   

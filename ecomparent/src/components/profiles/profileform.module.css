@@ -43,6 +43,10 @@
     margin: 0 2rem;
 
 }
+.incorrectpassword{
+    margin-top: -40px;
+    margin-bottom: 0;
+}
 .incorrectpassword p{
     margin-left: 20px;
     color: red;
@@ -68,7 +72,21 @@ input::placeholder{
 @media(max-width:500px){
     .form-holder{
         background-color: white;
-        width: 50%;
+        width: 80%;
+        height: fit-content;
+        border-radius: 10px;
+    }
+    .form-holder-dark{
+        background-color: gainsboro;
+        width: 80%;
+        height: fit-content;
+        border-radius: 10px;
+    }
+}
+@media(max-width:500px){
+    .form-holder{
+        background-color: white;
+        width: 70%;
         height: fit-content;
         border-radius: 10px;
     }

@@ -8,6 +8,7 @@ import styles from "./login.module.css"
 import ResetPassword from "../resetpassword/ResetPassword"
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Box } from '@mui/material'
+import Loading from '../../extra comp/NewLoadingModal'
 
 
 
@@ -58,11 +59,12 @@ function Login() {
   }
   return (
       <>
+     
       {(interval && status) &&<Message value={message} code={code}/>}
       {passwordChange &&<ResetPassword />}
       <div className={theme?styles["background-dark"]:styles.background}>
         <div className={styles["login-container"]}>
-          <div className={styles.login}>
+          <div className={theme?styles.logindark:styles.login }>
               <h1>Login</h1>
           </div>
           <form onSubmit={sendData?.loginUser}>
@@ -109,7 +111,9 @@ function Login() {
           </form>
          
         </div>
+        {sendData?.showModal && <Loading />}
       </div>
+
       </>
 
   )

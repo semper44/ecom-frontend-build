@@ -23,7 +23,6 @@ import SellersProduct from '../SellersProduct';
 import MyOrders from '../MyOrders';
 import { showsidebarcontext } from '../../../stores/CartContxt'
 import DeleteComp from '../../admin/DeleteComp';
-import throttle from 'lodash.throttle';
 
 
 
@@ -376,8 +375,7 @@ useEffect(()=>{
         ;
         setdata({pics:res.pics})
       })
-    } 
-    ;
+    };
   
   function showProfileFormModal(){
     setProfileFormstate(true)
@@ -386,7 +384,7 @@ useEffect(()=>{
   function updateProfileFormModal(){
     setUpdateProfile(true)
   }
-
+  console.log(data);
   return (
     <>
     {response ?
@@ -416,8 +414,8 @@ useEffect(()=>{
           <div className={theme?(dontdisplay?styles["left-holder-dark-dontdisplay"]:styles["left-holder-dark"]):(dontdisplay?styles["left-holder-dontdisplay"]:styles["left-holder"])}>
             <div className={styles["top-left-holder"]}>
               <div className={styles["user-details"]}>
-              { data ?<p>{data?.name}</p>: 
-              <p>Guest</p> }
+                
+              { data ?<p>{data?.name}</p>: <p>Guest</p> }
                 <div className={styles.location}>
                   <PlaceOutlinedIcon />
                   {data?.state? <p>{data?.state}</p>:<p>Location</p> }

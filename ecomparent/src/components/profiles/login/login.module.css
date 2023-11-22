@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    position: relative;
 }
 .background{
     display: block;
@@ -12,6 +13,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    position: relative;
 }
 
 .login-container{
@@ -23,6 +25,11 @@
     background-color: #fff;
 }
 .login h1{
+    color: cyan;
+    margin-top: 4%;
+
+}
+.logindark h1{
     margin-top: 4%;
 
 }

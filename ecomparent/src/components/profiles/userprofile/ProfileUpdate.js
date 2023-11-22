@@ -4,7 +4,7 @@ import { AuthContext } from '../login/LoginFetch'
 import jwt_decode from "jwt-decode"
 import axios from "axios"
 import Modals from '../../extra comp/Modals'
-import Loading from '../poductcreation/CreateProductLoading'
+import Loading from '../../extra comp/NewLoadingModal'
 import { ThemeData } from '../../../App';
 // import FullPage from './FullPage'
 

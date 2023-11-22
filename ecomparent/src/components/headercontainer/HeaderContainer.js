@@ -59,21 +59,7 @@ function HeaderContainer(props) {
     }
     else if(screenWidth>500 && screenWidth<=400 ){
       setSize(500)
-    }
-    // else{
-    //   setgridlg(true)
-    //   setGridxl(true)
-    //   setdontDisplay(undefined)
-    //   setGridxlxl(true)
-
-
-    // }
-    // else{
-    //   setdontDisplay(undefined)
-    //   // setlg(false)
-
-    // }
-   
+    }   
   }, [ screenWidth])
 
 
@@ -87,6 +73,11 @@ function HeaderContainer(props) {
       window.removeEventListener("resize", handleResize)
    }
   }, [screenWidth])
+
+
+  console.log(`${process.env.REACT_APP_URLS}`);
+  console.log("${process.env.REACT_APP_URLS}/product/addtocart/");
+
 
   // const worker = useMemo(
   //   () => new Worker(new URL("../extra comp/Workers.js", import.meta.url)),

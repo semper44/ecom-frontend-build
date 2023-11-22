@@ -10,7 +10,7 @@ import { Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Box } from '@mui/material'
-
+import Loading from '../../extra comp/NewLoadingModal'
 
 
 const initialState={
@@ -37,6 +37,7 @@ function Register() {
 },[])
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState)
   let sendData= useContext(AuthContext)
   let {theme}= useContext(ThemeData)
@@ -77,6 +78,8 @@ function Register() {
 
   let loginUser= (e)=>{
     e.preventDefault();
+    console.log("object11");
+    setShowModal(true)
     let fetchRequestOptions={
         method: "POST",
         headers: {
@@ -88,6 +91,7 @@ function Register() {
       fetch(`${process.env.REACT_APP_URLS}/profile/register/`, fetchRequestOptions)
       .then((res)=>{
           if(res.ok){
+            setShowModal(false)
             navigate("/login")
           }
         })
@@ -152,6 +156,7 @@ function Register() {
             </div>
           </form>
         </div>
+        {showModal && <Loading />}
       </div>
       </>
 

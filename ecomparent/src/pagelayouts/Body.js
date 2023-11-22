@@ -35,20 +35,20 @@ function Body(props) {
       </div>
       
       {/* {(window.location.pathname ==="/") && <Outlet />} */}
-      <div className="outlet" style={{marginTop:dontdisplay?"190px":"240px" }}>
+      <div className="outlet" style={{marginTop:dontdisplay?"190px":"200px" }}>
         <Box sx={{width:"100%", display:dontdisplay?"flex":"none", gap:"7.2%", alignItems:"center", justifyContent:"center", mt:"6%", "& a":{textDecoration:"none"}}}>
         <Link to={"/categories"}>
-          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
+          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer", textDecoration:"underline"}}>          
             Categories
           </Typography>
         </Link>
         <Link to={`/profile/${userDetails?.username}/yourorders`}>
-          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
+          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer", textDecoration:"underline"}}>          
             Orders
           </Typography>
         </Link>
         <Link to={"/allsellers"}>
-          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer"}}>          
+          <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer", textDecoration:"underline"}}>          
             Sellers
           </Typography>
         </Link>

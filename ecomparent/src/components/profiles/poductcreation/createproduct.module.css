@@ -3,12 +3,14 @@
     width: 30%;
     height: fit-content;
     border-radius: 10px;
+    position: relative;
 }
 .all-items-dark{
     background-color: gainsboro;
     width: 30%;
     height: fit-content;
     border-radius: 10px;
+    position: relative;
 }
 
 #cancel{

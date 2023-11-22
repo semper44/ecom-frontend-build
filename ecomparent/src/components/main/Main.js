@@ -60,7 +60,6 @@ function Main() {
     <>
     {(!featureData && !ftd && error) && <h1 id={styles.errors}>{error}</h1> }
     {(featureData || ftd) &&<div className={styles.parent} onClick={open}>
-      {/* <div className={styles['main-pics']}></div> */}
       <div className={styles["image-slide"]}>
         <Images />
       </div>

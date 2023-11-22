@@ -313,6 +313,12 @@
     text-align: center;
     color: cyan;
 }
+@media(max-width:500px){
+    .profile-down-part{
+        display: grid;
+        grid-row-gap: 1rem;
+    }
+}
 @media(max-width:800px){
     .profile-image-container{
     display: grid;

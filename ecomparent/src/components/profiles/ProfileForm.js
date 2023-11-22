@@ -1,8 +1,8 @@
-import React, { useState, useEffect , useContext} from 'react'
+import React, { useState , useContext} from 'react'
 import styles from "./profileform.module.css"
 import Modals from '../extra comp/Modals'
 import { ThemeData } from '../../App'
-import Loading from '../extra comp/Loading'
+import Loading from '../extra comp/NewLoadingModal'
 import jwt_decode from "jwt-decode";
 import Message from '../extra comp/Message'
 
@@ -17,6 +17,8 @@ function ProfileForm(props) {
     const[empty, setEmpty]=useState(false)
     const[incorrectEmail, setIncorrectEmail]=useState(false)
     const[UnCorrectPassword, setUnCorrectPassword]=useState(false)
+    const[accountnunber, setAccountnunber]=useState(false)
+    const[accountname, setAccountname]=useState(false)
     const {theme}= useContext(ThemeData)
 
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
@@ -35,19 +37,20 @@ function ProfileForm(props) {
 
 
 
-useEffect(()=>{
-    if(
-        (data.BankAccount &&
-        data.AccountNumber &&
-        data.PhoneNumber &&
-        data.Country &&
-        data.State &&
-        data.Email &&
-        data.BusinessName)
-        ){setEmpty(true)}
+// useEffect(()=>{
+//     if(
+//         (data.BankAccount &&
+//         data.AccountNumber &&
+//         data.PhoneNumber &&
+//         data.Country &&
+//         data.State &&
+//         data.Email &&
+//         data.BusinessName)
+//         ){setEmpty(true)}
     
-}, [data, data.AccountNumber, data.BankAccount, data.BusinessName, data.Country, data.Email, data.PhoneNumber, data.State])
-// 
+// }, [data, data.AccountNumber, data.BankAccount, data.BusinessName, data.Country, data.Email, data.PhoneNumber, data.State])
+
+
 let formData= new FormData()
 formData.append("bankAccount",  parseInt(data.BankAccount))
 formData.append("accountNumber", parseInt(data.AccountNumber))
@@ -67,15 +70,21 @@ const requestOptions = {
     redirect: 'follow'
   };
 
-function sendFormDetail(){
-    setLoading(true)
-    if(data?.PhoneNumber?.length !==11){
-        setUnCorrectPassword(true)
-    }else if(data?.Email==="" || !data?.Email?.includes("@")){
-        setIncorrectEmail(true)
-        
-    }
+  function sendFormDetail(){
+  if(data?.PhoneNumber?.length < 11){
+    setUnCorrectPassword(true)
+  }else if(data?.Email==="" || !data?.Email?.includes("@")){
+    setIncorrectEmail(true)
+    
+  }else if(!data.hasOwnProperty("AccountNumber") ){
+    setAccountnunber(true)
+    
+  }else if(!data.hasOwnProperty("BankAccount")  ){
+    setAccountname(true)
+    
+  }
     else{
+      setLoading(true)
       (async()=>{
        const response= await fetch(`${process.env.REACT_APP_URLS}/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
        let res= await response.json();
@@ -121,11 +130,19 @@ function sendFormDetail(){
               name='BankAccount'
               placeholder='Bank account'
               onChange={change} />
+              {accountname && 
+            <div className={styles.incorrectpassword}>
+              <p>Bank account incorrect</p>
+            </div>}
 
               <input type="text"
               name='AccountNumber'
               placeholder='Account number'
               onChange={change} />
+              {accountnunber && 
+            <div className={styles.incorrectpassword}>
+              <p>Account number incorrect</p>
+            </div>}
 
               <input type="text"
               name='PhoneNumber'
@@ -133,7 +150,7 @@ function sendFormDetail(){
               onChange={change} />
             {UnCorrectPassword && 
             <div className={styles.incorrectpassword}>
-              <p>phoneNumber not complete</p>
+              <p>Phone number not complete</p>
             </div>}
 
               <input type="text"

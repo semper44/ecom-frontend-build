@@ -10,6 +10,7 @@ const d=JSON.parse(window.localStorage.getItem("authToken"))||undefined
 
 function LoginFetch(props) {
     const [authToken, setAuthToken] = useState("");
+    const [showModal, setShowModal] = useState(false);
     const[interval, setIntervalF]= useState(false)
     const[loginState, setLoginState]= useState(false)
     const [message, setMessage] = useState({status:false, message:"", code:undefined});
@@ -18,6 +19,7 @@ function LoginFetch(props) {
     const navigate = useNavigate();
 
     let loginUser= (e)=>{
+        setShowModal(true)
         e.preventDefault();
         let fetchRequestOptions={
             method: "POST",
@@ -65,6 +67,7 @@ function LoginFetch(props) {
                         
                         
                         if(res.status===200){
+                            setShowModal(false)
                             response.serializer.forEach((obj, index) => {
                             obj.qty=JSON.parse(response.item_qty)[index]
                             
@@ -137,6 +140,7 @@ function LoginFetch(props) {
 
     let contextData = {
     user: user,
+    showModal:showModal,
     loginUser: loginUser,
     logout: logout,
     message:message,

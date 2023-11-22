@@ -21,8 +21,8 @@ function Protected(props) {
           onTransform={props.onChange}
         />
       </div>
-      {/* {user ? <Outlet /> : <Navigate to="/login" />} */}
-      <Outlet /> 
+      {user ? <Outlet /> : <Navigate to="/login" />}
+      {/* <Outlet />  */}
 
       <Footer />
     </>
