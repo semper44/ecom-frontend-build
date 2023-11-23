@@ -5,6 +5,8 @@ const io = new Server({
         origin:"https://epcommerce.vercel.app"
     }
  });
+console.log("hy")
+console.log("me")
 let flag= false
 let onlineUsers=[]
 const addNewUser=(userid, socketId)=>{
