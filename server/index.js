@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 // console.log(process.env.REACT_APP_URLS)
-const io = new Server({
+const io = new Server(httpServer,{
     cors:{
         origin:"*",
         credentials: true,
