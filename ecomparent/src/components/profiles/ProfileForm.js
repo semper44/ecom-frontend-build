@@ -14,7 +14,6 @@ function ProfileForm(props) {
     const[unsuccessful, setUnsuccessful]=useState(false)
     const[loading, setLoading]=useState(false)
     const[responseData, setResponseData]=useState(null)
-    const[empty, setEmpty]=useState(false)
     const[incorrectEmail, setIncorrectEmail]=useState(false)
     const[UnCorrectPassword, setUnCorrectPassword]=useState(false)
     const[accountnunber, setAccountnunber]=useState(false)

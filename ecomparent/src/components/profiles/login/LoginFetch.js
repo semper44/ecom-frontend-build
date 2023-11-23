@@ -49,6 +49,7 @@ function LoginFetch(props) {
                 if(result.detail){
                     setMessage({status:true, message:result.detail, code:"error"})
                     setIntervalF(true)
+                    showModal(false)
                 }
                 
 
