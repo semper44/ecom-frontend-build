@@ -2,7 +2,9 @@ import { Server } from "socket.io";
 // console.log(process.env.REACT_APP_URLS)
 const io = new Server({
     cors:{
-        origin:"https://epcommerce.vercel.app"
+        origin:"*",
+        credentials: true,
+        methods: ["GET", "POST"]
     }
  });
 console.log("hy")
