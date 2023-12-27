@@ -12,6 +12,7 @@ import Message from '../extra comp/Message'
 function ProfileForm(props) {
     const[data, setData]=useState({})
     const[unsuccessful, setUnsuccessful]=useState(false)
+    const[alreadyAseller, setAlreadyAseller]=useState(false)
     const[loading, setLoading]=useState(false)
     const[responseData, setResponseData]=useState(null)
     const[incorrectEmail, setIncorrectEmail]=useState(false)
@@ -48,6 +49,8 @@ function ProfileForm(props) {
 //         ){setEmpty(true)}
     
 // }, [data, data.AccountNumber, data.BankAccount, data.BusinessName, data.Country, data.Email, data.PhoneNumber, data.State])
+console.log(userDetails);
+console.log("userDetails");
 
 
 let formData= new FormData()
@@ -58,7 +61,6 @@ formData.append("country", data.Country)
 formData.append("state", data.State)
 formData.append("email", data.Email)
 formData.append("businessName", data.BusinessName)
-
 
 const requestOptions = {
     method: 'PATCH',
@@ -84,9 +86,12 @@ const requestOptions = {
   }
     else{
       setLoading(true)
+      console.log("object223");
       (async()=>{
-       const response= await fetch(`${process.env.REACT_APP_URLS}/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
-       let res= await response.json();
+        const response= await fetch(`http://127.0.0.1:8000/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
+        console.log(response, "object224");
+        let res= await response.json();
+        console.log(res, "object224");
        if(response.status===400){
         setLoading(false)
         setUnsuccessful(true)
@@ -95,6 +100,10 @@ const requestOptions = {
         setLoading(false)
         setUnsuccessful(false)
         setResponseData(res.data)
+        window.location.reload()
+      }else if(response.status===226){
+        setLoading(false)
+        setAlreadyAseller(true)
         window.location.reload()
       }
       else{
@@ -116,6 +125,11 @@ const requestOptions = {
 
       {responseData && <Message 
       value={"Successful"}
+      code={"success"}
+      fn={setResponseData}
+       />  } 
+      {alreadyAseller && <Message 
+      value={"Already a seller"}
       code={"success"}
       fn={setResponseData}
        />  } 

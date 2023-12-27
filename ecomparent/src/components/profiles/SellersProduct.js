@@ -49,7 +49,7 @@ function SellersProduct() {
 
   useEffect(()=>{
     let errorStatus=false
-    let url= `${process.env.REACT_APP_URLS}/product/listproductsbysellers/${username}`
+    let url= `https://epcommerce.onrender.com/product/listproductsbysellers/${username}`
     let method = "GET"
     fetch(url,
       {method:method,
@@ -57,6 +57,7 @@ function SellersProduct() {
       'Content-Type':'application/json',
       }})
       .then((response)=>{
+        console.log(response, "hit");
           if(!response.ok){
               setLoading(false)
               if(response.status===417){
@@ -67,12 +68,11 @@ function SellersProduct() {
           }
           if (response.status===200){
               setLoading(false)
-          }       
-          ;     
+          }; 
           return response.json()
       })
       .then((data)=>{
-          ;     
+        console.log(data, "data");   
           if(errorStatus){
               setError(data.msg)
           }else{
