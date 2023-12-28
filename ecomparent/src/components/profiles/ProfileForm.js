@@ -71,46 +71,45 @@ const requestOptions = {
     redirect: 'follow'
   };
 
-  function sendFormDetail(){
-  if(data?.PhoneNumber?.length < 11){
-    setUnCorrectPassword(true)
-  }else if(data?.Email==="" || !data?.Email?.includes("@")){
-    setIncorrectEmail(true)
-    
-  }else if(!data.hasOwnProperty("AccountNumber") ){
-    setAccountnunber(true)
-    
-  }else if(!data.hasOwnProperty("BankAccount")  ){
-    setAccountname(true)
-    
+  async function sendFormDetail() {
+    try {
+      if (data?.PhoneNumber?.length < 11) {
+        setUnCorrectPassword(true);
+      } else if (data?.Email === "" || !data?.Email?.includes("@")) {
+        setIncorrectEmail(true);
+      } else if (!data.hasOwnProperty("AccountNumber")) {
+        setAccountnunber(true);
+      } else if (!data.hasOwnProperty("BankAccount")) {
+        setAccountname(true);
+      } else {
+        setLoading(true);
+  
+        const response = await fetch(`${process.env.REACT_APP_URLS}/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions);
+        const res = await response.json();
+  
+        if (response.status === 400) {
+          setLoading(false);
+          setUnsuccessful(true);
+          window.location.reload();
+        } else if (response.status === 200) {
+          setLoading(false);
+          setUnsuccessful(false);
+          setResponseData(res);
+          window.location.reload();
+        } else if (response.status === 226) {
+          setLoading(false);
+          setAlreadyAseller(true);
+        } else {
+          setLoading(false);
+          setUnsuccessful(true);
+        }
+      }
+    } catch (error) {
+      console.error("Error in sendFormDetail:", error);
+      // Handle or log the error as needed
+    }
   }
-    else{
-      setLoading(true)
-      (async()=>{
-        const response= await fetch(`${process.env.REACT_APP_URLS}/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
-        let res= await response.json();
-       if(response.status===400){
-        setLoading(false)
-        setUnsuccessful(true)
-        window.location.reload()
-      }else if(response.status===200){
-        setLoading(false)
-        setUnsuccessful(false)
-        setResponseData(res)
-        window.location.reload()
-      }else if(response.status===226){
-        setLoading(false)
-        setAlreadyAseller(true)
-        // window.location.reload()
-      }
-      else{
-        setLoading(false)
-        setUnsuccessful(true)
-
-      }
-      })()                  
-    }  
-}
+  
   return (
     <>
     <Modals>
