@@ -53,7 +53,7 @@ function Body(props) {
           </Typography>
         </Link>
         </Box>
-        <Outlet />
+        <Outlet sx={{height:"100%"}} />
         <Footer />
       </div>
       {/* {user ?  <Outlet /> :<Navigate to="/login" />} */}

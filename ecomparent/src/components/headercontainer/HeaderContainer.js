@@ -75,9 +75,6 @@ function HeaderContainer(props) {
   }, [screenWidth])
 
 
-  console.log(`${process.env.REACT_APP_URLS}`);
-  console.log("${process.env.REACT_APP_URLS}/product/addtocart/");
-
 
   // const worker = useMemo(
   //   () => new Worker(new URL("../extra comp/Workers.js", import.meta.url)),

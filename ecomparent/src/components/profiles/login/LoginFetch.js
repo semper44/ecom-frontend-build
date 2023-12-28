@@ -161,7 +161,7 @@ function LoginFetch(props) {
     let updateToken= async()=> {
         try {
             let res = await fetch(
-                `${process.env.REACT_APP_URLS}/profile/token/refresh/`,
+                `${process.env.REACT_APP_URLS}profile/token/refresh/`,
                 {
                 method: "POST",
                 headers: {
