@@ -75,22 +75,22 @@ function AllProduct() {
 
   function block(params) {
     if(params.row.blocked==="True" && params.row.tags==="seller"){
-      setUrls(`http://127.0.0.1:8000/profile/unblockseller/${params.id}/`)
+      setUrls(`${process.env.REACT_APP_URLS}/profile/unblockseller/${params.id}/`)
       console.log("hy")
 
     }
     else if(params.row.blocked==="false" && params.row.tags==="seller"){
-      setUrls(`http://127.0.0.1:8000/profile/blockseller/${params.id}/`)
+      setUrls(`${process.env.REACT_APP_URLS}/profile/blockseller/${params.id}/`)
       console.log("hy2")
 
     }
     else if(params.row.blocked==="True" && params.row.tags==="no-seller"){
-      setUrls(`http://127.0.0.1:8000/profile/unblockuser/${params.id}/`)
+      setUrls(`${process.env.REACT_APP_URLS}/profile/unblockuser/${params.id}/`)
       console.log("hy3")
 
     }
     else if(params.row.blocked==="false" && params.row.tags==="no-seller"){
-      setUrls(`http://127.0.0.1:8000/profile/blockuser/${params.id}/`)
+      setUrls(`${process.env.REACT_APP_URLS}/profile/blockuser/${params.id}/`)
       console.log("hy4")
 
     }

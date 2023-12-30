@@ -35,7 +35,7 @@ function Body(props) {
       </div>
       
       {/* {(window.location.pathname ==="/") && <Outlet />} */}
-      <div className="outlet" style={{marginTop:dontdisplay?"190px":"200px", padding:"6%  0"}}>
+      <div className="outlet" style={{marginTop:dontdisplay?"190px":"100px", padding:"6%  0"}}>
         <Box sx={{width:"100%", display:dontdisplay?"flex":"none", gap:"7.2%", alignItems:"center", justifyContent:"center", mt:"6%", "& a":{textDecoration:"none"}}}>
         <Link to={"/categories"}>
           <Typography paragraph sx={{color: theme? "cyan": "black", cursor:"pointer", textDecoration:"underline"}}>          
@@ -53,12 +53,7 @@ function Body(props) {
           </Typography>
         </Link>
         </Box>
-<<<<<<< HEAD
-        <Outlet sx={{height:"100%"}} />
-        <Footer />
-=======
         <Outlet />
->>>>>>> try
       </div>
       <Footer />
       {/* {user ?  <Outlet /> :<Navigate to="/login" />} */}

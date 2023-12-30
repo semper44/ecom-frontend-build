@@ -11,7 +11,6 @@ function AdminOverviewFetch(props) {
 
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
 
-    // http://127.0.0.1:8000/
     useEffect(()=>{
       let requestOptions = {
         method: 'GET',

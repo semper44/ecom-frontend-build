@@ -30,7 +30,7 @@ function LoginFetch(props) {
         body:JSON.stringify({ username: e.target.username.value, password: e.target.password.value })
         };
         
-            fetch( "http://127.0.0.1:8000/profile/token/", fetchRequestOptions)
+            fetch( `${process.env.REACT_APP_URLS}/profile/token/`, fetchRequestOptions)
             .then((res)=>{
                 return res.json()})
             .then((result)=>{
