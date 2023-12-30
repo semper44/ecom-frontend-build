@@ -12,6 +12,8 @@ import Delete from "../admin/DeleteComp";
 import EditProduct from "../admin/EditProduct";
 import { screensizecontext } from "../../stores/CartContxt";
 import { useLocation } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
+
 
 
 
@@ -42,14 +44,13 @@ function SellersProduct() {
     userDetail= jwt_decode(user.access)  
   }  
   
-  ;
   const {theme}= useContext(ThemeData)
   
 
 
   useEffect(()=>{
     let errorStatus=false
-    let url= `https://epcommerce.onrender.com/product/listproductsbysellers/${username}`
+    let url= `${process.env.REACT_APP_URLS}/product/listproductsbysellers/${username}/`
     let method = "GET"
     fetch(url,
       {method:method,
@@ -57,7 +58,6 @@ function SellersProduct() {
       'Content-Type':'application/json',
       }})
       .then((response)=>{
-        console.log(response, "hit");
           if(!response.ok){
               setLoading(false)
               if(response.status===417){
@@ -68,11 +68,11 @@ function SellersProduct() {
           }
           if (response.status===200){
               setLoading(false)
+              return response.json()
           }; 
-          return response.json()
+          
       })
       .then((data)=>{
-        console.log(data, "data");   
           if(errorStatus){
               setError(data.msg)
           }else{
@@ -152,7 +152,10 @@ function SellersProduct() {
               component={Link}
               onClick={()=>editing(params)}
             >
+            <Tooltip title="Edit" arrow>
               <EditOutlinedIcon sx={{color:theme?"cyan":undefined}} />
+            </Tooltip >
+
               <Typography color={"grey"} sx={{ ml: "5px" }}>
                 Edit
               </Typography>
@@ -204,20 +207,20 @@ function SellersProduct() {
             components={{Toolbar:GridToolbar, GridCell:{border:"none"}}}
  // showColumnRightBorder={false}
             disableSelectionOnClick={true}
-            sx={theme && {color:"white", 
-            "& .MuiDataGrid-cellCheckbox":{outline:"white"},
-            "& :rli:":{outline:"yellow", color:"black"},
-            "& .MuiCheckbox-colorPrimary":{color:"white"},
-            "& .css-levciy-MuiTablePagination-displayedRows":{backgroundColor:"#0e7878",color:"white"},
-            "& .MuiDataGrid-footerContainer":{backgroundColor:"#0e7878",color:"white", borderTop:"none"},
-            "& .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar .MuiTablePagination-actions":{color:"white"},
-            "& .MuiDataGrid-cell":{borderBottom:"none"},
-            "& .css-1j9kmqg-MuiDataGrid-toolbarContainer":{borderTop:"none", backgroundColor:"#0e7878", color:"white", gap:dontdisplay?"0":"5%", paddingLeft:"1.5%"},
-            "& .css-1knaqv7-MuiButtonBase-root-MuiButton-root":{ color:"white"},
-            "& .css-1ptx2yq-MuiInputBase-root-MuiInput-root":{ color:"white"},
-            "& .MuiDataGrid-root .MuiDataGrid-root--densityStandard":{borderBottom:"none"},
-            "& .css-b1p1vf .MuiDataGrid-root ":{border:"5px solid red "},
-          }}
+            style={theme ? {
+              color: "white",
+              "& .MuiDataGrid-cellCheckbox": { outline: "white" },
+              "& .MuiDataGrid-cell": { borderBottom: "none" },
+              "& .MuiCheckbox-colorPrimary": { color: "white" },
+              "& .css-levciy-MuiTablePagination-displayedRows": { backgroundColor: "#0e7878", color: "white" },
+              "& .MuiDataGrid-footerContainer": { backgroundColor: "#0e7878", color: "white", borderTop: "none" },
+              "& .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar .MuiTablePagination-actions": { color: "white" },
+              "& .css-1j9kmqg-MuiDataGrid-toolbarContainer": { borderTop: "none", backgroundColor: "#0e7878", color: "white", gap: dontdisplay ? "0" : "5%", paddingLeft: "1.5%" },
+              "& .css-1knaqv7-MuiButtonBase-root-MuiButton-root": { color: "white" },
+              "& .css-1ptx2yq-MuiInputBase-root-MuiInput-root": { color: "white" },
+              "& .MuiDataGrid-root .MuiDataGrid-root--densityStandard": { borderBottom: "none" },
+              "& .css-b1p1vf .MuiDataGrid-root ": { border: "5px solid red" },
+            } : {}}
             
           />
         </Box>

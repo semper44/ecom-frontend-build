@@ -386,7 +386,6 @@ useEffect(()=>{
   function updateProfileFormModal(){
     setUpdateProfile(true)
   }
-  console.log(data);
   return (
     <>
     {response ?

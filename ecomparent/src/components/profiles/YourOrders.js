@@ -1,8 +1,10 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect,useContext } from 'react'
 import { DataGrid } from "@mui/x-data-grid";
 import { Avatar, Box} from "@mui/material";
 import Loading from '../extra comp/Loading';
 import useFetchToken from "../../usequery/useFetchToken.js";
+import { AuthContext } from "../profiles/login/LoginFetch"
+import jwt_decode from "jwt-decode"
 
 
 
@@ -15,7 +17,13 @@ function YourOrders() {
     // const[data, setData]= useState()
     // const [loading, setLoading] = useState(true);
     // const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-    let url= `${process.env.REACT_APP_URLS}/profile/yourorders/`
+    const {user}= useContext(AuthContext)
+    let userDetail
+    if(user){
+      userDetail= jwt_decode(user.access)  
+    }
+    
+    let url= `${process.env.REACT_APP_URLS}/profile/yourorders/${userDetail.username}`
     let method = "GET"
     const {data, loading, error}= useFetchToken(url, method)
     

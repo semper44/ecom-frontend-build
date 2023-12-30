@@ -11,13 +11,16 @@ import { ThemeData } from '../../App';
 import useFetchProductDetails from '../../usequery/useFetchProductDetails';
 import ShareOutlinedIcon from  '@mui/icons-material/ShareOutlined';
 import SocialMediaShare from '../extra comp/social/SocialMediaShares';
-import { cartContxt } from '../../stores/CartContxt';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem} from '../../stores/CartProviders';
 
 
 
 function ProductDetails() {
     const[share, setShare]=useState(false)
     const {id}= useParams()
+    const dispatch = useDispatch();
+
 
     useEffect(()=>{document.title="Product Details"
     },[])
@@ -25,25 +28,20 @@ function ProductDetails() {
     let url= `${process.env.REACT_APP_URLS}/product/listproductdetails/${id}/`
     let urls2= `${process.env.REACT_APP_URLS}/product/allproducts/electronics/`
   const{data, error, productDetails, loading}=useFetchProductDetails(url, urls2)
-  const{addItemsToCart}=useContext(cartContxt)
 
   
   
   // const[localdata, setLocaldata]= useState( parseddataLocalStorage?.data)
 //   const {addItemsToCart, removeItemsFromCart}=useContext(cartContxt)
   
-function clickToAdd(item){
-  addItemsToCart({
-    id:item.id,
-    category:item.category,
-    image:item.image,
-    price:item.price,
-    // totalPrice:item.totalPrice,
-    // seller:"semper",
-    qty:0,
-    
-    })
-    // addItemsToCart.seeSetDisplay(false)
+const clickToAdd = (item) => {
+  dispatch(addItem({
+    id: item.id,
+    category: item.category,
+    image: item.image,
+    price: item.price,
+    qty: 0,  
+  }));
 }
   function toggleShare(){
     setShare((prev)=> !prev)
@@ -58,15 +56,15 @@ function clickToAdd(item){
         {!loading ?<div id={styles["container-parent"]}>
             {productDetails && productDetails.map((item)=>{
                 return(
-                <div className={styles["featured-details-parent"]}>
+                <div key={item.id} className={styles["featured-details-parent"]}>
                     <div className={styles["featured-details-image"]}>
                     <img src={item.image} alt="" />
                     </div>
                     <div className={theme?styles["product-details-dark"]:styles["product-details"]}>
                     <h1>{item.category}</h1>
                     <p>{item.description}</p>
-                    <h2>N{item.price}</h2>
-                    <h3 onClick={clickToAdd}> ADD TO CART </h3>
+                    <h2>${item.price}</h2>
+                    <h3 onClick={()=>{clickToAdd(item)}}> ADD TO CART </h3>
                     </div>
                 </div>)
                 })}     
@@ -83,6 +81,9 @@ function clickToAdd(item){
                   </div>
                 </Link>
                   <div className={styles["related-products-others"]}>
+                  <h4 id={styles["p-category"]}>{item.category}</h4>
+                      {/* <p>{props.description}</p> */}
+                      <h2 id={theme?styles["h2-price-dark"]:styles["h2-price"]}>${item.price}</h2>
                     <div className="minus-plus" id={styles["minus-plus"]}>
                       <ButtonAdd item={item}/>
                       <div className="share" onClick={toggleShare}>
@@ -94,10 +95,7 @@ function clickToAdd(item){
                       <ButtonDelete  item={item}/>
                      
                     </div>
-                      <h4 id={styles["p-category"]}>{item.category}</h4>
-                      {/* <p>{props.description}</p> */}
-                      <h2 id={theme?styles["h2-price-dark"]:styles["h2-price"]}>{item.price}</h2>
-                      <p>{item.tittle}</p>
+                      
                   </div>
                 
               </div>

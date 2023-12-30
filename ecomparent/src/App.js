@@ -204,7 +204,6 @@ function App() {
 
 //   arr=["me", "you"]
 // n=5
-  console.log(process.env.REACT_APP_URLS, "oyyy");
   let urls2= `${process.env.REACT_APP_URLS}/product/allproducts/electronics/`
 
   const ShowCartToggle = () => {

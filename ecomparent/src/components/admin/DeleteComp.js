@@ -6,7 +6,6 @@ import { Box } from "@mui/system";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import DeleteModals from "./DeleteModal";
-import Modals from "../extra comp/Modals";
 import Message from "../extra comp/Message";
 import Loading from "../extra comp/Loading";
 // import { useNavigate } from "react-router-dom";
@@ -31,9 +30,9 @@ function DeleteComp({setdelete, url, type}) {
       isLoading(true)
       axios.delete(url,config)
         .then(res=>{
-          ;
-          if(res.response.status===200){
+          if(res.status===200){
             isLoading(false)
+            setResponseData(true)
             if(type==="profile"){
               navigate("./")
               window.localStorage.removeItem("MY_CARTSTATE")
@@ -43,7 +42,6 @@ function DeleteComp({setdelete, url, type}) {
               window.location.reload()
             }
           }else{
-            ;
             isLoading(false)
             setError(error)
           }
@@ -71,7 +69,7 @@ function DeleteComp({setdelete, url, type}) {
        />
 }
       {responseData && <Message 
-      value={"product created"}
+      value={"product deleted"}
       code={"success"}
       fn={setResponseData}
        />
@@ -86,6 +84,7 @@ function DeleteComp({setdelete, url, type}) {
         // gap="25px"
         backgroundColor="#f5f5f5"
         borderRadius="10px"
+        zIndex="100"
       >
         <Box>
         <Typography color={"grey"} sx={{ ml: "5px" }}>

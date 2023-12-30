@@ -116,3 +116,9 @@
 span {
   margin-left: 5px;
 }
+
+@media(min-width:500px){
+  #username{
+    padding-top: 0;
+  }
+}
