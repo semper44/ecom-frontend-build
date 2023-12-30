@@ -75,7 +75,10 @@ function HeaderContainer(props) {
   }, [screenWidth])
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> try
   // const worker = useMemo(
   //   () => new Worker(new URL("../extra comp/Workers.js", import.meta.url)),
   //   []

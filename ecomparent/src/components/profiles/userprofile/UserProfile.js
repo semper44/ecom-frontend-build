@@ -93,7 +93,11 @@ function UserProfile({socket}) {
   // fetching user profiledetails
     useEffect(()=>{
     try{
+<<<<<<< HEAD
       fetch(`${process.env.REACT_APP_URLS}/profile/profdetails/${username}/`)
+=======
+      fetch(`http://127.0.0.1:8000/profile/profdetails/${username}`)
+>>>>>>> try
       .then(res =>{
         if(res.status===200){
           setResponse(true)
@@ -130,6 +134,8 @@ function UserProfile({socket}) {
 
 }
 }, [userDetails?.user_id, username])
+
+
 
   // getting all reviews and setting rating based on response
   
@@ -384,7 +390,6 @@ useEffect(()=>{
   function updateProfileFormModal(){
     setUpdateProfile(true)
   }
-  console.log(data);
   return (
     <>
     {response ?

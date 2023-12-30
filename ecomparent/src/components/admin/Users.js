@@ -17,9 +17,8 @@ import { ThemeData } from "../../App";
 import Loading from "../extra comp/Loading";
 import { screensizecontext } from "../../stores/CartContxt";
 import { useLocation } from "react-router-dom";
-
-// http://127.0.0.1:8000/
-
+import Tooltip from "@mui/material/Tooltip";
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
 
 function AllProduct() {
@@ -27,6 +26,8 @@ function AllProduct() {
   const [deleteState, setdeleteState] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [blockState, setBlockState] = useState(false);
+  const [urls, setUrls] = useState("");
   // const [fullscreen, setFullscreen] = useState(false);
   const [id, setdId] = useState(null);
   const {theme}= useContext(ThemeData)
@@ -42,10 +43,12 @@ function AllProduct() {
 
   }
   
+
+
   // const fullscreen=false
   const getData= async()=>{
     try{
-      const res= await axios.get(`${process.env.REACT_APP_URLS}/product/getproduct`)
+      const res= await axios.get(`${process.env.REACT_APP_URLS}/profile/allusers`)
       if(res.status===200){
         ;
         setLoading(false)
@@ -70,20 +73,55 @@ function AllProduct() {
     setdId(params.id)
   }
 
+  function block(params) {
+    if(params.row.blocked==="True" && params.row.tags==="seller"){
+      setUrls(`http://127.0.0.1:8000/profile/unblockseller/${params.id}/`)
+      console.log("hy")
+
+    }
+    else if(params.row.blocked==="false" && params.row.tags==="seller"){
+      setUrls(`http://127.0.0.1:8000/profile/blockseller/${params.id}/`)
+      console.log("hy2")
+
+    }
+    else if(params.row.blocked==="True" && params.row.tags==="no-seller"){
+      setUrls(`http://127.0.0.1:8000/profile/unblockuser/${params.id}/`)
+      console.log("hy3")
+
+    }
+    else if(params.row.blocked==="false" && params.row.tags==="no-seller"){
+      setUrls(`http://127.0.0.1:8000/profile/blockuser/${params.id}/`)
+      console.log("hy4")
+
+    }
+    setBlockState(true)
+    setdId(params.id)
+    
+  }
+
   const columns = [
     { field: "id", headerName: "ID", hide: "true" },
     {
-      field: "image",
+      field: "pics",
       headerName: "PICS",
       filterable: false,
-      width:dontdisplay?60: undefined,
-      flex:dontdisplay?0: 1,
+      flex: 1,
       renderCell: (params) => {
         // ;
-        return <Avatar src={params.row.image} />;
+        console.log(params.row);
+        return (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Avatar src={params.row.pics} />
+            {params.row.tags === "seller" && (
+              <Tooltip title="Seller" arrow>
+                <CheckCircleOutlineOutlinedIcon  style={{ color: "green", marginLeft: "5px" }} />
+              </Tooltip>
+            ) }
+          </div>
+        )
       },
     },
-    { field: "name", headerName: "NAME", flex: 1 },
+    { field: "username", headerName: "NAME", flex: 1 },
 
     {
       field: "access",
@@ -101,31 +139,49 @@ function AllProduct() {
             justifyContent="center"
             gap="0"
           >
-            {/* prevous logic that links to a new page */}
-            {/* <IconButton
-              aria-label="Edit"
-              size="small"
-              className=""
-              component={Link}
-              to= {`/admin/editproducts/${params.id}`} 
-            >
-              <EditOutlinedIcon sx={{color:theme?"cyan":undefined}} />
-              <Typography color={"grey"} sx={{ ml: "5px" }}>
-                Edit
-              </Typography>
-            </IconButton> */}
+          
             <IconButton
               aria-label="Delete"
               size="small"
               className=""
               onClick={()=>del(params)}
             >
-              <DeleteOutlinedIcon sx={{color:theme?"red":undefined}}/>
-              <Typography color={"grey"} sx={{ ml: "5px" }}>
+              <Tooltip title="Delete" arrow>
+                <DeleteOutlinedIcon sx={{color:theme?"red":undefined}}/>
+              </Tooltip>
+              {dontdisplay? "" :<Typography color={"grey"} sx={{ ml: "5px" }}>
                 Delete
-              </Typography>
+              </Typography>}
             </IconButton>
             {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${id}`} type={"admin"}/>}
+            {!dontdisplay &&(params.row.blocked==="false"? 
+            <IconButton
+              aria-label="Delete"
+              size="small"
+              className=""
+              onClick={()=>block(params)}
+            >
+            <Tooltip title="Ban" arrow>
+              <DeleteOutlinedIcon sx={{color:theme?"red":params.row.tags==="no-seller"? "red":"cyan"}}/>
+            </Tooltip>
+              {gridxlxl &&<Typography color={"grey"} sx={{ ml: "5px" }}>
+                Ban
+              </Typography>}
+            </IconButton>
+            // blockState &&<Block setblock={setBlockState} url= {params.row.tags==="no-seller"?`http://127.0.0.1:8000/profile/blockuser/${params.id}`:`http://127.0.0.1:8000/profile/blockseller/${params.id}`}/>
+            :<IconButton
+              aria-label="Delete"
+              size="small"
+              className=""
+              onClick={()=>block(params)}
+            >
+            <Tooltip title="Unban" arrow>
+              <DeleteOutlinedIcon sx={{color:theme?"red":params.row.tags==="no-seller"? "red":"cyan"}}/>
+            </Tooltip>
+              {gridxlxl && <Typography color={"grey"} sx={{ ml: "5px" }}>
+                Unban
+              </Typography>}
+            </IconButton>)}
           </Box>
         );
       },

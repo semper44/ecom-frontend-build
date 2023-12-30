@@ -1,6 +1,6 @@
 .box{
     background-color:white;
-    width: 40%;
+    width: 50%;
     height: 73%;
     display:flex;
     gap:2%;
@@ -10,7 +10,7 @@
 }
 .box-dark{
     background-color:gainsboro;
-    width: 40%;
+    width: 50%;
     height: 73%;
     display:flex;
     gap:2%;
@@ -71,12 +71,7 @@
     color: black;
     /* width: 40%; */
     border-radius: 10px;
-    height: 70px;
-    width: 300px;
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
+   
 }
 .cart-parent{
     height: 400px;
@@ -221,7 +216,7 @@
 @media (min-width:1100px){
     .box{
         background-color:white;
-        width: 35%;
+        width: 40%;
         height: 73%;
         display:flex;
         gap:2%;
@@ -231,7 +226,7 @@
     }
     .box-dark{
         background-color:gainsboro;
-        width: 35%;
+        width: 40%;
         height: 73%;
         display:flex;
         gap:2%;
@@ -253,4 +248,14 @@
     }
     
 }
-  
+@media (max-width:500px){
+    .box{
+        width: 80%;
+        height: 73%;
+    }
+    .box-dark{
+        width: 80%;
+        height: 73%;
+
+    }
+}

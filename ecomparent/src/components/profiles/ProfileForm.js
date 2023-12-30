@@ -109,7 +109,40 @@ const requestOptions = {
       // Handle or log the error as needed
     }
   }
+<<<<<<< HEAD
   
+=======
+    else{
+      setLoading(true)
+      console.log("object223");
+      (async()=>{
+        const response= await fetch(`http://127.0.0.1:8000/profile/sellersprofileform/${userDetails.user_id}/`, requestOptions)
+        console.log(response, "object224");
+        let res= await response.json();
+        console.log(res, "object224");
+       if(response.status===400){
+        setLoading(false)
+        setUnsuccessful(true)
+        // window.location.reload()
+      }else if(response.status===200){
+        setLoading(false)
+        setUnsuccessful(false)
+        setResponseData(res.data)
+        window.location.reload()
+      }else if(response.status===226){
+        setLoading(false)
+        setAlreadyAseller(true)
+        window.location.reload()
+      }
+      else{
+        setLoading(false)
+        setUnsuccessful(true)
+
+      }
+      })()                  
+    }  
+}
+>>>>>>> try
   return (
     <>
     <Modals>

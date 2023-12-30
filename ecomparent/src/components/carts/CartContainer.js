@@ -70,7 +70,7 @@ const remove = (item) => {
 //   removeItemsTotally({id:item.id,})
 // }
 
-const {items, cartId}= cartDisplay.cart
+const {items, cartId, totalAmount}= cartDisplay.cart
 
 
 useEffect(()=>{
@@ -187,7 +187,7 @@ function order(){
           }}>
             <p>Total Amount</p>
             <div className={styles["price-container"]}>
-              <p>$40.00</p>
+              <p>${totalAmount}</p>
             </div>
         </Box>
         <Box sx={{

@@ -10,7 +10,6 @@ import { AuthContext } from "../profiles/login/LoginFetch"
 import jwt_decode from "jwt-decode"
 import Delete from "../admin/DeleteComp";
 import EditProduct from "../admin/EditProduct";
-import Message from "../extra comp/Message";
 import { screensizecontext } from "../../stores/CartContxt";
 
 
@@ -28,22 +27,36 @@ function MyOrders() {
     ;
     const {theme}= useContext(ThemeData)
 
-  useEffect(()=>{
+    const {user}= useContext(AuthContext)
+    let userDetail
+    if(user){
+      userDetail= jwt_decode(user.access)  
+    }
 
-    fetch(`${process.env.REACT_APP_URLS}/profile/ordersusersmade/`)
+  useEffect(()=>{
+    let errorStatus=false
+    fetch(`${process.env.REACT_APP_URLS}/profile/yourorders/${userDetail.username}`)
     .then((res)=>{
-        if(res.ok){
+        if(!res.ok){
             setLoading(false)
+            if(res.status===417){
+              errorStatus=true
+              return res.json()
+            }
         }else{
             throw Error("Couldn't fetch data, please retry")
         }
-        if (res.status !==200){
-            setMsgFn(true)
+        if (res.status === 200){
+            setLoading(false)
+            // setMsgFn(true)
+            return res.json()
         }
-        return res.json()})
+        })
     .then((result)=>{
-      
-      if(result){
+      if(errorStatus){
+        setError(result.msg)
+    }else{
+      if(result !== undefined){
           result.forEach((data) => {
             const itemQty= JSON.parse(data.item_qty)
             // )
@@ -61,6 +74,7 @@ function MyOrders() {
             })
           })
         }
+    }
     })
     .catch((err)=>{
         setLoading(false)
@@ -70,11 +84,7 @@ function MyOrders() {
     }, [])
   
 
-  const {user}= useContext(AuthContext)
-  let userDetail
-  if(user){
-    userDetail= jwt_decode(user.access)  
-  }
+  
   function editing(params) {
     setEdit(true)
     setdIdd(params.id)
@@ -161,7 +171,7 @@ function MyOrders() {
   },[])
   return (
     <div style={{ height: "60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>
-     {error && <h1 style={{display: "flex", justifyContent: "center", alignItems: "center", padding:" 22% 0", color: "cyan",}}>
+     {error && <h1 style={{textAlign: "center", padding:" 22% 0", color: "cyan",}}>
         {error}
       </h1> }      {!loading? (
         <Box m="35px 0 0 0" height="60vh">

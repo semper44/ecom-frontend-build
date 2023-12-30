@@ -28,8 +28,6 @@ function MenuIcon({showSidebar, notif}) {
   const {showNotifFn}= useContext(notificationscontext)
   const {dontdisplay}= useContext(screensizecontext)
 
-  console.log(dontdisplay);
-
 
   const userdetails= useContext(AuthContext)
   const {theme, toggleTheme}= useContext(ThemeData)

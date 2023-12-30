@@ -176,7 +176,7 @@ function App() {
   }
 
   useEffect(()=>{
-     setSocket(io("https://epcommerceserver.onrender.com"))
+     setSocket(io("http://localhost:5000"))
   },[])
 
   const  userId= userDetail?.user_id
@@ -204,7 +204,6 @@ function App() {
 
 //   arr=["me", "you"]
 // n=5
-
   let urls2= `${process.env.REACT_APP_URLS}/product/allproducts/electronics/`
 
   const ShowCartToggle = () => {
