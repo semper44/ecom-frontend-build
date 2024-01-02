@@ -11,7 +11,7 @@ import { ThemeData } from '../../App';
 import useFetchProductDetails from '../../usequery/useFetchProductDetails';
 import ShareOutlinedIcon from  '@mui/icons-material/ShareOutlined';
 import SocialMediaShare from '../extra comp/social/SocialMediaShares';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addItem} from '../../stores/CartProviders';
 
 

@@ -30,8 +30,6 @@ function HeaderContainer(props) {
   const[count, setCount]=useState()
   const[flag, setFlag]=useState("")
   const cartCount = useSelector((state) => state)
-  // const[modalReveal, setModalReveal]=useState(false)
-  // const[cartRemovedSuccessfully, setCartRemovedSuccessfully]=useState(false)
   const cartActive= useContext(cartActiveContxt)
   const activeContxt= useContext(isActive)
   const logIn= useContext(AuthContext)
@@ -75,10 +73,6 @@ function HeaderContainer(props) {
   }, [screenWidth])
 
 
-  // const worker = useMemo(
-  //   () => new Worker(new URL("../extra comp/Workers.js", import.meta.url)),
-  //   []
-  // );
   let userDetails;
   if(logIn?.user){
     userDetails=jwt_decode(logIn?.user?.access)
@@ -230,9 +224,7 @@ function HeaderContainer(props) {
       notif?.off("offlinefollowingnotif", handleFollowingofflineNotification);
     };
   }, [notif]);
-  
-
-  ;  
+   
  
   useEffect(()=>{
     localStorage.setItem("gottenNotification",JSON.stringify(notificationsstore))       
@@ -258,6 +250,7 @@ function HeaderContainer(props) {
     }
   },[profileNotification,profileNotification.length, notificationsstore,productnotification, changed]) 
   
+  console.log(cartCount.cart);
   
   function logout(){
     if(cartCount.cart.cartSize>=1 && token?.access){
@@ -291,8 +284,7 @@ function HeaderContainer(props) {
     formData.append("owners", userDetails?.user_id)
     formData.append("item_qty", JSON.stringify(arr))
     formData.append("cartSize", cartCount.cart.cartSize)      
-      // var myHeaders = new Headers();
-      // myHeaders.append("Authorization", "Bearer 
+    formData.append("totalAmount", cartCount.cart.totalAmount)      
       let requestOptions = {
         method: 'POST',
         body: formData,

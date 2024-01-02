@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useEffect } from 'react'
 import { IconButton } from '@mui/material'
 import { PhotoCamera } from '@mui/icons-material'
 import styles from "../profiles/poductcreation/createproduct.module.css"

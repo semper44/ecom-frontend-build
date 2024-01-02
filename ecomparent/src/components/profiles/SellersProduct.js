@@ -191,7 +191,7 @@ function SellersProduct() {
     <>
       {!loading?
       <>
-      {error && <h1 style={{display: "flex", justifyContent: "center", alignItems: "center", padding:" 15% 0", color: "cyan",}}>
+      {error && <h1 style={{textAlign: "center", padding:" 15% 0", color: "cyan",}}>
         {error}
       </h1> }
     {data &&<div style={{ height:fullscreen?"100%":"60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>

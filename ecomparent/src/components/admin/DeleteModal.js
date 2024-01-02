@@ -9,13 +9,13 @@ function Backdrop(props){
         </div>
     )
 }
-// function ModalOverlay(props){
-//     return(
-//         <div className={styles.modal}>
-//             {props.children}
-//         </div>
-//     )
-// }
+function ModalOverlay(props){
+    return(
+        <div className={styles.modal}>
+            {props.children}
+        </div>
+    )
+}
 
 
 const portalElement = document.getElementById("modals")

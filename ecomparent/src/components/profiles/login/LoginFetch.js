@@ -32,16 +32,17 @@ function LoginFetch(props) {
         
             fetch( `${process.env.REACT_APP_URLS}/profile/token/`, fetchRequestOptions)
             .then((res)=>{
-                return res.json()})
+                if(!res.ok){
+                    setShowModal(false) 
+                }
+                return res.json()
+                })
             .then((result)=>{
-                
                 setAuthToken(result);
                 let userToken; 
                 if (result.access){
-                    setUser(result);
-                    
-                    userToken= jwt_decode(result.access)
-                    
+                    setUser(result);                  
+                    userToken= jwt_decode(result.access)                  
                     localStorage.setItem("authToken", JSON.stringify(result));
                     setMessage({status:true, message:"Login successful", code:"success"})
                     setIntervalF(true)
@@ -49,7 +50,7 @@ function LoginFetch(props) {
                 if(result.detail){
                     setMessage({status:true, message:result.detail, code:"error"})
                     setIntervalF(true)
-                    showModal(false)
+                    // showModal(false)
                 }
                 
 
@@ -73,15 +74,14 @@ function LoginFetch(props) {
                             obj.qty=JSON.parse(response.item_qty)[index]
                             
                             })
+                            console.log(response);
                             // let others={cartSize:JSON.parse(dataCart.cartSize), cartId:JSON.parse(dataCart.id)}
-                            let cart={items:response.serializer, cartSize:JSON.parse(response.cartSize), cartId:JSON.parse(response.id)}
+                            let cart={items:response.serializer, cartSize:JSON.parse(response.cartSize), cartId:JSON.parse(response.id), totalAmount:JSON.parse(response.totalAmount)}
                             
                             const cartState= JSON.parse(window.localStorage.getItem("MY_CARTSTATE"))|| null
                             
                             if(!cartState || cartState===undefined || cartState.items===null ||  cartState?.items?.length===0 ){
-                                localStorage.setItem("MY_CARTSTATE", JSON.stringify(cart))
-                                
-                                
+                                localStorage.setItem("MY_CARTSTATE", JSON.stringify(cart))        
                             }
                             setLoginState(true)
                         }

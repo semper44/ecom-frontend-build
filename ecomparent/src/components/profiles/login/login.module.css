@@ -22,21 +22,13 @@
     border-radius: 10px;
     width: 400px;
     height: 500px;
-    background-color: #fff;
 }
 .login h1{
     color: cyan;
     margin-top: 4%;
 
 }
-.logindark h1{
-    margin-top: 4%;
 
-}
-.background-dark .login h1{
-    margin-top: 4%;
-    color: cyan;
-}
 .login-container .box input{
     width: 300px;
     margin-top: 2rem ;
@@ -45,6 +37,21 @@
     background: 0;
     outline: none;
     border-bottom: 1px solid black;
+}
+.login-container-dark .box input{
+    width: 300px;
+    margin-top: 2rem ;
+    padding-top: 2rem;
+    border: none;
+    background: 0;
+    outline: none;
+    color: white;
+    border-bottom: 1px solid cyan;
+}
+.login-text-dark p{
+    color: white;
+    text-align: center;
+    margin-top: 1rem;
 }
 
 .login-text p{

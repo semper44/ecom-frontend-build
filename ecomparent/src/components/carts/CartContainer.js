@@ -8,12 +8,16 @@ import jwt_decode from "jwt-decode"
 import { useNavigate } from 'react-router-dom';
 import { ThemeData } from '../../App';
 import { Box,} from '@mui/material';
+import Message from "../extra comp/Message";
+import Loading from "../extra comp/Loading";
 
 
 
 function CartContainer(props) {
   const[cartCombined, setCartCombined]= useState({})
-
+  const[permissionDenied, setPermissionDenied]= useState(false)
+  const [loading, isLoading] = useState(false)
+  const[error, setError]= useState(false)
   const logIn= useContext(AuthContext)
   const navigate= useNavigate()
 
@@ -50,29 +54,7 @@ const remove = (item) => {
   dispatch(totalRemoveItem({ id: item.id }));
 };
 
-
-// function clickToAdd(item){
-  
-//   addItemsToCart({
-//     id:item.id,
-//     category:item.category,
-//     image:item.image,
-//     price:item.price,
-//     // totalPrice:item.totalPrice,
-//     // seller:"semper",
-//     qty:0,
-    
-//     })
-//     // addItemsToCart.seeSetDisplay(false)
-// }
-
-// function remove(item){
-//   removeItemsTotally({id:item.id,})
-// }
-
 const {items, cartId, totalAmount}= cartDisplay.cart
-
-
 useEffect(()=>{
   setCartCombined({items, cartId})
 }, [cartId, items])
@@ -95,7 +77,6 @@ useEffect(()=>{
   formData.append("cartSize", cartDisplay.cart?.cartSize)      
   formData.append("cartId", cartDisplay.cart?.cartId)      
 
-;
 
 function order(){
   if(!userDetails?.user_id){ 
@@ -103,6 +84,7 @@ function order(){
     props.onToglle()
     
   }else{
+    isLoading(true)
     fetch(`${process.env.REACT_APP_URLS}/product/placeorder/`, {
       method: 'POST',
       headers: {
@@ -112,12 +94,21 @@ function order(){
         body:cartDisplay.cart.cartId==="null"?JSON.stringify(cartCombined):formData}
         )
     .then((res)=>{
+      isLoading(false)
+      console.log(res);
+      if(res.status !== 200){
+        if(res.status === 401 || res.status === 403){
+          console.log("object2");
+          setPermissionDenied(true)
+        }else{
+          setError(true)
+        }
+          
+      }
       return res.json();
     })
     .then((result)=>{
-      
-      // 
-      // 
+  
       if(result.code===200){
         window.location.href=result.link
       }else{
@@ -134,7 +125,21 @@ function order(){
 
  
   return (
+    <>
+    {loading && <Loading />}
+    
     <CartPortal >
+    {permissionDenied && <Message 
+      value={"Sorry, you have been blocked from using this service or do not have the necessary permissions"}
+      code={"error"}
+      fn={setPermissionDenied}
+       />}
+    {error && <Message 
+      value={"Sorry, an error occured, try again later"}
+      code={"error"}
+      fn={setError}
+       />
+      }
       {lengthOfCart ? <div className={theme? styles['nothing-in-cart-dark']:styles['nothing-in-cart']}>
         <div className={styles.cancelfirst}>
           <p  onClick={props.onToglle}>X</p>
@@ -154,7 +159,7 @@ function order(){
         {cartDisplay.cart?.items?.map((item)=>{
           return( 
            <>
-           <div className={styles.class}>
+           <div key={item.id} className={styles.class}>
               <div className={styles["cart-container"]}>
                 <div className={styles["cart-image"]}>
                     <img src={item.image} alt="" />
@@ -203,7 +208,8 @@ function order(){
             <p className={styles.order} onClick={order}>Order Now</p>                  
         </Box>
       </div>}
-    </CartPortal>  
+    </CartPortal> 
+    </> 
     )
 }
 

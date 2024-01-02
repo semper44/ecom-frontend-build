@@ -52,7 +52,6 @@ function AllProduct() {
     try{
       const res= await axios.get(`${process.env.REACT_APP_URLS}/product/getproduct`)
       if(res.status===200){
-        ;
         setLoading(false)
         setproductData(res.data)
       }
@@ -207,7 +206,7 @@ function AllProduct() {
             components={{Toolbar:CustomToolbar, GridCell:{border:"none"}}}
             // showColumnRightBorder={false}
             disableSelectionOnClick={true}
-            sx={theme && {color:"white", 
+            sx={theme ? {color:"white", 
             "& .MuiDataGrid-cellCheckbox":{outline:"white"},
             "& :rli:":{outline:"yellow", color:"black"},
             "& .MuiCheckbox-colorPrimary":{color:"white"},
@@ -220,9 +219,10 @@ function AllProduct() {
             "& .css-1ptx2yq-MuiInputBase-root-MuiInput-root":{ color:"white"},
             "& .MuiDataGrid-root .MuiDataGrid-root--densityStandard":{borderBottom:"none"},
             "& .css-b1p1vf .MuiDataGrid-root ":{border:"5px solid red "},
-          }}
-            
-          />
+          } : {}
+        }   />
+
+        
         </Box>}</>: <Loading />}
     </div>
   );

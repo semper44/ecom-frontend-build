@@ -5,6 +5,8 @@ import Loading from "../extra comp/Loading"
 import { ThemeData } from '../../App';
 import { mainproductContext } from '../../stores/CartContxt';
 import { screensizecontext } from '../../stores/CartContxt';
+
+
 // import { promoData } from '../../stores/CartContxt';
 
 
@@ -26,29 +28,6 @@ function MainProducts() {
       ftd = JSON.parse(featureDatalocal)
     }
   }
-
-    // if(gridbxlxl){
-    //   featuredata.slice(0,10)
-    // }
-    // else if(gridlg){
-    //   featuredata.slice(0,8)
-    // }
-    // else if(!gridlg && !gridbxlxl){
-    //   featuredata.slice(0,6)
-
-    // }
-    ;
-    
-    // useEffect(()=>{
-    //   const handleResize = () => {
-    //     setScreenWidth(window.innerWidth)
-    //   }
-    //   window.addEventListener("resize", handleResize);
-  
-    //   return ()=>{
-    //     window.removeEventListener("resize", handleResize)
-    //  }
-    // }, [screenWidth])
 
 
     useEffect(()=>{

@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 import { SearchOutlined } from "@mui/icons-material";
 import {ThemeData} from "../App"
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Box } from "@mui/material";
 import { Typography } from '@mui/material'
@@ -98,8 +99,10 @@ function PageLayout(props) {
                   // <SearchModal changed={(search) => setSearch(search)} />
                   <SearchModal onHide={hideSearch} />
                 )}
-                <Typography
-                onClick={createShow} sx={{color:(createShowState &&"cyan")||(theme &&"white")}}>Create</Typography> 
+                <Box onClick={logout} sx={{display:"flex", color:theme &&"white"}}>
+                  <AddCircleOutlineOutlinedIcon fontSize="small" sx={{color:theme?"white":undefined, mr:"5px"}}/>
+                  <Typography onClick={createShow} sx={{color:(createShowState &&"cyan")||(theme &&"white")}}>Create</Typography> 
+                </Box>
                 {createShowState && <AdminCreate onHide={createHide} />}
                 <Box onClick={logout} sx={{display:"flex", color:theme &&"white"}}>
                   <LogoutOutlinedIcon fontSize="small" sx={{color:theme?"white":undefined, mr:"5px"}}/>

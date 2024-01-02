@@ -3,7 +3,9 @@ import React, { useState, useEffect,useContext } from 'react'
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ImageSearchOutlinedIcon from '@mui/icons-material/ImageSearchOutlined';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import { Link } from 'react-router-dom'
@@ -49,9 +51,6 @@ function Admin({defaultTitle}) {
   const {collapsed, collapseSidebar } = useProSidebar();
   const[selected, setSelected]= useState(newTitle)
   
-  // const[dontdisplay, setdontDisplay]= useState(undefined)
-  // const[screenWidth, setScreenWidth]= useState(window.innerWidth)
-
   const {user}= useContext(AuthContext)
   const {theme, toggleTheme}= useContext(ThemeData)
   const {dontdisplay}= useContext(screensizecontext)

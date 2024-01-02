@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DataGrid} from "@mui/x-data-grid";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import axios from "axios";
 import Delete from "./DeleteComp";
@@ -11,15 +12,14 @@ import { GridToolbarContainer,
   import { GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { GridToolbarColumnsButton } from "@mui/x-data-grid";
 import { GridToolbarFilterButton } from "@mui/x-data-grid";
-// import { GridToolbarDensitySelector } from "@mui/x-data-grid";
-// import {Link} from "react-router-dom"
 import { ThemeData } from "../../App";
 import Loading from "../extra comp/Loading";
 import { screensizecontext } from "../../stores/CartContxt";
 import { useLocation } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-
+import Block from "./Block"; 
+import Unblock from "./Unblock";
 
 function AllProduct() {
   const [productData, setproductData] = useState("");
@@ -27,9 +27,12 @@ function AllProduct() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [blockState, setBlockState] = useState(false);
+  const [unBlockState, setUnBlockState] = useState(false);
+  const [blockSuccessful, setBlockSuccessful] = useState(false);
   const [urls, setUrls] = useState("");
   // const [fullscreen, setFullscreen] = useState(false);
   const [id, setdId] = useState(null);
+  const [unblockId, setUnblockId] = useState(null);
   const {theme}= useContext(ThemeData)
   const {dontdisplay, gridlg, gridxl, gridxlxl}= useContext(screensizecontext)
   const location= useLocation()
@@ -50,7 +53,6 @@ function AllProduct() {
     try{
       const res= await axios.get(`${process.env.REACT_APP_URLS}/profile/allusers`)
       if(res.status===200){
-        ;
         setLoading(false)
         setproductData(res.data)
       }
@@ -61,12 +63,9 @@ function AllProduct() {
     }
   }
 
-
   useEffect(()=>{
     window.location.pathname==="/users"&&getData()
   },[])
-
-
 
   function del(params) {
     setdeleteState(true)
@@ -74,31 +73,22 @@ function AllProduct() {
   }
 
   function block(params) {
-    if(params.row.blocked==="True" && params.row.tags==="seller"){
-      setUrls(`${process.env.REACT_APP_URLS}/profile/unblockseller/${params.id}/`)
-      console.log("hy")
-
-    }
-    else if(params.row.blocked==="false" && params.row.tags==="seller"){
+    if(params.row.blocked===false && params.row.tags==="seller"){
       setUrls(`${process.env.REACT_APP_URLS}/profile/blockseller/${params.id}/`)
-      console.log("hy2")
-
     }
-    else if(params.row.blocked==="True" && params.row.tags==="no-seller"){
-      setUrls(`${process.env.REACT_APP_URLS}/profile/unblockuser/${params.id}/`)
-      console.log("hy3")
-
-    }
-    else if(params.row.blocked==="false" && params.row.tags==="no-seller"){
+    else if(params.row.blocked===false && params.row.tags==="no-seller"){
       setUrls(`${process.env.REACT_APP_URLS}/profile/blockuser/${params.id}/`)
-      console.log("hy4")
-
     }
     setBlockState(true)
     setdId(params.id)
     
   }
 
+  function unblock(params) {
+    setUnBlockState(true)
+    console.log(params);
+    setUnblockId(params.row.id)
+    }
   const columns = [
     { field: "id", headerName: "ID", hide: "true" },
     {
@@ -108,7 +98,6 @@ function AllProduct() {
       flex: 1,
       renderCell: (params) => {
         // ;
-        console.log(params.row);
         return (
           <div style={{ display: "flex", alignItems: "center" }}>
             <Avatar src={params.row.pics} />
@@ -154,34 +143,33 @@ function AllProduct() {
               </Typography>}
             </IconButton>
             {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${id}`} type={"admin"}/>}
-            {!dontdisplay &&(params.row.blocked==="false"? 
-            <IconButton
+            {!dontdisplay &&(
+            params.row.blocked===false?(<IconButton
               aria-label="Delete"
               size="small"
               className=""
-              onClick={()=>block(params)}
-            >
-            <Tooltip title="Ban" arrow>
-              <DeleteOutlinedIcon sx={{color:theme?"red":params.row.tags==="no-seller"? "red":"cyan"}}/>
+              onClick={()=>block(params)}>
+            <Tooltip title={blockSuccessful?"unban":"Ban"} arrow>
+              <RemoveCircleOutlineOutlinedIcon />
             </Tooltip>
               {gridxlxl &&<Typography color={"grey"} sx={{ ml: "5px" }}>
-                Ban
+              Ban
               </Typography>}
-            </IconButton>
-            // blockState &&<Block setblock={setBlockState} url= {params.row.tags==="no-seller"?`http://127.0.0.1:8000/profile/blockuser/${params.id}`:`http://127.0.0.1:8000/profile/blockseller/${params.id}`}/>
-            :<IconButton
+            </IconButton>):
+          (  <IconButton
               aria-label="Delete"
               size="small"
               className=""
-              onClick={()=>block(params)}
-            >
-            <Tooltip title="Unban" arrow>
-              <DeleteOutlinedIcon sx={{color:theme?"red":params.row.tags==="no-seller"? "red":"cyan"}}/>
+              onClick={()=>unblock(params)}>
+            <Tooltip title="UnBan" arrow>
+              <RemoveCircleOutlineOutlinedIcon />
             </Tooltip>
-              {gridxlxl && <Typography color={"grey"} sx={{ ml: "5px" }}>
-                Unban
+              {gridxlxl &&<Typography color={"grey"} sx={{ ml: "5px" }}>
+              UnBan
               </Typography>}
-            </IconButton>)}
+            </IconButton>))}
+            {blockState && <Block setBlockState={setBlockState} url= {urls}/>}
+            {unBlockState && <Unblock  setUnBlockState={setUnBlockState} params={params} id={unblockId}/>}
           </Box>
         );
       },
@@ -217,7 +205,7 @@ function AllProduct() {
             components={{Toolbar:CustomToolbar, GridCell:{border:"none"}}}
             // showColumnRightBorder={false}
             disableSelectionOnClick={true}
-            sx={theme && {color:"white", 
+            sx={theme ? {color:"white", 
             "& .MuiDataGrid-cellCheckbox":{outline:"white"},
             "& :rli:":{outline:"yellow", color:"black"},
             "& .MuiCheckbox-colorPrimary":{color:"white"},
@@ -230,7 +218,7 @@ function AllProduct() {
             "& .css-1ptx2yq-MuiInputBase-root-MuiInput-root":{ color:"white"},
             "& .MuiDataGrid-root .MuiDataGrid-root--densityStandard":{borderBottom:"none"},
             "& .css-b1p1vf .MuiDataGrid-root ":{border:"5px solid red "},
-          }}
+          }:{}}
             
           />
         </Box>}</>: <Loading />}

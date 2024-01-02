@@ -19,8 +19,6 @@ function ProductFromCategories({url}) {
   let word= url.split("/")
   let title=word[word.length-2]
   // console.log(url);
-  console.log(title);
-  console.log("title");
 
   useEffect(()=>{
     document.title=title.charAt(0).toUpperCase()+title.slice(1)

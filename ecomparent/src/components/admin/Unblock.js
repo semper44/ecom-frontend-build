@@ -4,8 +4,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {Typography, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import DeleteModals from "./DeleteModal";
-import axios from 'axios'
 import Message from "../extra comp/Message";
+import axios from 'axios'
 import Loading from "../extra comp/Loading";
 
 
@@ -15,15 +15,15 @@ import Loading from "../extra comp/Loading";
 //   return axios.delete(`${process.env.REACT_APP_URLS}/product/deleteproduct/${productId}`)
 // }
 
-function Block({setBlockState, url}) {
+function Unblock({setUnBlockState, params, id}) {
   const [loading, isLoading] = useState(false)
   const [error, setError] = useState(null)
   const [unsuccessful, setUnsuccessful] = useState(false)
   const [successful, setSuccessful] = useState(false)
-  
-  
+
+
   function cancel(){
-    setBlockState(false)
+    setUnBlockState(false)
   }
   
   const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
@@ -32,29 +32,48 @@ function Block({setBlockState, url}) {
       'Authorization': 'Bearer '+ token?.access
   }}
 
-  function blockfn(){
+  // console.log(url);
+
+  function blockfn(params){
+    let url;
+  
     isLoading(true)
+    if(params.row.tags==="seller"){
+      url = `${process.env.REACT_APP_URLS}/profile/unblockseller/${id}/`
+      console.log("1");
+    }
+    else {
+      url = `${process.env.REACT_APP_URLS}/profile/unblockuser/${id}/`
+      console.log("2");
+    }    
+    console.log(url);
     axios.post(url,config)
       .then(res=>{
         isLoading(false)
         console.log(res);
         if(res.status === 200){
           setSuccessful(true)
-          window.location.reload()      
-        }else{
-            isLoading(false)
-            setError(error)
+          setUnBlockState(false)
+          window.location.reload()
+        }else{          
+          setUnBlockState(false)
+          isLoading(false)
+          setError(error)
+          setUnsuccessful(true)
+          if(res.status === 200){
+            alert("user not blocked")
+          }
           }
         })
         .catch(error=>{  
           setError(error)
           isLoading(false)
           setUnsuccessful(true)
+
           
         })
   }
 
-  console.log(successful);
 
   return (
     <>
@@ -66,7 +85,7 @@ function Block({setBlockState, url}) {
        />
       }
       {successful && <Message 
-      value={"user banned"}
+      value={"User unbanned"}
       code={"success"}
       fn={setSuccessful}
        />
@@ -84,11 +103,11 @@ function Block({setBlockState, url}) {
       >
         <Box>
         <Typography color={"grey"} sx={{ ml: "5px" }}>
-          Are you sure you want to block?
+          Are you sure you want to unban?
         </Typography>
         <Box m="11px 0">
-        <Button variant="outlined" sx={{':hover':{opacity:0.6}}} startIcon={<DeleteIcon />} onClick={blockfn}>
-          Ban
+        <Button variant="outlined" sx={{':hover':{opacity:0.6}}} startIcon={<DeleteIcon />} onClick={()=>blockfn(params)}>
+          Unban
         </Button>
         <Button variant="contained" sx={{ml:"5px", ':hover':{opacity:0.6}}} startIcon={<CancelIcon />} onClick={cancel}>
           Cancel
@@ -104,4 +123,4 @@ function Block({setBlockState, url}) {
   );
 }
 
-export default Block;
+export default Unblock;

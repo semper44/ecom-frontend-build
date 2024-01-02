@@ -37,7 +37,7 @@ function AdminCreate({setproduct, socket, followers}) {
     const [responseData, setResponseData] = useState(false)
     const [reload, setReload] = useState(false)
     const [loading, isLoading] = useState(false)
-    const [error, setError] = useState(null)
+    const[permissionDenied, setPermissionDenied]= useState(false)
     const {user}= useContext(AuthContext)
     const {theme}= useContext(ThemeData)
     let userDetail
@@ -87,6 +87,7 @@ function AdminCreate({setproduct, socket, followers}) {
        'Content-Type':'multipart/form-data',
        'Authorization': 'Bearer '+ token?.access
     }}
+
     function handleSubmit(e){
       e.preventDefault();
       isLoading(true)
@@ -106,22 +107,20 @@ function AdminCreate({setproduct, socket, followers}) {
       imageState && formData.append("image", imageState.image[0])
       axios.post(URL, formData, config)
         .then(res=>{
-          
-          
-          
+          isLoading(false)
           if(res.status===200){
             productNotif()
             setResponseData(true)
-          }else{
+          }else{           
             setUnsuccessful(true)
-            isLoading(false)
           }
         })
         .catch(error=>{
           setUnsuccessful(true)
-          setError(error)
-          isLoading(false)
-          
+          isLoading(false) 
+          if(error.response.status === 401 || error.response.status === 403){
+            setPermissionDenied(true)
+          }
         })
          
       // 
@@ -157,6 +156,12 @@ function AdminCreate({setproduct, socket, followers}) {
 
   return (
     <Modals >
+      {permissionDenied && <Message 
+      value={"Sorry, you have been blocked from using this service or do not have the necessary permissions"}
+      code={"error"}
+      fn={setPermissionDenied}
+       />}
+
       {unsuccessful && <Message 
       value={"Sorry, request failed"}
       code={"error"}
@@ -202,16 +207,16 @@ function AdminCreate({setproduct, socket, followers}) {
             onChange={change}
             name='size'/>
             
-            {previewImage &&  <div className={styles.preview} style={{width:"140px", height:"100px", marginTop:"10px", cursor:"pointer"}}>
+            {previewImage &&  <div className={styles.preview} style={{width:"140px", height:"100px", cursor:"pointer"}}>
               <img src={previewImage} alt='' style={{width:"100%", height:"100%"}}></img>
             </div>}
             <div className={styles["send-button"]}>
-              <IconButton variant="outlined" component="label" sx={{color:'cyan', mt:"1.5rem", display:"flex", justifyContent:"center"}}>
+              <IconButton variant="outlined" component="label" sx={{color:'cyan', display:"flex",padding:"0", justifyContent:"center"}}>
               <input hidden accept='image/*' type="file"
               className={styles.colors} 
               onChange={changeFile}
               name='image'/>
-              <PhotoCamera />
+              <PhotoCamera sx={{margin:"0", padding:"0"}}/>
               </IconButton>
               <button className={styles.searchcreate} onClick={handleSubmit} >Upload</button>
             </div>

@@ -13,6 +13,7 @@ const Loading = () => {
           radius="9"
           color="cyan"
           ariaLabel="loading"
+          style={{ zIndex: 100 }}
       />
     </div>
      

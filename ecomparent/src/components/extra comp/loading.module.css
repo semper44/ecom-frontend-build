@@ -7,3 +7,6 @@
     padding: 8% 0;
     z-index: 99;
 }
+.parent>div{
+    z-index: 99;
+}

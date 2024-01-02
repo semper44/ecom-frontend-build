@@ -63,8 +63,8 @@ function Login() {
       {(interval && status) &&<Message value={message} code={code}/>}
       {passwordChange &&<ResetPassword />}
       <div className={theme?styles["background-dark"]:styles.background}>
-        <div className={styles["login-container"]}>
-          <div className={theme?styles.logindark:styles.login }>
+        <div className={theme? styles["login-container-dark"]: styles["login-container"]}>
+          <div className={styles.login }>
               <h1>Login</h1>
           </div>
           <form onSubmit={sendData?.loginUser}>
@@ -82,11 +82,11 @@ function Login() {
                 onChange={Change}
                 name='password'/>
 
-                <VisibilityOffOutlinedIcon style={{ cursor: 'pointer', position:"absolute", top:"70%", right:"3.2rem" }}
+                <VisibilityOffOutlinedIcon style={{color:theme &&"cyan", cursor: 'pointer', position:"absolute", top:"70%", right:"3.2rem" }}
                   onClick={toggleShowPassword}/>
               </Box>
             </div>
-            <div id='forgotpassword' className={styles["login-text"]}>
+            <div id='forgotpassword' className={theme?styles["login-text-dark"] :styles["login-text"]}>
               <p>Forgot Password? 
                 <span>
                   <Link to={"/resetpassword"}>
@@ -99,7 +99,7 @@ function Login() {
             <div className={styles["login-button"]}> 
               <button id={styles['login-button']} >Login</button>
             </div>
-            <div className={styles["login-text"]}>
+            <div className={theme?styles["login-text-dark"] : styles["login-text"]}>
               <p>Not a member? 
                 <span>
                   <Link to="/register">
