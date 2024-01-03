@@ -19,7 +19,6 @@ function AllGeneralNotifications({hideNotifFn}) {
     } 
     const userfollowingnotif= JSON.parse(window.localStorage.getItem("gottenNotification"))|| null
     const productnotif= JSON.parse(window.localStorage.getItem("productNotification"))|| null
-    
 
   return (
     <>

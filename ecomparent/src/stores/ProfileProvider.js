@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 function ProfileProvider(props) {
   const[profileNotification, setProfileNotification]= useState([])
   const[changed, setChanged]= useState(false)
+  const[seller, setSeller]= useState(false)
     
     const users= useContext(AuthContext)
     let userDetails;
@@ -28,6 +29,9 @@ function ProfileProvider(props) {
           .then(data => {
             data?.map((item)=>{
               setProfileNotification(item.notification)
+              if(item.tags=== "seller"){
+                setSeller(true)
+              }
             }) 
             setChanged(!changed)   
     });
@@ -39,7 +43,8 @@ function ProfileProvider(props) {
   const profilecontextvalue = {
     setProfileNotifications:setProfileNotification,
     profileNotification:profileNotification,
-    changed:changed
+    changed:changed,
+    seller:seller
     };
 
   return (

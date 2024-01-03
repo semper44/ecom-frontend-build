@@ -26,7 +26,7 @@ function AllFollowers() {
    </h1> }
     <div className={styles.parent}>
      {data?.map((datum)=>{return(
-      <Link to={`/profile/${datum.name}`}>
+      <Link key={datum.id} to={`/profile/${datum.name}`}>
         <Box sx={{display:"flex", alignItems:"center", gap:"1rem"}}>
           <img src={datum.pics} alt="" style={{borderRadius:"50%", width:"100px", height:"100px"}}/>
           <h2 style={{color:"cyan"}}>{datum.name}</h2>  

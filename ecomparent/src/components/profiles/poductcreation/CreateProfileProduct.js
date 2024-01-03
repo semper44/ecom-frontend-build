@@ -36,7 +36,7 @@ function AdminCreate({setproduct, socket, followers}) {
     const [unsuccessful, setUnsuccessful] = useState(false)
     const [responseData, setResponseData] = useState(false)
     const [reload, setReload] = useState(false)
-    const [selectedCategory, setSelectedCategory] = useState('Electronics');
+    const [selectedCategory, setSelectedCategory] = useState('electronics');
     const [loading, isLoading] = useState(false)
     const[permissionDenied, setPermissionDenied]= useState(false)
     const {user}= useContext(AuthContext)
@@ -188,12 +188,12 @@ function AdminCreate({setproduct, socket, followers}) {
             name='category'
           >
             <option value='' disabled>Select a category</option>
-            <option value='Electronics'>Electronics</option>
-            <option value='Baby product'>Baby product</option>
-            <option value='Computing'>Computing</option>
+            <option value='electronics'>Electronics</option>
+            <option value='baby product'>Baby product</option>
+            <option value='computing'>Computing</option>
             <option value='home & office'>home & office</option>
-            <option value='Game'>Game</option>
-            <option value='Fashion'>Fashion</option>
+            <option value='game'>Game</option>
+            <option value='fashion'>Fashion</option>
           </select>
 
             <input type="text" 
