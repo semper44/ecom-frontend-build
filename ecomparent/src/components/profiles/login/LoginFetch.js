@@ -34,6 +34,8 @@ function LoginFetch(props) {
             .then((res)=>{
                 if(!res.ok){
                     setShowModal(false) 
+                }else{
+                    setShowModal(false) 
                 }
                 return res.json()
                 })

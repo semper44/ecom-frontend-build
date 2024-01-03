@@ -36,6 +36,7 @@ function AdminCreate({setproduct, socket, followers}) {
     const [unsuccessful, setUnsuccessful] = useState(false)
     const [responseData, setResponseData] = useState(false)
     const [reload, setReload] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState('Electronics');
     const [loading, isLoading] = useState(false)
     const[permissionDenied, setPermissionDenied]= useState(false)
     const {user}= useContext(AuthContext)
@@ -44,12 +45,12 @@ function AdminCreate({setproduct, socket, followers}) {
     if(user){
       userDetail= jwt_decode(user.access)  
     }
+
     function changeFile(e){
       setimageState({image:e.target.files})
-      
-      // 
       setPreviewImage(window.URL.createObjectURL(e.target.files[0]))
     } 
+
     useEffect(()=>{
       socket?.on("offlineproductnotif", (data)=>{
         if(data){
@@ -100,7 +101,7 @@ function AdminCreate({setproduct, socket, followers}) {
       let formData= new FormData()
       formData.append("description", state.description)
       formData.append("price", state.price)
-      formData.append("category", state.category)
+      formData.append("category", selectedCategory)
       formData.append("sellers", parseInt(state.seller))
       formData.append("size",  parsedSize)
       formData.append("sellerName",  userDetail.username)
@@ -138,7 +139,10 @@ function AdminCreate({setproduct, socket, followers}) {
 
       });
     }
-
+    const changeSelect = (e) => {
+      setSelectedCategory(e.target.value);
+    };
+    console.log((selectedCategory));
     function change(e){
         const {name, value}=e.target
         const action={
@@ -177,11 +181,21 @@ function AdminCreate({setproduct, socket, followers}) {
         <div className={theme?styles['all-items-dark']:styles['all-items']}>
           <button id={styles.cancel} onClick={()=>setproduct(false)}>&#10005;</button>
           <div className={styles['search-items']}>
-            <input type="text" 
-            className={styles.product} 
-            placeholder='category'
-            onChange={change}
-            name='category'/>
+          <select
+            className={styles.product}
+            id ={styles.product}
+            onChange={changeSelect}
+            value={selectedCategory} // Use the value prop to control the selected option
+            name='category'
+          >
+            <option value='' disabled>Select a category</option>
+            <option value='Electronics'>Electronics</option>
+            <option value='Baby product'>Baby product</option>
+            <option value='Computing'>Computing</option>
+            <option value='home & office'>home & office</option>
+            <option value='Game'>Game</option>
+            <option value='Fashion'>Fashion</option>
+          </select>
 
             <input type="text" 
             className={styles.product} 

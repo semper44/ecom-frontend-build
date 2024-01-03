@@ -11,7 +11,7 @@ function AdminOverviewFetch(props) {
 
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
 
-    useEffect(()=>{
+    const fetchdata =()=>{
       let requestOptions = {
         method: 'GET',
         redirect: 'follow',
@@ -33,10 +33,10 @@ function AdminOverviewFetch(props) {
         SetOrders(dataOrders)
         SetTotalUsers(dataTotalUsers)
         SetMostBoughtCategory(dataCategory)
-      })}, [token?.access])
+      })}
 
       const adminData=useMemo(
-        () => ({MostBoughtCategory:MostBoughtCategory, 
+        () => ({ fetchdata:fetchdata ,MostBoughtCategory:MostBoughtCategory, 
           TotalUsers:TotalUsers, MonthlyUsers:MonthlyUsers, Orders:Orders}))
   return (
     <adminOverview.Provider 

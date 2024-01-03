@@ -1,4 +1,4 @@
-import React, { useContext} from 'react'
+import React, { useContext, useEffect} from 'react'
 import styles from "./dashboard.module.css"
 import { BarChart } from '../extra comp/admin/BarChart'
 import { PieChart } from '../extra comp/admin/PieChart'
@@ -12,8 +12,11 @@ import Loading from "../extra comp/Loading"
 // import PieChart
 
 function DashBoard() {
-  const{Orders, MostBoughtCategory, TotalUsers, MonthlyUsers}=useContext(adminOverview)
+  const{fetchdata, Orders, MostBoughtCategory, TotalUsers, MonthlyUsers}=useContext(adminOverview)
   
+  useEffect(()=>{
+    fetchdata();
+  }, [fetchdata])
   
   return (
     <>

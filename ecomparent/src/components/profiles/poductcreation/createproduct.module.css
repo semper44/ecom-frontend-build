@@ -46,6 +46,10 @@
     /* height: 35px; */
     border-bottom: 1px solid black;
 }
+#product{
+    border: none;
+    width: 90%;
+}
 
 .send-button{
     display: grid;

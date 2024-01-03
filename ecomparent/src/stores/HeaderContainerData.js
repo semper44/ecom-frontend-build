@@ -51,28 +51,6 @@ function HeaderContainerData(props) {
       })()
     }, [followingNotifications])
 
-    // useEffect(()=>{
-    
-    //   (async()=>{
-    //     const response= await fetch(`${process.env.REACT_APP_URLS}/profile/profdetails/${userDetails.username}/`)
-    //     let res= await response.json();
-    //           //           //       setpPoductNotifications("item.notification")
-    //       if(res){
-    //         // res.map((item)=>{
-    //         //   console.log(item.notification);
-    //         //   if(item.tags==="seller"){
-    //         //     setSeller(true)
-    //         //   }else{
-    //         //     setSeller(false)
-    //         //   }
-    //         // })
-            
-    //     }
-    //   })()
-    // }, [userDetails.username])
-
-        
-
   return (
     <headerdata.Provider value={{
       notificationData:followingSideData, 
