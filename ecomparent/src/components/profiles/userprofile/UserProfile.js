@@ -384,8 +384,7 @@ useEffect(()=>{
   function showProfileFormModal(){
     setProfileFormstate(true)
   }
-  console.log(data);
-
+  
   function updateProfileFormModal(){
     setUpdateProfile(true)
   }

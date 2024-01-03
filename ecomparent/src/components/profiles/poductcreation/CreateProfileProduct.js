@@ -142,7 +142,6 @@ function AdminCreate({setproduct, socket, followers}) {
     const changeSelect = (e) => {
       setSelectedCategory(e.target.value);
     };
-    console.log((selectedCategory));
     function change(e){
         const {name, value}=e.target
         const action={
