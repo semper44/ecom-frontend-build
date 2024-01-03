@@ -2,16 +2,10 @@ import {React, memo, useContext, useEffect,useState} from 'react'
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import {SearchOutlined } from "@mui/icons-material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import { Link } from 'react-router-dom';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-
-
-// import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-// import styles from "./headercontainer.module.css"
-
 import{NavLink, useNavigate} from "react-router-dom"
 import {isActive, cartActiveContxt } from '../../App'
 import { AuthContext } from '../profiles/login/LoginFetch'
@@ -249,9 +243,7 @@ function HeaderContainer(props) {
       setCount(userfollowingnotif?.length+productnotif?.length)
     }
   },[profileNotification,profileNotification.length, notificationsstore,productnotification, changed]) 
-  
-  console.log(cartCount.cart);
-  
+    
   function logout(){
     if(cartCount.cart.cartSize>=1 && token?.access){
       sendCartData()

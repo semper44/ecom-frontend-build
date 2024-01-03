@@ -64,7 +64,7 @@ function AllProduct() {
 
 
   useEffect(()=>{
-    window.location.pathname==="/products"&&getData()
+    getData()
   },[])
   // const fullscreen=false
 

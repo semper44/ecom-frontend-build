@@ -14,7 +14,6 @@ function AllSellers() {
 
   useEffect(()=>{document.title="All Sellers"
   },[])
-    console.log(theme);
     return (
     <>
      {!loading ? 

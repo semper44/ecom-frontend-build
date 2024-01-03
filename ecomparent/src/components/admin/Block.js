@@ -37,7 +37,6 @@ function Block({setBlockState, url}) {
     axios.post(url,config)
       .then(res=>{
         isLoading(false)
-        console.log(res);
         if(res.status === 200){
           setSuccessful(true)
           window.location.reload()      
@@ -53,8 +52,6 @@ function Block({setBlockState, url}) {
           
         })
   }
-
-  console.log(successful);
 
   return (
     <>

@@ -23,6 +23,8 @@ import SellersProduct from '../SellersProduct';
 import MyOrders from '../MyOrders';
 import { showsidebarcontext } from '../../../stores/CartContxt'
 import DeleteComp from '../../admin/DeleteComp';
+import R from "../../../ecom_images/R.jpg"
+
 
 
 
@@ -382,6 +384,7 @@ useEffect(()=>{
   function showProfileFormModal(){
     setProfileFormstate(true)
   }
+  console.log(data);
 
   function updateProfileFormModal(){
     setUpdateProfile(true)
@@ -398,7 +401,7 @@ useEffect(()=>{
       <div id={styles["seventy-container"]} className={theme?styles["class-dark"]:styles.class}>
         <div className={styles["profile-image-container"]}>
           <div className={styles["profile-image"]}>
-            <img src={data?.pics}alt="" />
+           {data &&<img src={data.pics===""?R:data?.pics}alt="" />}
           </div>
          { sameusers &&<div className={styles["change-prof-pics"]}>
             <p onClick={handleClick} value={"Change Profile Pics"}>

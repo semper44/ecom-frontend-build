@@ -74,7 +74,6 @@ function LoginFetch(props) {
                             obj.qty=JSON.parse(response.item_qty)[index]
                             
                             })
-                            console.log(response);
                             // let others={cartSize:JSON.parse(dataCart.cartSize), cartId:JSON.parse(dataCart.id)}
                             let cart={items:response.serializer, cartSize:JSON.parse(response.cartSize), cartId:JSON.parse(response.id), totalAmount:JSON.parse(response.totalAmount)}
                             

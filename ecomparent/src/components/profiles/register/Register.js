@@ -78,7 +78,6 @@ function Register() {
 
   let loginUser= (e)=>{
     e.preventDefault();
-    console.log("object11");
     setShowModal(true)
     let fetchRequestOptions={
         method: "POST",

@@ -1,11 +1,8 @@
 import React, { useContext} from 'react';
-import jwt_decode from "jwt-decode"
-;
-// import * as FaIcons from 'react-icons/fa';
-// import * as AiIcons from 'react-icons/ai';
+import jwt_decode from "jwt-decode";
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
-// import { IconContext } from 'react-icons';
+import { useSelector } from 'react-redux';
 import R from "../../ecom_images/R.jpg"
 // import  "./menuicon.css"
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
@@ -14,7 +11,6 @@ import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { AuthContext } from '../profiles/login/LoginFetch'
 import { ThemeData } from '../../App';
-import { cartContxt } from '../../stores/CartContxt';
 import { Switch } from '@mui/material';
 import { notificationscontext } from '../../App';
 import styles from "./menuicon.module.css"
@@ -27,11 +23,13 @@ import { screensizecontext } from '../../stores/CartContxt';
 function MenuIcon({showSidebar, notif}) {
   const {showNotifFn}= useContext(notificationscontext)
   const {dontdisplay}= useContext(screensizecontext)
+  const cartCount = useSelector((state) => state)
+
 
 
   const userdetails= useContext(AuthContext)
   const {theme, toggleTheme}= useContext(ThemeData)
-  const cartCount= useContext(cartContxt)
+  // const cartCount= useContext(cartContxt)
 
 
   let user
@@ -52,7 +50,7 @@ function MenuIcon({showSidebar, notif}) {
       let arr= []
       let arr2=[]
       // let arr3=[]
-      cartCount.items.map((item)=>{
+      cartCount.cart.items.map((item)=>{
       // 
       // let ids={qty: item.qty}
       arr.push(item.qty)
@@ -60,9 +58,10 @@ function MenuIcon({showSidebar, notif}) {
       // formData.append("item", item.id)      
     })
     formData.append("item", JSON.stringify(arr2))      
-    formData.append("owners", userDetail.user_id)
+    formData.append("owners", userDetail?.user_id)
     formData.append("item_qty", JSON.stringify(arr))
-    formData.append("cartSize", cartCount.cartSize)      
+    formData.append("cartSize", cartCount.cart.cartSize)      
+    formData.append("totalAmount", cartCount.cart.totalAmount)    
       // var myHeaders = new Headers();
       // myHeaders.append("Authorization", "Bearer 
       let requestOptions = {
@@ -86,7 +85,7 @@ function MenuIcon({showSidebar, notif}) {
   }
 
   function logingout(){
-    if(cartCount.cartSize>=1){
+    if(cartCount.cart.cartSize>=1){
       sendCartData()
     }else{
       window.localStorage.removeItem("MY_CARTSTATE")

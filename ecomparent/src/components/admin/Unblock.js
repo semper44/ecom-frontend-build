@@ -32,7 +32,6 @@ function Unblock({setUnBlockState, params, id}) {
       'Authorization': 'Bearer '+ token?.access
   }}
 
-  // console.log(url);
 
   function blockfn(params){
     let url;
@@ -40,17 +39,13 @@ function Unblock({setUnBlockState, params, id}) {
     isLoading(true)
     if(params.row.tags==="seller"){
       url = `${process.env.REACT_APP_URLS}/profile/unblockseller/${id}/`
-      console.log("1");
     }
     else {
       url = `${process.env.REACT_APP_URLS}/profile/unblockuser/${id}/`
-      console.log("2");
     }    
-    console.log(url);
     axios.post(url,config)
       .then(res=>{
         isLoading(false)
-        console.log(res);
         if(res.status === 200){
           setSuccessful(true)
           setUnBlockState(false)

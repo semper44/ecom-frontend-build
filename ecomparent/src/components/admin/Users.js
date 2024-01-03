@@ -64,7 +64,7 @@ function AllProduct() {
   }
 
   useEffect(()=>{
-    window.location.pathname==="/users"&&getData()
+    getData()
   },[])
 
   function del(params) {
@@ -86,9 +86,9 @@ function AllProduct() {
 
   function unblock(params) {
     setUnBlockState(true)
-    console.log(params);
     setUnblockId(params.row.id)
-    }
+  }
+
   const columns = [
     { field: "id", headerName: "ID", hide: "true" },
     {

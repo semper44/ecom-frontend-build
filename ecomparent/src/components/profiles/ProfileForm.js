@@ -49,8 +49,6 @@ function ProfileForm(props) {
 //         ){setEmpty(true)}
     
 // }, [data, data.AccountNumber, data.BankAccount, data.BusinessName, data.Country, data.Email, data.PhoneNumber, data.State])
-console.log(userDetails);
-console.log("userDetails");
 
 
 let formData= new FormData()
@@ -105,7 +103,7 @@ const requestOptions = {
         }
       }
     } catch (error) {
-      console.error("Error in sendFormDetail:", error);
+      alert("Error in sendFormDetail:", error);
       // Handle or log the error as needed
     }
   }

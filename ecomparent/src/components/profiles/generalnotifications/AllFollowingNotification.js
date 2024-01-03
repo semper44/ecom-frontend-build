@@ -54,7 +54,6 @@ function AllFollowingNotification() {
               )
             await res.json()
             if(res.ok){
-              console.log(res.ok);
               window.localStorage.removeItem("gottenNotification")
               setNotificationsstore([])
             }
@@ -65,8 +64,6 @@ function AllFollowingNotification() {
     })();  
     }, [notificationData, setNotificationsstore]) 
     
-
-    console.log(notificationsstore)    
 
   return (
     <>

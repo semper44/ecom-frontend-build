@@ -2,13 +2,12 @@ import { Server } from "socket.io";
 // console.log(process.env.REACT_APP_URLS)
 const io = new Server({
     cors:{
-      origin:"http://localhost:3000",
+      origin:"https://epcommerce.vercel.app",
       credentials: true,
       methods: ["GET", "POST"]
     }
  });
-console.log("hy")
-console.log("me")
+
 let flag= false
 let onlineUsers=[]
 const addNewUser=(userid, socketId)=>{

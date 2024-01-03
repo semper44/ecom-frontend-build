@@ -95,10 +95,8 @@ function order(){
         )
     .then((res)=>{
       isLoading(false)
-      console.log(res);
       if(res.status !== 200){
         if(res.status === 401 || res.status === 403){
-          console.log("object2");
           setPermissionDenied(true)
         }else{
           setError(true)

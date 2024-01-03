@@ -10,7 +10,6 @@ import {useParams } from 'react-router-dom';
 
 function AllFollowers() {
   const{username}= useParams()
-  console.log("userDetails");
     const {data, loading, error}= useFetch(`${process.env.REACT_APP_URLS}/profile/allfollowers/${username}/`)
   
     

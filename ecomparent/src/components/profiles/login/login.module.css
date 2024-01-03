@@ -91,6 +91,7 @@
     background-color: cyan;
     color: white;
     cursor: pointer;
+    margin-left: 0;
 }
 #login-button:hover{
     opacity: 0.5;

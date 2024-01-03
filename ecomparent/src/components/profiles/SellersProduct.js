@@ -65,10 +65,11 @@ function SellersProduct() {
               }else{
                   throw Error("Couldn't fetch data, please retry")
               }
+              return response.json()
           }
           if (response.status===200){
-              setLoading(false)
-              return response.json()
+            setLoading(false)
+            return response.json()
           }; 
           
       })
