@@ -1,4 +1,4 @@
-import React, { useContext} from 'react';
+import React, { useContext, useState, useEffect} from 'react';
 import jwt_decode from "jwt-decode";
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
@@ -11,10 +11,11 @@ import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { AuthContext } from '../profiles/login/LoginFetch'
 import { ThemeData } from '../../App';
-import { Switch } from '@mui/material';
+import { Box, Switch, Typography } from '@mui/material';
 import { notificationscontext } from '../../App';
 import styles from "./menuicon.module.css"
 import { screensizecontext } from '../../stores/CartContxt';
+import { profileContext } from '../../stores/CartContxt';
 
 
 
@@ -22,6 +23,9 @@ import { screensizecontext } from '../../stores/CartContxt';
 
 function MenuIcon({showSidebar, notif}) {
   const {showNotifFn}= useContext(notificationscontext)
+  const[count, setCount]=useState()
+  const { profileNotification, changed}= useContext(profileContext)
+
   const {dontdisplay}= useContext(screensizecontext)
   const cartCount = useSelector((state) => state)
 
@@ -97,8 +101,23 @@ function MenuIcon({showSidebar, notif}) {
     }
   }
   
-  
-  
+  // useEffect(()=>{
+  //   localStorage.setItem("gottenNotification",JSON.stringify(notificationsstore))       
+  // }, [notificationsstore])
+  const productnotification= JSON.parse(window.localStorage.getItem("productNotification"))|| null
+  useEffect(()=>{
+    const userfollowingnotif= JSON.parse(window.localStorage.getItem("gottenNotification"))|| null
+    const productnotif= JSON.parse(window.localStorage.getItem("productNotification"))|| null
+    if (userfollowingnotif===null){
+      setCount(productnotif?.length)
+    }else if(productnotif===null){
+      setCount(userfollowingnotif?.length)
+
+    }else if(productnotif && userfollowingnotif){
+      setCount(userfollowingnotif?.length+productnotif?.length)
+    }
+  },[profileNotification,profileNotification.length,productnotification, changed]) 
+    
 
   
   return (
@@ -151,9 +170,12 @@ function MenuIcon({showSidebar, notif}) {
           </li>}
           <li className={styles['nav-text']} onClick={showNotifFn}>
           <Link to={""}>
-              <NotificationsNoneOutlinedIcon />
-              <span>Notification</span>
-              </Link>
+          <Box sx={{position:"relative"}}>
+              <NotificationsNoneOutlinedIcon sx={{mt:"5px"}}/>
+              <Typography sx={{position:"absolute",top:"-7%", left:"31%", color:"white", backgroundColor:"red", borderRadius:"50%", p:"0 3px" }} >{count>=1?count:null}</Typography>
+            </Box>
+            <Typography sx={{mt:"8px"}}>Notifications</Typography>
+          </Link>
           </li>
            {user?<li className={styles['nav-text']}>
              <Link to={"/"}>

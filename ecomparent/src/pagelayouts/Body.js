@@ -22,7 +22,7 @@ function Body(props) {
   if(logIn?.user){
     userDetails=jwt_decode(logIn?.user?.access)
   } 
-
+  
   return (
     <>
       <div className={styles["styles-body"]}>

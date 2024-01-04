@@ -106,3 +106,12 @@ textarea::placeholder{
     /* margin-top: -20px; */
     margin-left: 8rem;
 }
+
+@media (max-width:842px) {
+    .container{
+        width: 80%;
+    }
+    .container-dark{
+        width: 80%;
+    }
+}

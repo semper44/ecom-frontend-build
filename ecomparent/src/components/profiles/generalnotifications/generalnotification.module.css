@@ -1,12 +1,12 @@
 .all-items{
     background-color: white;
-    width: fit-content;
+    width: 50%;
     height: fit-content;
     border-radius: 10px;   
 }
 .theme-dark{
     background-color:gainsboro;
-    width: fit-content;
+    width: 50%;
     height: fit-content;
     border-radius: 10px;
   
@@ -91,27 +91,20 @@
     opacity: 0.5;
 }
 
-@media (max-width:493px){
+@media (max-width:800px){
     .all-items{
-        background-color: green;
-        width: 59%;
-        height: fit-content;
-        border-radius: 10px;
-        position: absolute;
-        top: 25%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-       
+        width: 80%;
     }
     .theme-dark{
-        background-color:rgb(249, 249, 249, 0.7);
-        width: 59%;
-        height: fit-content;
-        border-radius: 10px;
-        position: absolute;
-        top: 25%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        width: 80%;
+    }
+}
+@media (min-width:1150px){
+    .all-items{
+        width: 50%;
+    }
+    .theme-dark{
+        width: 50%;
     }
 }
 

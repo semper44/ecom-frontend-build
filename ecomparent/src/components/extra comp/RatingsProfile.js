@@ -1,11 +1,6 @@
 import { useState } from "react";
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import styles from "./ratings.module.css"
-const colors = {
-    orange: "#FFBA5A",
-    grey: "#a9a9a9"
-    
-};
 
 
 

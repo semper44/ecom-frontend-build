@@ -72,7 +72,7 @@ function AllFollowingNotification() {
         { notificationData?.length>= 1 ? notificationData.map((notifs)=>{
           return(
             <>
-            <div className={styles.text}>
+            <div key={notifs.id} className={styles.text}>
               <p>{notifs.text}-{notifs.time}</p>  
               
               <div className={styles.eye}>

@@ -9,7 +9,6 @@ import HeaderContainer from '../headercontainer/HeaderContainer'
 import jwt_decode from "jwt-decode"
 import { showsidebarcontext } from '../../stores/CartContxt'
 import { screensizecontext } from '../../stores/CartContxt'
-import logo from "../../ecom_images/logo.png"
 // import BreakPointtheme  from './muiThemes'
 
 

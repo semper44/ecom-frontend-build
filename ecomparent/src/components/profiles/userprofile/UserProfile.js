@@ -24,6 +24,7 @@ import MyOrders from '../MyOrders';
 import { showsidebarcontext } from '../../../stores/CartContxt'
 import DeleteComp from '../../admin/DeleteComp';
 import R from "../../../ecom_images/R.jpg"
+import { Box } from '@mui/material';
 
 
 
@@ -46,6 +47,7 @@ function UserProfile({socket}) {
   const[sellersproduct, setsellersproduct]= useState(true)
   const[showAllProduct, setshowAllProduct]= useState(false)
   const[followAndRate, setFollowAndRate]= useState(false)
+  const[followLoading, setFollowLoading]= useState(false)
   const[rated, setRated]= useState(false)
   const[seller, setSeller]= useState(false)
   const[data, setdata]= useState()
@@ -276,6 +278,7 @@ useEffect(()=>{
 
   function following(){
     // eslint-disable-next-line no-undef
+    setFollowLoading(true)
     fetch(`${process.env.REACT_APP_URLS}/profile/follow/${username}/`,
     {method:'POST',
     headers:{
@@ -283,6 +286,7 @@ useEffect(()=>{
        'Authorization': 'Bearer '+ token.access
     }})
     .then((response)=>{
+      setFollowLoading(false)
       response.json();
       if(response.status===200){
         setFollowed(true)
@@ -305,6 +309,7 @@ useEffect(()=>{
   }
  
   const unprofileFollow= async ()=>{
+    setFollowLoading(true)
     let response=await fetch(`${process.env.REACT_APP_URLS}/profile/unfollow/${username}/`,
     {method:'POST',
     headers:{
@@ -313,6 +318,7 @@ useEffect(()=>{
       
     }})
     await response.json()
+    setFollowLoading(false)
     if(response.status===200){
       setFollowed(false)
       setUserFollowers(curr=>curr-1)
@@ -424,8 +430,11 @@ useEffect(()=>{
                   {data?.state? <p>{data?.state}</p>:<p>Location</p> }
                 </div>
                 <div className={styles["following-div"]}>
+                  {followLoading && <Box sx={{position:"fixed", top:"40%", left:"5%", zIndex:"99"}}>
+                    <Loading />
+                  </Box>}
                   {data &&(!sameusers && !followed && userDetails?.user_id && seller) && <p className={styles.following} onClick={following}>Follow</p>}
-                  {data &&(!sameusers && followed && userDetails?.user_id) && <p className={styles.unfollow}  onClick={unfollowing}>Unfollow</p>}
+                  {data &&(!sameusers && followed && userDetails?.user_id) && <p className={styles.unfollow}  onClick={unprofileFollow}>Unfollow</p>}
                   {/* <p className={styles.unfollow}  onClick={unfollowing}>Unfollow</p>} */}
                 </div>
               </div>
