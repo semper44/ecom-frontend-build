@@ -9,7 +9,6 @@
 # testing
 /coverage
 
-src/app.js
 
 text.txt
 # production
