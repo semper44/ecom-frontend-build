@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { AuthContext } from '../login/LoginFetch'
-import { headerdata } from '../../../stores/CartContxt'
 import { profileContext } from '../../../stores/CartContxt'
 import jwt_decode from "jwt-decode"
 import styles from "./productandfollowingnotification.module.css"

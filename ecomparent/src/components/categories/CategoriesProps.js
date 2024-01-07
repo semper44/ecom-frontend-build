@@ -45,8 +45,7 @@ function CategoriesProp(props) {
   {!loading ?<div id={styles["related-products-parents"]} className={theme?styles.id:undefined}>
    {data?.map((item, index)=>{
   return(
-      <>
-      <div className={theme? styles["holder-dark"]:styles.holder} key={index}>
+      <div key={item.id} className={theme? styles["holder-dark"]:styles.holder} >
         <Link to={`/${item}`}>
           <div className={styles["related-products-image"]}>
             <img src={image} alt={"descrip"} />
@@ -54,9 +53,6 @@ function CategoriesProp(props) {
           <p>{item}</p>
         </Link>        
       </div>
-       
-      </>
-
 
   );
   })}

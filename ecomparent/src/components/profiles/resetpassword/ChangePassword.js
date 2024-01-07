@@ -50,7 +50,7 @@ function ChangePassword() {
         setError("Couldn't fetch data, please retry")
 
       }
-      let res= await data.json()
+      // let res= await data.json()
       
   }
 

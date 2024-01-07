@@ -1,9 +1,7 @@
 import { Box, Typography} from "@mui/material";
 import React, {useContext} from "react";
 import ProgressCircle from "./ProgressCircle";
-import { adminOverview } from "../../../stores/CartContxt";
 import { ThemeData } from "../../../App";
-import {useProSidebar } from "react-pro-sidebar";
 import { screensizecontext } from "../../../stores/CartContxt";
 
 // import { ThemeData } from "../../../App";
@@ -13,11 +11,6 @@ import { screensizecontext } from "../../../stores/CartContxt";
 const StatBox = ({ title, subtitle, icon, progress, increase }) => {
   const Theme=useContext(ThemeData)
   const {dontdisplay}=useContext(screensizecontext)
-  const{TotalUsers}=useContext(adminOverview)
-  const {collapsed} = useProSidebar();
-
-  
-
  
   // useEffect(()=>{
   //   const handleResize = () => {

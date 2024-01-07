@@ -21,7 +21,6 @@ function ProductDetails() {
     const {id}= useParams()
     const dispatch = useDispatch();
 
-
     useEffect(()=>{document.title="Product Details"
     },[])
 
@@ -57,15 +56,15 @@ const clickToAdd = (item) => {
             {productDetails && productDetails.map((item)=>{
                 return(
                 <div key={item.id} className={styles["featured-details-parent"]}>
-                    <div className={styles["featured-details-image"]}>
-                    <img src={item.image} alt="" />
-                    </div>
-                    <div className={theme?styles["product-details-dark"]:styles["product-details"]}>
-                    <h1>{item.category}</h1>
-                    <p>{item.description}</p>
-                    <h2>${item.price}</h2>
-                    <h3 onClick={()=>{clickToAdd(item)}}> ADD TO CART </h3>
-                    </div>
+                  <div className={styles["featured-details-image"]}>
+                  <img src={item.image} alt="" />
+                  </div>
+                  <div className={theme?styles["product-details-dark"]:styles["product-details"]}>
+                  <h1>{item.category}</h1>
+                  <p>{item.description}</p>
+                  <h2>${item.price}</h2>
+                  <h3 onClick={()=>{clickToAdd(item)}}> ADD TO CART </h3>
+                  </div>
                 </div>)
                 })}     
             <div className={styles['pre-link-text']}>

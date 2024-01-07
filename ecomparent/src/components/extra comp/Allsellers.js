@@ -23,7 +23,7 @@ function AllSellers() {
    </h1> }
     <div className={styles.parent}>
      {data?.map((datum)=>{return(
-      <Link to={`/profile/${datum.name}`}>
+      <Link key={datum.id} to={`/profile/${datum.name}`}>
         <div className={theme?styles.followersdark:styles.followers}>
         <h2>{datum.name}</h2>  
         <RatingProfile value={datum.ratings_value}/>

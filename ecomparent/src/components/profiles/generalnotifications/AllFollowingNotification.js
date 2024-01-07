@@ -14,7 +14,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 
 
 function AllFollowingNotification() {
-    const {setNotificationsstore, notificationData, notificationsstore}= useContext(headerdata)
+    const {setNotificationsstore, notificationData}= useContext(headerdata)
     // const {notificationData}= useContext(generalNotification)
     const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null

@@ -107,7 +107,7 @@ function SellersProduct() {
   function del(params) {
     setdeleteState(true)
   }
-
+  
   const columns = [
     { field: "id", headerName: "ID", hide: "true" },
     {

@@ -173,7 +173,7 @@ function MyOrders() {
     <div style={{ height: "60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>
      {error && <h1 style={{textAlign: "center", padding:" 22% 0", color: "cyan",}}>
         {error}
-      </h1> }      {!loading? (
+      </h1> }      {(!loading && !error )? (
         <Box m="35px 0 0 0" height="60vh">
           <DataGrid
             rows={data}

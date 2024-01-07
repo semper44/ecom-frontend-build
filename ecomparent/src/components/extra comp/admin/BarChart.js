@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState, useEffect} from 'react';
+import React, { useContext} from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +10,6 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { adminOverview } from '../../../stores/CartContxt';
-import { screensizecontext } from '../../../stores/CartContxt';
 import { Box } from '@mui/material';
 // import faker from 'faker';
 

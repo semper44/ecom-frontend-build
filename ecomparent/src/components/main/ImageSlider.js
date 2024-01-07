@@ -2,7 +2,6 @@
 // import 'swiper/swiper.min.css';
 // import Swiper from 'swiper';
 // import {SwiperSlide } from "swiper/react";
-import image from "../../ecom_images/3.jpg"
 import image3 from "../../ecom_images/trendy.jpg"
 import bag from "../../ecom_images/bag.jpg"
 import three from "../../ecom_images/happy.jpg"

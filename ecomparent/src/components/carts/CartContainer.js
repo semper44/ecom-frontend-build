@@ -23,7 +23,14 @@ function CartContainer(props) {
 
   const {theme}= useContext(ThemeData)
 
-   const cartDisplay = useSelector((state) => state);
+  //  const cartDisplay = useSelector((state) => state);
+   const cartDisplay = (state) => {
+    return {
+      cartSize: state.cart.size,
+      totalAmount: state.cart.totalAmount,
+      // Add other properties as needed
+    };
+  };;
    const dispatch = useDispatch();
   const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
 

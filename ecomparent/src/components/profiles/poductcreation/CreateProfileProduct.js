@@ -33,12 +33,14 @@ function AdminCreate({setproduct, socket, followers}) {
     const [imageState, setimageState] = useState({image:""})
     const [previewImage, setPreviewImage] = useState()
     const [socketData, setSocketData] = useState(false)
-    const [unsuccessful, setUnsuccessful] = useState(false)
     const [responseData, setResponseData] = useState(false)
-    const [reload, setReload] = useState(false)
+    const [unsuccessful, setUnsuccessful] = useState(false)
+    const [unsuccessful2, setUnsuccessful2] = useState(false)
+    const [response, setResponse] = useState(false)
+    const[permissionDenied2, setPermissionDenied2]= useState(false)
+    const[permissionDenied, setPermissionDenied]= useState(false)
     const [selectedCategory, setSelectedCategory] = useState('electronics');
     const [loading, isLoading] = useState(false)
-    const[permissionDenied, setPermissionDenied]= useState(false)
     const {user}= useContext(AuthContext)
     const {theme}= useContext(ThemeData)
     let userDetail
@@ -53,17 +55,14 @@ function AdminCreate({setproduct, socket, followers}) {
 
     useEffect(()=>{
       socket?.on("offlineproductnotif", (data)=>{
-        if(data){
-           
+        if(data){       
         setSocketData(true)
       }
   })
     }, [socket])
 
-    useEffect(()=>{
-         
-      socket?.on("userproductnotif", (data)=>{
-           
+    useEffect(()=>{       
+      socket?.on("userproductnotif", (data)=>{          
         if(data){
            
         setSocketData(true)
@@ -73,14 +72,17 @@ function AdminCreate({setproduct, socket, followers}) {
 
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
 
-
   useEffect(()=>{
-    if(responseData && socketData){
-      isLoading(false)
-      window.location.reload()
-      setReload(true)
+    if(unsuccessful){
+      
+      setUnsuccessful2(true)
+    }else if(permissionDenied){
+      setPermissionDenied2(true)
+      setproduct(false)
+      
+
     }
-    }, [responseData, socketData])
+    }, [permissionDenied, setproduct, unsuccessful])
     
 
     const URL=`${process.env.REACT_APP_URLS}/product/create/`
@@ -152,31 +154,44 @@ function AdminCreate({setproduct, socket, followers}) {
         dispatch(action)
     }
     
+    useEffect(()=>{
+    if(responseData && socketData){
+      isLoading(false)
+      setResponse(true)
+      setproduct(false)
+      alert("product created")
+    }
+    }, [responseData, setproduct, socketData])
+    
     
     // let space = ""
     // let value= space.concat("sorry, something went wrong, please try again ")
-  
+    console.log(responseData, socketData,response);
 
   return (
+    <>
     <Modals >
-      {permissionDenied && <Message 
+      {permissionDenied2 && <Message 
       value={"Sorry, you have been blocked from using this service or do not have the necessary permissions"}
       code={"error"}
-      fn={setPermissionDenied}
+      fn={setPermissionDenied2}
        />}
 
-      {unsuccessful && <Message 
+      {unsuccessful2 && <Message 
       value={"Sorry, request failed"}
       code={"error"}
-      fn={setUnsuccessful}
-       />
-}
-      {reload && <Message 
+      fn={setUnsuccessful2}
+      />
+      }
+
+      {/* {check && <Message 
       value={"product created"}
       code={"success"}
-      fn={setResponseData}
-       />
-}
+      fn={setResponse}
+      />
+      } */}
+
+    {loading && <Loading />}
         <div className={theme?styles['all-items-dark']:styles['all-items']}>
           <button id={styles.cancel} onClick={()=>setproduct(false)}>&#10005;</button>
           <div className={styles['search-items']}>
@@ -234,10 +249,10 @@ function AdminCreate({setproduct, socket, followers}) {
               <button className={styles.searchcreate} onClick={handleSubmit} >Upload</button>
             </div>
           </div>
-          {loading && <Loading />}
+          
         </div>
     </Modals>
-  
+    </>
   )
 }
 

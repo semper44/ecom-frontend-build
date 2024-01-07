@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect} from 'react'
 import { headerdata } from './CartContxt'
-import { AuthContext } from '../components/profiles/login/LoginFetch'
-import jwt_decode from "jwt-decode";
+
 
 
 
@@ -16,11 +15,11 @@ function HeaderContainerData(props) {
     const[followingSideData, setFollowingSideData]=useState([])
     const[notificationsstore, setNotificationsstore]=useState([])
 
-    const users= useContext(AuthContext)
-    let userDetails;
-    if(users.user){
-      userDetails=jwt_decode(users?.user?.access)
-    }
+    // const users= useContext(AuthContext)
+    // let userDetails;
+    // if(users.user){
+    //   userDetails=jwt_decode(users?.user?.access)
+    // }
 
 
     
