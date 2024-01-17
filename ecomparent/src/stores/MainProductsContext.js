@@ -1,4 +1,4 @@
-import React, {useState, useEffect, memo ,useMemo} from 'react'
+import React, {useState, useCallback, memo ,useMemo} from 'react'
 import { mainproductContext } from './CartContxt'
 
 
@@ -8,10 +8,10 @@ const MainProductsContext=(props)=> {
     const[error, setError]=useState(null)    
     
   
-    useEffect(()=>{
+    const fetchdata = useCallback(() => {
        Promise.all([
-        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch(`${process.env.REACT_APP_URLS}/product/allproducts/electronics/`),
-        (window.location.pathname==="/" || window.location.pathname==="/electronics")&&fetch(`${process.env.REACT_APP_URLS}/product/allproducts/electronics/`),
+        fetch(`${process.env.REACT_APP_URLS}/product/allproducts/electronics/`),
+        fetch(`${process.env.REACT_APP_URLS}/product/allproducts/electronics/`),
        
       ])
       .then(([resfeatured, resReviewed])=>{
@@ -37,6 +37,7 @@ const MainProductsContext=(props)=> {
 
        const memoizedValue = useMemo(
         () => ({
+          fetchdata:fetchdata,
           featureData: featuredData,
           loading: loading,
           error: error,

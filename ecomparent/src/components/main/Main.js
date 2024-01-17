@@ -27,8 +27,12 @@ function Main() {
   const {dontdisplay}= useContext(screensizecontext)
   // const {promoloading}= useContext(promoData)
   const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
-  const {featureData,loading, error}= useContext(mainproductContext);
+  const {fetchdata, featureData,loading, error}= useContext(mainproductContext);
   
+  useEffect(()=>{
+    fetchdata();
+  }, [fetchdata])
+
   let ftd = null ;
   if(featureData){
     localStorage.setItem("featuredata", JSON.stringify(featureData))

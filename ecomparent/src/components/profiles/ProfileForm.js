@@ -27,9 +27,8 @@ function ProfileForm(props) {
     if(token){
       userDetails=jwt_decode(token?.access)
     }
-    ;
     function change(e){
-        setData({...data, [e.target.name]:e.target.value})
+      setData({...data, [e.target.name]:e.target.value})
 }
 
 
@@ -50,7 +49,7 @@ function ProfileForm(props) {
     
 // }, [data, data.AccountNumber, data.BankAccount, data.BusinessName, data.Country, data.Email, data.PhoneNumber, data.State])
 
-
+console.log(process.env.REACT_APP_URLS)
 let formData= new FormData()
 formData.append("bankAccount",  parseInt(data.BankAccount))
 formData.append("accountNumber", parseInt(data.AccountNumber))

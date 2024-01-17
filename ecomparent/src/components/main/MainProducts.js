@@ -19,6 +19,8 @@ function MainProducts() {
   // const[screenWidth, setScreenWidth]= useState(window.innerWidth)
   const {featureData, loading, error}= useContext(mainproductContext)
 
+  
+
   let ftd ;
   if(featureData){
     localStorage.setItem("featuredata", JSON.stringify(featureData))

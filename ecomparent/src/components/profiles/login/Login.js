@@ -11,6 +11,7 @@ import { Box } from '@mui/material'
 import Loading from '../../extra comp/NewLoadingModal'
 
 
+console.log(process.env.REACT_APP_URLS)
 
 const initialState={
   username:"",
