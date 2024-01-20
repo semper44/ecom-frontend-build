@@ -32,10 +32,5 @@ export const UserProfileData = [
     
   },
   
-  // {
-  //   title: 'My Products',
-  //   icon: <FaShoppingCart />,
-    
-  // },
   
 ];

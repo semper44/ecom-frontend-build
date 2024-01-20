@@ -37,7 +37,7 @@ const clickToAdd = (item) => {
   dispatch(addItem({
     id: item.id,
     category: item.category,
-    image: item.image,
+    image: item.image_url,
     price: item.price,
     qty: 0,  
   }));
@@ -57,7 +57,7 @@ const clickToAdd = (item) => {
                 return(
                 <div key={item.id} className={styles["featured-details-parent"]}>
                   <div className={styles["featured-details-image"]}>
-                  <img src={item.image} alt="" />
+                  <img src={item.image_url} alt="" />
                   </div>
                   <div className={theme?styles["product-details-dark"]:styles["product-details"]}>
                   <h1>{item.category}</h1>
@@ -76,7 +76,7 @@ const clickToAdd = (item) => {
                 <div className={theme?styles["holder-dark"]:styles.holder} key={item.id}>
                 <Link to={`/productdetails/${item.id}`}>
                   <div className={styles["related-products-image"]}>
-                    <img src={item.image} alt={item.description} />
+                    <img src={item.image_url} alt={item.description} />
                   </div>
                 </Link>
                   <div className={styles["related-products-others"]}>

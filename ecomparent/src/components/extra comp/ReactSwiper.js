@@ -44,7 +44,7 @@ export const Slider = () => {
         <div key={slide.image} className="swiper-slide" style={{ width: '80%', height: '80%', maxWidth: '300px', }}>
            <Link to={""}>
           <div className={styles["related-products-pics"]}>
-            <img src={slide.image} alt={slide.description} />
+            <img src={slide.image_url} alt={slide.description} />
           </div>
         </Link>
           <div className={styles["others"]}>

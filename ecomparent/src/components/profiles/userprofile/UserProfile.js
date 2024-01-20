@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef, useContext } from 'react'
 import styles from "./userprofile.module.css"
 import { UserProfileData } from './UserProfileData'
+import Message from '../../extra comp/Message';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ProfileForm from "../ProfileForm"
@@ -31,6 +32,7 @@ import { Box } from '@mui/material';
 
 let Successful= false
 function UserProfile({socket}) {
+  
   const[thirtyContainerState, setThirtyContainerState]= useState(undefined)
   const[stateCheck, setstateCheck]= useState("")
   const[response, setResponse]= useState(false)
@@ -56,6 +58,12 @@ function UserProfile({socket}) {
   const[errors, setErrors]= useState(false)
   const[deleteState, setDeleteState]= useState(false)
   const[combinedOrder, setCombinedOrders]= useState(undefined)
+  const[alreadyAseller, setAlreadyAseller]=useState(false)
+  const[unsuccessful, setUnsuccessful]=useState(false)
+
+
+  console.log(alreadyAseller)
+  console.log('alreadyAseller')
   // const[fullpage, setFullPage]= useState(true)
   const[combinedReviews, setCombinedReviews]= useState(undefined)
   const {hideSidebar}= useContext(showsidebarcontext)
@@ -111,23 +119,20 @@ function UserProfile({socket}) {
       return res.json();
       })
       .then(data => {
-        if(!Successful){
-          data?.map((item)=>{
-            setdata(item)
-            setUserFollowers(item.followers.length)
-            if(item.tags==="seller"){
-              setSeller(true)}
-              if(item?.followers.length<1){
-                setFollowed(false)
-              }else{
-                if(item?.followers.includes(userDetails?.user_id)){
-                  setFollowed(true)  
-                }else{
-                  setFollowed(false)
-                }
-              }
-          })
+        setdata(data)  
+        if(data?.tags === 'seller'){
+          setSeller(true)
         }
+        if(data?.followers.length < 1){
+          setFollowed(false)
+        }else{
+          if(data.followers.includes(userDetails?.user_id)){
+            setFollowed(true)
+          }else{
+            setFollowed(false)
+          }
+        }
+        console.log(data)   
 
 });
 }catch(error){
@@ -396,6 +401,20 @@ useEffect(()=>{
   }
   return (
     <>
+    <div style={{position:'fixed', zIndex:100, right:'0', top:'0', width:'100%'}}>
+      {alreadyAseller && <Message 
+        value={" Already a seller"}
+        code={"success"}
+        fn={setAlreadyAseller}
+        />  } 
+
+{unsuccessful && <Message 
+      value={"Sorry, request failed"}
+      code={"error"}
+      fn={setUnsuccessful}
+       />}
+      </div>
+    {alreadyAseller}
     {response ?
     <div className={styles["profile-container"]} onClick={hideSidebar}>
       {errors?<div className={styles["error-profile"]}>
@@ -406,7 +425,8 @@ useEffect(()=>{
       <div id={styles["seventy-container"]} className={theme?styles["class-dark"]:styles.class}>
         <div className={styles["profile-image-container"]}>
           <div className={styles["profile-image"]}>
-           {data &&<img src={data.pics===""?R:data?.pics}alt="" />}
+            {data?.image_url}
+           {data &&<img src={data.image_url}alt="" />}
           </div>
          { sameusers &&<div className={styles["change-prof-pics"]}>
             <p onClick={handleClick} value={"Change Profile Pics"}>
@@ -424,7 +444,7 @@ useEffect(()=>{
             <div className={styles["top-left-holder"]}>
               <div className={styles["user-details"]}>
                 
-              { data ?<p>{data?.name}</p>: <p>Guest</p> }
+              { data ?<p>{data.name}</p>: <p>Guest</p> }
                 <div className={styles.location}>
                   <PlaceOutlinedIcon />
                   {data?.state? <p>{data?.state}</p>:<p>Location</p> }
@@ -443,7 +463,7 @@ useEffect(()=>{
               </div>
               <div className={theme?styles["profile-down-part-dark"]:styles["profile-down-part"]}>
                 <Link to={`/profile/${username}/allfollowers`}>
-                  <p id={styles.followers}>{userFollowers}<span> Followers</span></p>
+                  <p id={styles.followers}>{data?.followers?.length}<span> Followers</span></p>
                 </Link>
                 <Link to={`/profile/${username}/allfollowing/`}>
                   <p>{data?.following?.length} <span>Following</span></p>
@@ -546,7 +566,7 @@ useEffect(()=>{
             {stateCheck === "settings" ?<div className={thirtyContainerState==="settings" ?styles.show: styles["no-show"]}>
               <div className="products-childers">
                 {!seller && <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={showProfileFormModal}>Become a seller </p>}
-                {(ProfileFormstate && !seller) &&<ProfileForm setProfileFormstate={setProfileFormstate}/>}
+                {(ProfileFormstate && !seller) &&<ProfileForm setProfileFormstate={setProfileFormstate} setAlreadyAseller={setAlreadyAseller} setUnsuccessful={setUnsuccessful}/>}
                 <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={updateProfileFormModal}>Update profile</p>
                 {updateProfile && <ProfileUpdate setprofileupdate={setUpdateProfile}/>}
                 <p className={theme?styles.thirtydark:styles["thirty-container-buttons"]} id={styles["thirty-container-buttons"]} onClick={"changepassword"}>Change Password</p>

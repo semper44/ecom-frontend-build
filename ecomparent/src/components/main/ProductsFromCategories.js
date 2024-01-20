@@ -40,7 +40,7 @@ function ProductFromCategories({url}) {
       <div className={theme? styles["holder-dark"]:styles.holder} key={item.id}>
         <Link to={`/productdetails/${item.id}`}>
           <div className={styles["related-products-image"]}>
-            <img src={item.image} alt={item.description} />
+            <img src={item.image_url} alt={item.description} />
           </div>
         </Link>
           <div className={styles["related-products-others"]}>

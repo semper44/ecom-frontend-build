@@ -16,7 +16,6 @@ function MainProducts() {
   const[data, setData]= useState()
   const {theme}= useContext(ThemeData)
   const {screenWidth}= useContext(screensizecontext)
-  // const[screenWidth, setScreenWidth]= useState(window.innerWidth)
   const {featureData, loading, error}= useContext(mainproductContext)
 
   
@@ -72,7 +71,7 @@ function MainProducts() {
       <div className={theme? styles["slides-holder-dark"]:styles["slides-holder"]} key={item.id}>
         <Link to={`/productdetails/${item.id}`}>
           <div className={styles["related-products-image"]}>
-            <img src={item.image} alt={item.description} />
+            <img src={item.image_url} alt={item.description} />
           </div>
         </Link>
           <div className={styles["mainProduct-others"]}>

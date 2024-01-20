@@ -11,14 +11,13 @@ import Message from '../extra comp/Message'
 
 function ProfileForm(props) {
     const[data, setData]=useState({})
-    const[unsuccessful, setUnsuccessful]=useState(false)
-    const[alreadyAseller, setAlreadyAseller]=useState(false)
     const[loading, setLoading]=useState(false)
     const[responseData, setResponseData]=useState(null)
     const[incorrectEmail, setIncorrectEmail]=useState(false)
     const[UnCorrectPassword, setUnCorrectPassword]=useState(false)
     const[accountnunber, setAccountnunber]=useState(false)
     const[accountname, setAccountname]=useState(false)
+
     const {theme}= useContext(ThemeData)
 
     const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
@@ -49,7 +48,6 @@ function ProfileForm(props) {
     
 // }, [data, data.AccountNumber, data.BankAccount, data.BusinessName, data.Country, data.Email, data.PhoneNumber, data.State])
 
-console.log(process.env.REACT_APP_URLS)
 let formData= new FormData()
 formData.append("bankAccount",  parseInt(data.BankAccount))
 formData.append("accountNumber", parseInt(data.AccountNumber))
@@ -86,19 +84,20 @@ const requestOptions = {
   
         if (response.status === 400) {
           setLoading(false);
-          setUnsuccessful(true);
+          props.setUnsuccessful(true);
           window.location.reload();
         } else if (response.status === 200) {
           setLoading(false);
-          setUnsuccessful(false);
+          props.setUnsuccessful(false);
           setResponseData(res);
           window.location.reload();
         } else if (response.status === 226) {
           setLoading(false);
-          setAlreadyAseller(true);
+          props.setAlreadyAseller(true);
+          props.setProfileFormstate(false)
         } else {
           setLoading(false);
-          setUnsuccessful(true);
+          props.setUnsuccessful(true);
         }
       }
     } catch (error) {
@@ -138,24 +137,15 @@ const requestOptions = {
     // }  
 
   return (
-    <>
+    <>    
     <Modals>
-      {unsuccessful && <Message 
-      value={"Sorry, request failed"}
-      code={"error"}
-      fn={setUnsuccessful}
-       />}
 
       {responseData && <Message 
       value={"Successful"}
       code={"success"}
       fn={setResponseData}
        />  } 
-      {alreadyAseller && <Message 
-      value={"Already a seller"}
-      code={"success"}
-      fn={setResponseData}
-       />  } 
+      
 
        <div className={theme?styles["form-holder-dark"]:styles["form-holder"]}>
           <div className={styles.cancel} onClick={()=>props.setProfileFormstate(false)}>

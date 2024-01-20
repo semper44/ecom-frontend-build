@@ -63,7 +63,7 @@ function Positive() {
             <>
             <div className={styles["container"]}>
                 <div className={styles.pics}>
-                    <img src={item?.pics} alt="" />
+                    <img src={item?.image_url} alt="" />
                 </div>
                 <p>{item?.sender_name}</p>
             <div className={styles.rated}>

@@ -40,7 +40,7 @@ const clickToAdd = (item) => {
   dispatch(addItem({
     id: item.id,
     category: item.category,
-    image: item.image,
+    image: item.image_url,
     price: item.price,
     qty: 0,  
   }));
@@ -122,6 +122,7 @@ function order(){
   }
 }
 
+console.log(cartDisplay.cart?.items)
  
   return (
     <>

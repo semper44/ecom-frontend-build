@@ -8,6 +8,7 @@ function ProfileProvider(props) {
   const[profileNotification, setProfileNotification]= useState([])
   const[changed, setChanged]= useState(false)
   const[seller, setSeller]= useState(false)
+  const[image, setImage]= useState('')
     
     const users= useContext(AuthContext)
     let userDetails;
@@ -27,12 +28,11 @@ function ProfileProvider(props) {
           return res.json();
           })
           .then(data => {
-            data?.map((item)=>{
-              setProfileNotification(item.notification)
-              if(item.tags=== "seller"){
-                setSeller(true)
-              }
-            }) 
+            setImage(data.image_url)
+            setProfileNotification(data.notification)
+            if(data.tags === "seller"){
+              setSeller(true)
+            }
             setChanged(!changed)   
     });
   }catch(error){
@@ -44,7 +44,8 @@ function ProfileProvider(props) {
     setProfileNotifications:setProfileNotification,
     profileNotification:profileNotification,
     changed:changed,
-    seller:seller
+    seller:seller,
+    image:image,
     };
 
   return (

@@ -111,13 +111,13 @@ function SellersProduct() {
   const columns = [
     { field: "id", headerName: "ID", hide: "true" },
     {
-      field: "image",
+      field: "image_url",
       headerName: "Image",
       filterable: false,      
       flex:dontdisplay?undefined: 1,
       renderCell: (params) => {
         // ;
-        return <Avatar src={params.row.image} />;
+        return <Avatar src={params.row.image_url} />;
       },
     },
     {

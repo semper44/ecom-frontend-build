@@ -7,6 +7,7 @@ function Message({value, code, fn}) {
     const interval=setInterval(()=>{
       
       fn(false)
+      console.log('i have ran')
       
     }, 5000)      
     setTimeout(()=>clearInterval(interval), 6000)

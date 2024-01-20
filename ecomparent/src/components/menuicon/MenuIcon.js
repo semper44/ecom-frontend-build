@@ -3,7 +3,6 @@ import jwt_decode from "jwt-decode";
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import { useSelector } from 'react-redux';
-import R from "../../ecom_images/R.jpg"
 // import  "./menuicon.css"
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -24,7 +23,7 @@ import { profileContext } from '../../stores/CartContxt';
 function MenuIcon({showSidebar, notif}) {
   const {showNotifFn}= useContext(notificationscontext)
   const[count, setCount]=useState()
-  const { profileNotification, changed}= useContext(profileContext)
+  const {image,  profileNotification, changed}= useContext(profileContext)
 
   const {dontdisplay}= useContext(screensizecontext)
   const cartCount = useSelector((state) => state)
@@ -131,7 +130,7 @@ function MenuIcon({showSidebar, notif}) {
             alt="profile-user"
             width="160px"
             height="160px"
-            src={R}
+            src={image}
             style={{ cursor: "pointer", borderRadius: "50%",  }}/>
           <div className={styles["prof-others"]}>
             <Switch onClick={toggleAndCloseSidebar} />
@@ -153,7 +152,7 @@ function MenuIcon({showSidebar, notif}) {
           {!dontdisplay &&<li className={styles['nav-text']}>
           <Link to={"/categories"}>
               <NotificationsNoneOutlinedIcon />
-              <span>Cateories</span>
+              <span>Categories</span>
               </Link>
           </li>}
           {!dontdisplay &&<li className={styles['nav-text']}>
@@ -163,7 +162,7 @@ function MenuIcon({showSidebar, notif}) {
               </Link>
           </li>}
           {!dontdisplay &&<li className={styles['nav-text']}>
-          <Link to={"/sellers"}>
+          <Link to={"/allsellers"}>
               <NotificationsNoneOutlinedIcon />
               <span>Sellers</span>
               </Link>
