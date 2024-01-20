@@ -56,7 +56,6 @@ function AllProduct() {
         setLoading(false)
         setproductData(res.data)
       }
-
     }catch(error){
       setLoading(false)
       setError(error)
@@ -92,7 +91,7 @@ function AllProduct() {
   const columns = [
     { field: "id", headerName: "ID", hide: "true" },
     {
-      field: "pics",
+      field: "image_url",
       headerName: "PICS",
       filterable: false,
       flex: 1,
@@ -100,7 +99,7 @@ function AllProduct() {
         // ;
         return (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Avatar src={params.row.pics} />
+            <Avatar src={params.row.image_url} />
             {params.row.tags === "seller" && (
               <Tooltip title="Seller" arrow>
                 <CheckCircleOutlineOutlinedIcon  style={{ color: "green", marginLeft: "5px" }} />

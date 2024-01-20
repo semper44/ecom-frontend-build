@@ -1,14 +1,10 @@
 import { Outlet } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../components/profiles/login/LoginFetch";
 import Admin from "../components/admin/Admin";
-import AdminCreate from "../components/admin/AdminCreate";
-import SearchModal from "../components/searchmodal/SearchModal";
 import jwt_decode from "jwt-decode";
-import { SearchOutlined } from "@mui/icons-material";
 import {ThemeData} from "../App"
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Box } from "@mui/material";
 import { Typography } from '@mui/material'
@@ -19,8 +15,6 @@ import { screensizecontext } from "../stores/CartContxt";
 
 
 function PageLayout(props) {
-  const [createShowState, setCreateShowState] = useState(false);
-  const [search, setSearch] = useState(false);
   const {theme}= useContext(ThemeData)
   const {dontdisplay}= useContext(screensizecontext)
   const {collapsed, collapseSidebar} = useProSidebar();
@@ -44,20 +38,6 @@ function PageLayout(props) {
 
   function showsidebar() {
     collapseSidebar(false);
-    ;
-  }
-  function createShow() {
-    setCreateShowState(false);
-  }
-
-  function createHide() {
-    setCreateShowState(false);
-  }
-  function hideSearch() {
-    setSearch(false);
-  }
-  function ShowSearch() {
-    setSearch(true);
   }
 
   const { user, logout } = useContext(AuthContext);
@@ -85,25 +65,6 @@ function PageLayout(props) {
                 <MenuOutlinedIcon fontSize="medium" onClick={showsidebar} sx={{color:theme?"white":undefined, cursor:"pointer"}} />
               </Box>
               <Box sx={{display:"flex", justifyContent:"basline", gap:"3.5%", cursor:"pointer"}}>
-                <Box
-                  onClick={ShowSearch}
-                  sx={{color:search?"cyan":"black", display: "flex", gap: "6px"}}
-                  // className={`${styles.pagelayoutsearch} ${
-                  //   search && styles["pagelayoutsearch-active"]
-                  // }`}
-                >
-                  <SearchOutlined fontSize="small" sx={{color:theme?"white":undefined}}  />
-                  <Typography  sx={{color:theme &&"white"}}>Search</Typography>
-                </Box>
-                {search && (
-                  // <SearchModal changed={(search) => setSearch(search)} />
-                  <SearchModal onHide={hideSearch} />
-                )}
-                <Box onClick={logout} sx={{display:"flex", color:theme &&"white"}}>
-                  <AddCircleOutlineOutlinedIcon fontSize="small" sx={{color:theme?"white":undefined, mr:"5px"}}/>
-                  <Typography onClick={createShow} sx={{color:(createShowState &&"cyan")||(theme &&"white")}}>Create</Typography> 
-                </Box>
-                {createShowState && <AdminCreate onHide={createHide} />}
                 <Box onClick={logout} sx={{display:"flex", color:theme &&"white"}}>
                   <LogoutOutlinedIcon fontSize="small" sx={{color:theme?"white":undefined, mr:"5px"}}/>
                   <Typography>Logout</Typography>

@@ -95,7 +95,7 @@ function LoginFetch(props) {
                     })()
                         
                 } else if (userToken?.is_staff === true && userToken?.is_superuser === false) {
-                    navigate("/moderator");
+                    navigate("/admin");
                 } 
                 else if(userToken?.is_staff === true ||(userToken?.is_staff === true && userToken?.is_superuser === true)){
                     navigate("/admin");

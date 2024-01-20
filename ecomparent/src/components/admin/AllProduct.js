@@ -55,7 +55,6 @@ function AllProduct() {
         setLoading(false)
         setproductData(res.data)
       }
-
     }catch(error){
       setLoading(false)
       setError(error)
@@ -86,14 +85,14 @@ function AllProduct() {
       headerAlign: "left",
     },
     {
-      field: "image",
+      field: "image_url",
       headerName: "Image",
       filterable: false,
       width:dontdisplay?60: undefined,
       flex:dontdisplay?0: 1,
       renderCell: (params) => {
         // ;
-        return <Avatar src={params.row.image} />;
+        return <Avatar src={params.row.image_url} />;
       },
     },
     { field: "sellers", headerName: "Sellers", flex: 1 },
