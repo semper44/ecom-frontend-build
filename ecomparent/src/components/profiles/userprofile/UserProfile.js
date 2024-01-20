@@ -24,22 +24,18 @@ import SellersProduct from '../SellersProduct';
 import MyOrders from '../MyOrders';
 import { showsidebarcontext } from '../../../stores/CartContxt'
 import DeleteComp from '../../admin/DeleteComp';
-import R from "../../../ecom_images/R.jpg"
 import { Box } from '@mui/material';
 
 
 
 
-let Successful= false
-function UserProfile({socket}) {
-  
+function UserProfile({socket}) {  
   const[thirtyContainerState, setThirtyContainerState]= useState(undefined)
   const[stateCheck, setstateCheck]= useState("")
   const[response, setResponse]= useState(false)
   const[ProfileFormstate, setProfileFormstate]= useState(false)
   const[updateProfile, setUpdateProfile]= useState(false)
   const[ratings, setRatings]= useState(false)
-  // fetchData is display oders and other components 
   const[fetchData, setfetchData]= useState(false)
   const[deliveryfetchData, setdeliveryfetchData]= useState(false)
   const[sameusers, setsameusers]= useState(true)
@@ -61,9 +57,6 @@ function UserProfile({socket}) {
   const[alreadyAseller, setAlreadyAseller]=useState(false)
   const[unsuccessful, setUnsuccessful]=useState(false)
 
-
-  console.log(alreadyAseller)
-  console.log('alreadyAseller')
   // const[fullpage, setFullPage]= useState(true)
   const[combinedReviews, setCombinedReviews]= useState(undefined)
   const {hideSidebar}= useContext(showsidebarcontext)
@@ -113,7 +106,6 @@ function UserProfile({socket}) {
         else if(res.status !==200){
           setErrors(true)
           setResponse(true)
-          Successful=true
         }
 
       return res.json();
@@ -128,12 +120,11 @@ function UserProfile({socket}) {
         }else{
           if(data.followers.includes(userDetails?.user_id)){
             setFollowed(true)
+            setUserFollowers(data?.followers.length)
           }else{
             setFollowed(false)
           }
         }
-        console.log(data)   
-
 });
 }catch(error){
 
@@ -281,6 +272,10 @@ useEffect(()=>{
    
     }
 
+
+  
+
+
   function following(){
     // eslint-disable-next-line no-undef
     setFollowLoading(true)
@@ -292,13 +287,13 @@ useEffect(()=>{
     }})
     .then((response)=>{
       setFollowLoading(false)
-      response.json();
       if(response.status===200){
         setFollowed(true)
         setUserFollowers(curr=>curr+1)
       }else{
         alert("An error occured, please try again")
       }
+      return response.json();
     })
     if(!rated){
       setFollowAndRate(true)
@@ -311,7 +306,12 @@ useEffect(()=>{
       seen:"unseen",
       type:"following",
       time: new Date(Date.now()).getHours()+":"+new Date(Date.now()).getMinutes()})
+
+    .catch((error) => {
+      console.error("Error:", error);
+    });
   }
+
  
   const unprofileFollow= async ()=>{
     setFollowLoading(true)
@@ -333,9 +333,6 @@ useEffect(()=>{
     }
   }
 
-  function unfollowing(){
-    unprofileFollow()
-  }
  
   function changeThirtyContainer(){
     setstateCheck("products")
@@ -387,8 +384,7 @@ useEffect(()=>{
     fetch(URL, requestOptions)
       .then((result)=>{return result.json()})
       .then(res=>{
-        ;
-        setdata({pics:res.pics})
+        setdata({image_url:res.image_url})
       })
     };
   
@@ -425,7 +421,6 @@ useEffect(()=>{
       <div id={styles["seventy-container"]} className={theme?styles["class-dark"]:styles.class}>
         <div className={styles["profile-image-container"]}>
           <div className={styles["profile-image"]}>
-            {data?.image_url}
            {data &&<img src={data.image_url}alt="" />}
           </div>
          { sameusers &&<div className={styles["change-prof-pics"]}>
@@ -455,7 +450,6 @@ useEffect(()=>{
                   </Box>}
                   {data &&(!sameusers && !followed && userDetails?.user_id && seller) && <p className={styles.following} onClick={following}>Follow</p>}
                   {data &&(!sameusers && followed && userDetails?.user_id) && <p className={styles.unfollow}  onClick={unprofileFollow}>Unfollow</p>}
-                  {/* <p className={styles.unfollow}  onClick={unfollowing}>Unfollow</p>} */}
                 </div>
               </div>
               <div className={styles.ratingsprofile}>
@@ -463,10 +457,10 @@ useEffect(()=>{
               </div>
               <div className={theme?styles["profile-down-part-dark"]:styles["profile-down-part"]}>
                 <Link to={`/profile/${username}/allfollowers`}>
-                  <p id={styles.followers}>{data?.followers?.length}<span> Followers</span></p>
+                  <p id={styles.followers}>{userFollowers}<span> Followers</span></p>
                 </Link>
                 <Link to={`/profile/${username}/allfollowing/`}>
-                  <p>{data?.following?.length} <span>Following</span></p>
+                  <p> {data?.following?.length}<span>Following</span></p>
                 </Link>
               </div>
             </div>

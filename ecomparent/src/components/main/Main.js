@@ -74,8 +74,6 @@ function Main() {
       <div className={styles['category-props']}>
         <Categories img={pexels} category={"Electronics"}/> 
         <Categories img={pexels} category={"Featured"}/> 
-        {/* <CategoriesProp img={pexels} category={data.categories} price={data.price}/> 
-        <CategoriesProp img={pexels} category={data.categories} price={data.price}/>  */}
       </div>
       <div className='icon-container'>
           <Link to="/categories">

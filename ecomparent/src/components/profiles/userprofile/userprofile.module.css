@@ -313,6 +313,7 @@
     text-align: center;
     color: cyan;
 }
+
 @media(max-width:500px){
     .profile-down-part{
         display: grid;
@@ -324,6 +325,14 @@
     display: grid;
     justify-content: center;
     /* grid-template-columns: repeat(1, minmax(20%, 1fr)); */
+}
+/* .profile-image{
+    text-align: center;
+} */
+.profile-image img{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
 }
 .change-prof-pics{
     display: flex;

@@ -42,17 +42,18 @@ export const Slider = () => {
       <div className="swiper-wrapper">
       {featureData&&(featureData.slice(0, 5)).map((slide) => (
         <div key={slide.image} className="swiper-slide" style={{ width: '80%', height: '80%', maxWidth: '300px', }}>
-           <Link to={""}>
-          <div className={styles["related-products-pics"]}>
-            <img src={slide.image_url} alt={slide.description} />
-          </div>
-        </Link>
-          <div className={styles["others"]}>
-              <h4 id={styles["p-category"]}>{slide.category}</h4>
-              {/* <p>{props.description}</p> */}
-              <h2 id={theme?styles["h2-price-dark"]:styles["h2-price"]}>{slide.price}</h2>
-              <p>{slide.tittle}</p>
-          </div>
+          <Link to={`/productdetails/${slide.id}`} style={{textDecoration:'none'}}>
+            <div className={styles["related-products-pics"]}>
+              <img src={slide.image_url} alt={slide.description} />
+            </div>
+    
+            <div className={styles["others"]}>
+                <h4 id={styles["p-category"]}>{slide.category}</h4>
+                {/* <p>{props.description}</p> */}
+                <h2 id={theme?styles["h2-price-dark"]:styles["h2-price"]}>${slide.price}</h2>
+                <p>{slide.tittle}</p>
+            </div>
+          </Link>
         </div>
       ))}
      </div>

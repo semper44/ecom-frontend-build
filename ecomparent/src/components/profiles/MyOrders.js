@@ -24,7 +24,6 @@ function MyOrders() {
     const[msgFn, setMsgFn]=useState(false)
     const {dontdisplay}= useContext(screensizecontext)
     const{id}=useParams()
-    ;
     const {theme}= useContext(ThemeData)
 
     const {user}= useContext(AuthContext)
@@ -37,24 +36,23 @@ function MyOrders() {
     let errorStatus=false
     fetch(`${process.env.REACT_APP_URLS}/profile/yourorders/${userDetail.username}`)
     .then((res)=>{
+      console.log(res)
         if(!res.ok){
             setLoading(false)
+            errorStatus=true
             if(res.status===417){
-              errorStatus=true
-              return res.json()
+            }else{
+              throw Error("Couldn't fetch data, please retry")
             }
         }else{
-            throw Error("Couldn't fetch data, please retry")
-        }
-        if (res.status === 200){
-            setLoading(false)
-            // setMsgFn(true)
-            return res.json()
-        }
+              setLoading(false)
+              // setMsgFn(true)
+              return res.json()
+            }
         })
     .then((result)=>{
       if(errorStatus){
-        setError(result.msg)
+        setError('No orders found')
     }else{
       if(result !== undefined){
           result.forEach((data) => {
@@ -166,14 +164,14 @@ function MyOrders() {
       },
     },
   ];
-
   useEffect(()=>{document.title="Orders"
   },[])
   return (
     <div style={{ height: "60vh", width: "100%", marginBottom:"20px", paddingRight:"6%",  paddingLeft:"3.5%"  }}>
-     {error && <h1 style={{textAlign: "center", padding:" 22% 0", color: "cyan",}}>
+     {error ? <h1 style={{textAlign: "center", padding:" 22% 0", color: "cyan",}}>
         {error}
-      </h1> }      {(!loading && !error )? (
+      </h1>  :    
+      (!loading ? (
         <Box m="35px 0 0 0" height="60vh">
           <DataGrid
             rows={data}
@@ -199,7 +197,7 @@ function MyOrders() {
             
           />
         </Box>
-      ): <Loading />}
+      ): <Loading />)}
     </div>
   );
 }
