@@ -65,6 +65,12 @@ function Ratings(props) {
   const createReview= async ()=>{
     await fetch(`${process.env.REACT_APP_URLS}/profile/createreview/`,requestOptions
     )   
+    // .then((response)=>{
+    //   if(response.status === 417){
+
+    //   }
+    // }
+    // )
   }
 
 

@@ -36,7 +36,7 @@ function Positive() {
             return response.json()
         })
         .then((data)=>{
-            ;     
+            console.log(data)
             if(errorStatus){
                 setError(data.msg)
             }else{
@@ -65,10 +65,12 @@ function Positive() {
                 <div className={styles.pics}>
                     <img src={item?.image_url} alt="" />
                 </div>
-                <p>{item?.sender_name}</p>
-            <div className={styles.rated}>
-                <CriticalRating value={item?.value}/>
-            </div>
+                <div>
+                    <p style={{color:'cyan'}}>{item?.sender_name}</p>
+                    <div className={styles.rated}>
+                        <CriticalRating value={item?.value}/>
+                    </div>
+                </div>
             </div>
             <div className={styles["rating-text"]}>
                 {item?.text}
