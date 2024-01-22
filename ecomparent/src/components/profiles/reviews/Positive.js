@@ -36,7 +36,6 @@ function Positive() {
             return response.json()
         })
         .then((data)=>{
-            console.log(data)
             if(errorStatus){
                 setError(data.msg)
             }else{

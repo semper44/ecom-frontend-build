@@ -99,7 +99,6 @@ function Register() {
           }
         })
       .then((data)=>{
-        console.log(data.email)
         if(data.email !== undefined){
           setError(data.email[0])
           

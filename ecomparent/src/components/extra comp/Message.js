@@ -6,9 +6,7 @@ function Message({value, code, fn}) {
   useEffect(()=>{
     const interval=setInterval(()=>{
       
-      fn(false)
-      console.log('i have ran')
-      
+      fn(false)      
     }, 5000)      
     setTimeout(()=>clearInterval(interval), 6000)
   }, [fn])

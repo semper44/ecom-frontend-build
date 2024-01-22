@@ -51,13 +51,11 @@ const SearchComponent = (props) => {
   function Change(e){
     setSelectedOptions({...selectedOptions, [e.target.name]:e.target.value})
   }
-  console.log(searchResults)
   function goBackFn(){
     setSearchResultShow(false)
     setSearchContainer(true)
   }
   function goToProfile(profile){
-    console.log(profile)
     window.location.pathname =`/profile/${profile?.name}`
     props.hide()
   }

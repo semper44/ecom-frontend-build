@@ -166,7 +166,6 @@ function AdminCreate({setproduct, socket, followers}) {
     
     // let space = ""
     // let value= space.concat("sorry, something went wrong, please try again ")
-    console.log(responseData, socketData,response);
 
   return (
     <>

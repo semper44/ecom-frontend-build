@@ -18,7 +18,6 @@ function ProductFromCategories({url}) {
   const {data, loading, error}= useFetch(url)
   let word= url.split("/")
   let title=word[word.length-2]
-  // console.log(url);
 
   useEffect(()=>{
     document.title=title.charAt(0).toUpperCase()+title.slice(1)

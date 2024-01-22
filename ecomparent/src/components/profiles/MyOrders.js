@@ -36,7 +36,6 @@ function MyOrders() {
     let errorStatus=false
     fetch(`${process.env.REACT_APP_URLS}/profile/yourorders/${userDetail.username}`)
     .then((res)=>{
-      console.log(res)
         if(!res.ok){
             setLoading(false)
             errorStatus=true
