@@ -121,8 +121,6 @@ function order(){
  
   }
 }
-
-console.log(cartDisplay.cart?.items)
  
   return (
     <>

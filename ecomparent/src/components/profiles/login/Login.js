@@ -9,9 +9,10 @@ import ResetPassword from "../resetpassword/ResetPassword"
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Box } from '@mui/material'
 import Loading from '../../extra comp/NewLoadingModal'
+import Welcom from '../../extra comp/Welcom'
 
 
-console.log(process.env.REACT_APP_URLS)
+let showroadMap = localStorage.getItem('welcome')||true
 
 const initialState={
   username:"",
@@ -26,7 +27,7 @@ function Login() {
   
   useEffect(()=>{document.title="login"
   },[])
-
+  const [showWelcome, setShowWelcome]= useState(JSON.parse(showroadMap))
   const [state, dispatch] = useReducer(reducer, initialState)
   let sendData= useContext(AuthContext)
   const[passwordChange, setPasswordChange]=useState(false)
@@ -60,7 +61,7 @@ function Login() {
   }
   return (
       <>
-     
+      {showWelcome && <Welcom setShowWelcome={setShowWelcome}/>}
       {(interval && status) &&<Message value={message} code={code}/>}
       {passwordChange &&<ResetPassword />}
       <div className={theme?styles["background-dark"]:styles.background}>

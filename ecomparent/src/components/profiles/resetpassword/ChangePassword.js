@@ -13,7 +13,7 @@ function ChangePassword() {
   const[showResetPasswordMsg, setShowResetPasswordMsg]= useState(false)
   const[password, setPassword]=useState({password1:"", password2:""})
   const[status, setStatus]= useState(false)
-  const[error, setError]= useState(null)
+  const[error, setError]= useState(false)
 
  
   const{uid, id}= useParams()
@@ -39,11 +39,11 @@ function ChangePassword() {
     let fetchrequest= async(e)=>{
       
       let data= await fetch(`${process.env.REACT_APP_URLS}/profile/password-reset-complete/`, requestOptions)
-      
       if(data.ok){
         setShowResetPasswordMsg(true)
         setStatus(true)
-        setError(null)
+        setError(false)
+        window.location.pathname = '/login'
       }else{
         setStatus(false)
         setShowResetPasswordMsg(true)

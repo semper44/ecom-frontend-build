@@ -1,473 +1,156 @@
-import React, { useContext, useState, useEffect } from 'react'
+// SearchComponent.jsx
+
+import React, { useState , useContext} from 'react';
+import axios from 'axios';
+import Modals from '../extra comp/Modals';
 import styles from  "./searchmodal.module.css"
-import Modals from '../extra comp/Modals'
 import {ThemeData} from "../../App"
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
- 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Loading from '../extra comp/Loading';
+import { Link } from 'react-router-dom';
+import CriticalRating from "../extra comp/CriticalRating"
 
-function SearchModal(props) {
+
+
+const SearchComponent = (props) => {
+  const {theme}= useContext(ThemeData)
+  const [selectedOptions, setSelectedOptions] = useState({
+    query:'',
+    size: '',
+    color: '',
+    price: '',
+  });
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchResultShow, setSearchResultShow] = useState(false);
+  const [searchContainer, setSearchContainer] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleSearch = async () => {
+    setLoading(true)
+    try {
+      // Create a new object with only non-empty values
+      const filteredOptions = Object.fromEntries(
+        Object.entries(selectedOptions).filter(([key, value]) => value !== '')
+      );
   
-    const[disabled, isDisabled]= useState(true)
-    const[mainSearch, setMainSearch]= useState(undefined)
-    const[realData, setRealData]= useState()
-    const[data, setData]= useState({
-      search:"",
-      color:"",
-      category:"",
-      price:"",
-      size:""
-  })
-    const {theme}= useContext(ThemeData)
+      const response = await axios.get(`${process.env.REACT_APP_URLS}/product/api/search/`, {
+        params: { query: selectedOptions.query, ...filteredOptions },
+      });
+      if(response.data){
+        setSearchResults(response.data);
+        setLoading(false)
+        setSearchContainer(false)
+        setSearchResultShow(true)
+      }
 
-
-    function Change(e){
-      setData({...data, [e.target.name]:e.target.value})
+    } catch (error) {
+      console.error('Error fetching search results:', error);
     }
-
-    function handleChange(e){
-      setMainSearch(e.target.value)
-      isDisabled(false)
-    }
-    
-
-    
-    useEffect(()=>{
-      if(data.search !== ""){
-        setRealData({...realData, search:data.search})
-      }
-      else{
-        setRealData({...realData, search:undefined})
-
-      } 
-    },[data.search])
-
-    useEffect(()=>{
-      if(data.color !== ""){
-        setRealData({...realData, color:data.color})
-      }else{
-        setRealData({...realData, color:undefined})
-
-      }
-      
-    },[data.color])
-
-    useEffect(()=>{
-      if(data.size !== ""){
-        setRealData({...realData, size:data.size})
-      }else{
-        setRealData({...realData, size:undefined})
-
-      }
-      
-    },[data.size])
-
-    useEffect(()=>{
-      if(data.price !== ""){
-        setRealData({...realData, price:data.price})
-      }else{
-        setRealData({...realData, price:undefined})
-
-      }
-    },[data.price])
-
-    useEffect(()=>{
-      if(data.category !== ""){
-        setRealData({...realData, category:data.category})
-      }else{
-        setRealData({...realData, category:undefined})
-
-      }
-      
-    },[data.category])
-
-      
-   
-      function send(){
-      if(realData.search && realData.price && realData.color && realData.category && realData.size){
-        
-        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&$price=${realData.price}&category=${realData.category}&size=${realData.size}&color=${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      // search combinations
-
-      else if(!realData.search && realData.price && !realData.color && !realData.category && !realData.size){
-        
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && !realData.price && realData.color && !realData.category && !realData.size){
-        
-        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && !realData.price && !realData.color && realData.category && !realData.size){
-        
-        fetch(`${process.env.REACT_APP_URLS}/product/search?category=${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && !realData.price && !realData.color && !realData.category && realData.size){
-        
-        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && !realData.price && !realData.color && !realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && realData.price && !realData.color && !realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&price${realData.price}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && !realData.price && realData.color && !realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&color${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && !realData.price && !realData.color && realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&category${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && !realData.price && !realData.color && !realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?search=${realData.search}&size${realData.size}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      // price combinations
-
-      else if(!realData.search && realData.price && realData.color && realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&color=${realData.color}&category=${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && realData.price && realData.color && !realData.category && realData.size){
-        
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&search=${realData.search}&color=${realData.color}&size=${realData.size}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && realData.price && realData.color && !realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&color=${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && realData.price && !realData.color && realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&category=${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && realData.price && !realData.color && realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}&search=${realData.search}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && realData.price && !realData.color && realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&category=${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && realData.price && realData.color && !realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && realData.price && !realData.color && !realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && realData.price && realData.color && realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&size=${realData.size}&color=${realData.color}&category=${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-
-      // color combination
-
-      else if(!realData.search && !realData.price && realData.color && realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&category=${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && !realData.price && realData.color && realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&category=${realData.category}&size=${realData.size}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && !realData.price && realData.color && !realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&size=${realData.size}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && !realData.price && realData.color && realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}&category=${realData.category}&color=&size=${realData.size}${realData.color}&search=${realData.search}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(!realData.search && !realData.price && !realData.color && realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}&category=${realData.category}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && realData.price && realData.color && realData.category && !realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?size=${realData.size}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      
-      // search combination
-      else if(realData.search && realData.price && !realData.color && !realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-      else if(realData.search && !realData.price && realData.color && !realData.category && realData.size){
-        
-
-        fetch(`${process.env.REACT_APP_URLS}/product/search?color=${realData.color}&search=${realData.search}&color=${realData.color}`)
-        .then(res=>{
-            return res.json()
-        })
-        .then(response=>{
-          
-        })
-      }
-
-
-      // testing
-      // else if(realData.search && !realData.price && realData.color && !realData.category && realData.size){
-      //   
-
-      //   fetch(`${process.env.REACT_APP_URLS}/product/search?price=${realData.price}&category=${realData.category}&search=${realData.search}&color=${realData.color}`)
-      //   .then(res=>{
-      //       return res.json()
-      //   })
-      //   .then(response=>{
-      //     
-      //   })
-      // }
-
-    }
-
-
+  };
+  
+  function Change(e){
+    setSelectedOptions({...selectedOptions, [e.target.name]:e.target.value})
+  }
+  console.log(searchResults)
+  function goBackFn(){
+    setSearchResultShow(false)
+    setSearchContainer(true)
+  }
+  function goToProfile(profile){
+    console.log(profile)
+    window.location.pathname =`/profile/${profile?.name}`
+    props.hide()
+  }
+  function goToProduct(item){
+    window.location.pathname =`/productdetails/${item.id}`
+    props.hide()
+  }
+  
   return (
     <Modals>
-    {/* <div className='modal-bg' > */}
-        <div className={theme?styles["theme-dark"]:styles['all-items']}>
+      {loading && <div className={styles.loadingdiv}>
+        <Loading />
+      </div> }
+      <div className={theme?styles["theme-dark"]:styles['all-items']}>
+        <div className="buttons">
+          {searchResultShow && <ArrowBackIcon sx={{cursor:'pointer'}} onClick={goBackFn}/>}
           <button id={styles.cancel} onClick={props.onHide}>&#10005;</button>
-          <div className={styles['search-items']}>
+        </div>
+       {searchContainer &&<div className="searchcontainer">
+          <div className={styles['parent-hold']}>
+            <div className={styles['search-items']}>
+              <div className={styles.first}>
+              <input
+                type="text"
+                onChange={Change}
+                name='query'
+                placeholder="Search..."
+              />
+            </div>
             <div className={styles.first}>
-              <input type="text" 
-              value={data.search}
-              className={styles.product} 
-              placeholder='Search'
-              onChange={Change}
-              name='search'/>
-          </div>
-          <div className={styles.radio}>          
-            <FormControl>
-              <RadioGroup 
-              aria-labelledby="demo-radio-buttons-group-label"
-              name="radio-buttons-group"
-              value={mainSearch} onChange={handleChange} >
-                <FormControlLabel value="profile" sx={{color:"black"}} control={<Radio />} label="Profiles" />
-                <FormControlLabel value="product" sx={{color:"black"}} control={<Radio />} label="Products" />
-              </RadioGroup>
-            </FormControl>
-          </div>
-
-          <div className={styles["specific-search-child"]}>
-          
-            {/* <input type="text" 
-            className={styles.colors} 
-            placeholder='color'
-            onChange={Change}
-            value={data.color}
-            name='color'
-            disabled={disabled}/> */}
-
-            <input type="text" 
-            value={data.category}
-            className={styles.sellers}
-            placeholder='category'
-            onChange={Change}
-            name='category'
-            disabled={disabled}/>
+              <input
+                type="text"
+                placeholder="max-size (optional)"
+                name = 'size'
+                // checked={selectedOptions === 'size'}
+                onChange={Change}
+              />
+            </div>
             
-            <input type="text" 
-            value={data.price}
-            className={styles.price}
-            placeholder='Maximum price'
-            onChange={Change}
-            name='price'
-            disabled={disabled}/>
-
-            <input type="text" 
-            value={data.size}
-            className={styles.price}
-            placeholder='Size'
-            onChange={Change}
-            name='size'
-            disabled={disabled}/>
+            <div className={styles.first}>
+              <input
+                type="text"
+                placeholder="color (optional)"
+                name='color'              
+                onChange={Change}
+              />
+              </div>
+              <div className={styles.first}>
+              <input
+                type="text"
+                placeholder="max-price (optional)"
+                name='price'
+                onChange={Change}
+              />
+              </div>
+            </div>
           </div>
+
           <div className={styles["send-button"]}>
-            <button className={disabled? styles.disabled:styles.search} onClick={send} disabled={disabled}>Search</button>
+            <button className={styles.search} onClick={handleSearch}>Search</button>
           </div>
-          </div>
-      </div>
-    </Modals>
-  )
-}
+        </div>}
 
-export default SearchModal
+        {searchResultShow && ((searchResults.profiles.length>0 || searchResults.products.length>0) ?<div className={styles['search-results']}>
+          {searchResults.profiles && (searchResults.profiles.length>0 && searchResults.profiles.map((result) => (
+              <div className={styles["container"]} onClick={()=>goToProfile(result)}>
+                <div className={styles.pics}>
+                    <img src={result?.image_url} alt="" />
+                </div>
+                 <div>
+                    <p style={{color:'cyan'}}>{result?.name}</p>
+                    {result.tags === 'seller' && <div className={styles.rated}>
+                      <CriticalRating value={result?.ratings_value}/>
+                    </div>}
+                </div>
+              </div>
+          )))}
+          {searchResults.products && (searchResults.products.length>0 && searchResults.products.map((result) => (
+            <div className={styles["container"]} onClick={()=>goToProduct(result)}>
+                <div className={styles.pics}>
+                    <img src={result?.image_url} alt="" />
+                </div>
+                 <div >
+                  <p style={{color:'cyan'}} >{result.category}</p> 
+                  <p className={theme?styles.category:styles['dark-category']}>${result.price}</p>
+              </div>
+            </div>
+          )))}
+        </div>: <div className={styles['noting']}>oops 😥 <br /><br /> Nothing found, please check your keywords</div>)}
+      </div>
+
+    </Modals>
+  );
+};
+
+export default SearchComponent;

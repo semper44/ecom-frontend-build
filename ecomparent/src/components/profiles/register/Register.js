@@ -15,6 +15,7 @@ import Loading from '../../extra comp/NewLoadingModal'
 
 const initialState={
   username:"",
+  email:'',
   password1:"",
   password2:"",
   checkbox:false
@@ -25,7 +26,7 @@ function reducer(state, action){
 }
 
 function validate(state){
-  return state.username !== "" &&
+  return state.username !== "" && state.email !== "" &&
   state.password1===state.password2  &&
   state.password1.length>4 && state.password2.length>4  &&
   state.checkbox
@@ -38,6 +39,8 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState('');
+  const [errorState, setErrorState] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState)
   let sendData= useContext(AuthContext)
   let {theme}= useContext(ThemeData)
@@ -74,8 +77,6 @@ function Register() {
     dispatch(action)
   }
 
-  ;
-
   let loginUser= (e)=>{
     e.preventDefault();
     setShowModal(true)
@@ -85,19 +86,37 @@ function Register() {
         "Content-Type": "application/json",
         },
     
-    body:JSON.stringify({ username: state.username, password: state.password1, password2: state.password2 })
+    body:JSON.stringify({ username: state.username, email:state.email, password: state.password1, password2: state.password2 })
     };
       fetch(`${process.env.REACT_APP_URLS}/profile/register/`, fetchRequestOptions)
       .then((res)=>{
+        setShowModal(false)
           if(res.ok){
-            setShowModal(false)
             navigate("/login")
+          }else{
+            setErrorState(true)
+            return res.json()
           }
         })
+      .then((data)=>{
+        console.log(data.email)
+        if(data.email !== undefined){
+          setError(data.email[0])
+          
+        }else{
+          setError(data.username[0])
+
+        }
+      })
   }
 
   return (
       <>
+      {errorState && <Message 
+      value={error}
+      code={"error"}
+      fn={setErrorState}
+       />  } 
       {(interval && status) &&<Message value={message} code={code}/>}
       <div className={theme?styles["register-background-dark"]:styles.registerbackground}>
         <div className={styles["register-image"]}>
@@ -115,6 +134,12 @@ function Register() {
               onChange={Change}
               name='username'/>
 
+              <input type="email" 
+              className="input-username" 
+              placeholder='Email'
+              onChange={Change}
+              name='email'/>
+
             <Box sx={{position:"relative"}}>
               <input type={showPassword?"text":"password" } 
             className="input-password" 
@@ -122,7 +147,7 @@ function Register() {
             onChange={Change}
             name='password1'/>
 
-            <VisibilityOffOutlinedIcon style={{ cursor: 'pointer', position:"absolute", top:"70%", right:"2rem" }}
+            <VisibilityOffOutlinedIcon style={{ cursor: 'pointer', position:"absolute", top:"60%", right:"2rem" }}
                   onClick={toggleShowPassword}/>
             </Box>
 
@@ -132,7 +157,7 @@ function Register() {
             placeholder='Password'
             onChange={Change}
             name='password2'/>
-            <VisibilityOffOutlinedIcon style={{ cursor: 'pointer', position:"absolute", top:"70%", right:"2rem" }}
+            <VisibilityOffOutlinedIcon style={{ cursor: 'pointer', position:"absolute", top:"60%", right:"2rem" }}
                   onClick={toggleShowPassword2}/>
             </Box>
 

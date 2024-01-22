@@ -112,6 +112,7 @@ function UserProfile({socket}) {
       })
       .then(data => {
         setdata(data)  
+        setUserFollowers(data?.followers.length)
         if(data?.tags === 'seller'){
           setSeller(true)
         }
@@ -120,18 +121,15 @@ function UserProfile({socket}) {
         }else{
           if(data.followers.includes(userDetails?.user_id)){
             setFollowed(true)
-            setUserFollowers(data?.followers.length)
           }else{
             setFollowed(false)
           }
         }
-});
+})
 }catch(error){
 
 }
 }, [userDetails?.user_id, username])
-
-
 
   // getting all reviews and setting rating based on response
   

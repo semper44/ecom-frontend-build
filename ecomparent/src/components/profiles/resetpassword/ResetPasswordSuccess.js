@@ -9,7 +9,7 @@ function ResetPasswordSuccess({status, setshow, type, error}) {
     const[passwordReset, setPasswordReset]= useState(null)
 
     useEffect(()=>{
-      if(error===null){
+      if(!error){
         setPasswordReset("Password reset successfull")
         setPasswordSent("We have sent you a link to reset your password, Please check your email, click on the link and follow prompt, to complete the process.")
       }else{

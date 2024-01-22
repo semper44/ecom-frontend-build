@@ -37,6 +37,7 @@ import AllGeneralNotifications from "./components/profiles/generalnotifications/
 // import ChangePassword from "./components/profiles/resetpassword/ChangePassword";
 import ConfirmAndUpdateOrder from "./components/profiles/poductcreation/ConfirmAndUpdateOrder";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import ChangePassword from "./components/profiles/resetpassword/ChangePassword";
 // import FetchMostBought from "./components/admin/FetchMostBought";
 // import Workers from "./components/extra comp/Workers";
 // import MyOrders from "./components/profiles/MyOrders";
@@ -306,7 +307,9 @@ function App() {
                                                     <Route path="yourorders" element={<YourOrders />}/>
                                                     <Route path="reviews/critical" element={<Critical />}/>
                                                     <Route path="reviews/positive" element={<Critical />}/>
+
                                                   </Route>
+                                                    <Route path="/profile/password-reset/:uid/:id/" element={ <ChangePassword /> } />
                                                     {/* element={<UserProfile socket={socket}/>}
                                                   /> */}
 

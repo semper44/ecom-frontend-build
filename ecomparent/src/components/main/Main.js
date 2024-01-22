@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, memo} from 'react'
+import React, {useEffect, useContext, memo, useState} from 'react'
 import styles from "./main.module.css"
 import { ThemeData } from '../../App'
 import pexels from "../../ecom_images/pexels1.jpeg"
@@ -16,19 +16,20 @@ import MainProducts from './MainProducts'
 import {Images} from './ImageSlider'
 import Aos from 'aos'
 import "aos/dist/aos.css"
+import Welcom from '../extra comp/Welcom'
 
 
 
-
+let showroadMap = localStorage.getItem('welcome')||true
 
 function Main() {
-  
   const {theme}= useContext(ThemeData)
+  const [showWelcome, setShowWelcome]= useState(JSON.parse(showroadMap))
   const {dontdisplay}= useContext(screensizecontext)
   // const {promoloading}= useContext(promoData)
   const {sidebar,  hideSidebar}= useContext(showsidebarcontext)
   const {fetchdata, featureData,loading, error}= useContext(mainproductContext);
-  
+
   useEffect(()=>{
     fetchdata();
   }, [fetchdata])
@@ -62,6 +63,7 @@ function Main() {
     <>
     {!loading?
     <>
+    {showWelcome && <Welcom setShowWelcome={setShowWelcome}/>}
     {(!featureData && !ftd && error) && <h1 id={styles.errors}>{error}</h1> }
     {(featureData || ftd) &&<div className={styles.parent} onClick={open}>
       <div className={styles["image-slide"]}>

@@ -7,6 +7,7 @@ import styles from "./ratings.module.css"
 
 function RatingProfile({value}) {
   const [currentValue] = useState(value);
+  console.log(currentValue)
   const stars = Array(5).fill(0)
   return (
       <div className={styles.stars}>

@@ -4,47 +4,50 @@ import ResetPasswordSuccess from './ResetPasswordSuccess'
 import { ThemeData } from '../../../App'
 
 function ResetPassword() {
-    const[email, setEmail]= useState({email:""})
-    const[showResetPasswordMsg, setShowResetPasswordMsg]= useState(false)
-    const[status, setStatus]= useState(false)
-    const[error, setError]= useState(null)
-    const{theme}=useContext(ThemeData)
+  const[email, setEmail]= useState({email:""})
+  const[showResetPasswordMsg, setShowResetPasswordMsg]= useState(false)
+  const[status, setStatus]= useState(false)
+  const[error, setError]= useState(false)
+  const{theme}=useContext(ThemeData)
     
   useEffect(()=>{document.title="Confirm Order"
   },[])
 
-    function change(e){
-      setEmail({[e.target.name]:e.target.value})
-    }
+  function change(e){
+    setEmail({[e.target.name]:e.target.value})
+  }
 
-    let formdata= new FormData()
-    let fetchrequest= async()=>{
-        
-        formdata.append("email", email.email)
-        const requestOptions = {
-          method: 'POST',
-          body: formdata,
-          // redirect: 'follow'
-        };
-        // const body = JSON.stringify(email);
-        let data= await fetch(`${process.env.REACT_APP_URLS}/profile/reset_password/`, requestOptions)
-        if(data.ok){
-          setShowResetPasswordMsg(true)
-          setStatus(true)
-          setError(null)
-        }else{
-          setStatus(false)
-          setShowResetPasswordMsg(true)
-          setError("Couldn't fetch data, please retry")
-          
+  let formdata= new FormData()
+  let fetchrequest= async()=>{
+      
+    formdata.append("email", email.email)
+    const requestOptions = {
+      method: 'POST',
+      body: formdata,
+      // redirect: 'follow'
+    };
+      // const body = JSON.stringify(email);
+      let data= await fetch(`${process.env.REACT_APP_URLS}/profile/reset_password/`, requestOptions)
+      if(data.ok){
+        setShowResetPasswordMsg(true)
+        setStatus(true)
+        setError(false)
+      }else{
+        setStatus(false)
+        setShowResetPasswordMsg(true)
+        setError("Couldn't fetch data, please retry")
+        if(data.status === 404){
+          setError("Please enter the email you registered with")
         }
-      await data.json()
         
-    }
-   
-    function submit(e){    
-      fetchrequest()
-    }
+      }
+    await data.json()
+      
+  }
+  
+  function submit(e){    
+    fetchrequest()
+  }
 
   return (
     <>
