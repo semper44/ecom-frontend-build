@@ -242,7 +242,7 @@ function HeaderContainer(props) {
     }else if(productnotif && userfollowingnotif){
       setCount(userfollowingnotif?.length+productnotif?.length)
     }
-  },[profileNotification,profileNotification.length, notificationsstore,productnotification, changed]) 
+  },[profileNotification,profileNotification, notificationsstore,productnotification, changed]) 
     
   function logout(){
     if(cartCount.cart.cartSize>=1 && token?.access){
