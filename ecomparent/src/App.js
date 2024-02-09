@@ -177,7 +177,7 @@ function App() {
   }
 
   useEffect(()=>{
-     setSocket(io("https://epcommerceserver.onrender.com"))
+     setSocket(io("http://localhost:5000"))
   },[])
 
   const  userId= userDetail?.user_id

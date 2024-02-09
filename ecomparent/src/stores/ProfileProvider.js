@@ -39,7 +39,7 @@ function ProfileProvider(props) {
     //   }
   }}, [userDetails?.user_id, userDetails?.username])
     
-
+console.log(profileNotification)
   const profilecontextvalue = {
     setProfileNotifications:setProfileNotification,
     profileNotification:profileNotification,

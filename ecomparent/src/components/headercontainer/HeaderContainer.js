@@ -219,6 +219,7 @@ function HeaderContainer(props) {
     };
   }, [notif]);
    
+  console.log(profileNotification, 'before')
  
   useEffect(()=>{
     localStorage.setItem("gottenNotification",JSON.stringify(notificationsstore))       
@@ -228,7 +229,8 @@ function HeaderContainer(props) {
     localStorage.setItem("productNotification",JSON.stringify(profileNotification))       
   }, [profileNotification])
 
-  
+  console.log(profileNotification, 'after')
+
 
   const productnotification= JSON.parse(window.localStorage.getItem("productNotification"))|| null
   useEffect(()=>{
