@@ -218,9 +218,7 @@ function HeaderContainer(props) {
       notif?.off("offlinefollowingnotif", handleFollowingofflineNotification);
     };
   }, [notif]);
-   
-  console.log(profileNotification, 'before')
- 
+    
   useEffect(()=>{
     localStorage.setItem("gottenNotification",JSON.stringify(notificationsstore))       
   }, [notificationsstore])
