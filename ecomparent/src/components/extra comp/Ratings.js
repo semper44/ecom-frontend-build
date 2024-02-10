@@ -63,14 +63,11 @@ function Ratings(props) {
     redirect: 'follow'
   };
   const createReview= async ()=>{
-    await fetch(`${process.env.REACT_APP_URLS}/profile/createreview/`,requestOptions
-    )   
-    // .then((response)=>{
-    //   if(response.status === 417){
-
-    //   }
-    // }
-    // )
+    const response=  await fetch(`${process.env.REACT_APP_URLS}/profile/createreview/`,requestOptions
+    ) 
+    if(response.status === 417){
+      props.setAlreadyReviewed(true)
+    }
   }
 
 

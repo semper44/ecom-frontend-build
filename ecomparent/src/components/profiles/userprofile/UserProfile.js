@@ -47,6 +47,7 @@ function UserProfile({socket}) {
   const[followAndRate, setFollowAndRate]= useState(false)
   const[followLoading, setFollowLoading]= useState(false)
   const[rated, setRated]= useState(false)
+  const[alreadyReviewed, setAlreadyReviewed]= useState(false)
   const[seller, setSeller]= useState(false)
   const[data, setdata]= useState()
   const[userFollowers, setUserFollowers]= useState()
@@ -271,9 +272,6 @@ useEffect(()=>{
     }
 
 
-  
-
-
   function following(){
     // eslint-disable-next-line no-undef
     setFollowLoading(true)
@@ -361,7 +359,6 @@ useEffect(()=>{
 
   function handleChange(e){
     e.preventDefault()
-    ;
     // setImage({image:e.target.files})
     updateProfilePics(e)
    
@@ -407,6 +404,11 @@ useEffect(()=>{
       code={"error"}
       fn={setUnsuccessful}
        />}
+  {alreadyReviewed && <Message 
+      value={"Already reviewed this Seller"}
+      code={"error"}
+      fn={setAlreadyReviewed}
+       />}
       </div>
     {alreadyAseller}
     {response ?
@@ -415,7 +417,7 @@ useEffect(()=>{
         <h1> Profile Not Found</h1>
       </div>:
       <div className={styles["profile-profile"]}>
-      {(ratings || followAndRate) && <Ratings later={ratings =>setRatings(ratings)} followandrate={followAndRate =>setFollowAndRate(followAndRate)} id={username}/>}
+      {(ratings || followAndRate) && <Ratings later={ratings =>setRatings(ratings)} setAlreadyReviewed={setAlreadyReviewed} followandrate={followAndRate =>setFollowAndRate(followAndRate)} id={username}/>}
       <div id={styles["seventy-container"]} className={theme?styles["class-dark"]:styles.class}>
         <div className={styles["profile-image-container"]}>
           <div className={styles["profile-image"]}>
@@ -458,7 +460,7 @@ useEffect(()=>{
                   <p id={styles.followers}>{userFollowers}<span> Followers</span></p>
                 </Link>
                 <Link to={`/profile/${username}/allfollowing/`}>
-                  <p> {data?.following?.length}<span>Following</span></p>
+                  <p> {data?.following?.length}<span> Following</span></p>
                 </Link>
               </div>
             </div>

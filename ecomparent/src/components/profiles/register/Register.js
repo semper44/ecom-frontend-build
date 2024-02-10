@@ -171,7 +171,7 @@ function Register() {
              <p>Accept terms of use!</p>
             </label>
              <Typography sx={{mt:"15px", fontSize:"14px", }}>Already registered? <span style={{color:"cyan", cursor:"pointer", textDecoration:"none"}}> <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}> Login! </Link></span></Typography>
-            <div className={styles["login-button"]}> 
+            <div className={styles["login-button-parent"]}> 
               <button 
               onClick={loginUser}
               disabled={!validate(state)}

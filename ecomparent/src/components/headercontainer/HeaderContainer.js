@@ -227,6 +227,7 @@ function HeaderContainer(props) {
     localStorage.setItem("productNotification",JSON.stringify(profileNotification))       
   }, [profileNotification])
 
+
   const productnotification= JSON.parse(window.localStorage.getItem("productNotification"))|| null
   useEffect(()=>{
     const userfollowingnotif= JSON.parse(window.localStorage.getItem("gottenNotification"))|| null
