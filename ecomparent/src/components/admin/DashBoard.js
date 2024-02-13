@@ -17,7 +17,6 @@ function DashBoard() {
   useEffect(()=>{
     fetchdata();
   }, [fetchdata])
-  
   return (
     <>
     {(Orders,MostBoughtCategory,TotalUsers,MonthlyUsers)?<div className={styles.container}>
@@ -26,8 +25,9 @@ function DashBoard() {
           <StatBox
             title={TotalUsers?.seller+TotalUsers["no-seller"]}
             subtitle="Total Users"
-            progress="0.75"
-            increase="14%"
+            progress={(TotalUsers?.previousBuyers2 !== 0)?(((TotalUsers?.currentBuyers-TotalUsers?.previousBuyers2)*100)/TotalUsers?.previousBuyers2):TotalUsers?.currentBuyers/100}
+            // progress={'0.75'}
+            increase={TotalUsers?.seller+(TotalUsers["no-seller"]-1)}
             icon={
               <EmailOutlinedIcon
               sx={{color:"gray", fontSize:"26px"}} />
@@ -36,8 +36,9 @@ function DashBoard() {
           <StatBox
             title={TotalUsers?.seller}
             subtitle="Total Sellers"
-            progress="0.75"
-            increase="14%"
+            progress={(TotalUsers?.previousSellers2 !== 0)?(((TotalUsers?.currentSellers-TotalUsers?.previousSellers2)*100)/TotalUsers?.previousSellers2):TotalUsers?.currentSellers/100}
+            // progress={'0.01'}
+            increase={TotalUsers?.seller}
             icon={
               <EmailOutlinedIcon
               sx={{color:"gray", fontSize:"26px"}} />
@@ -46,8 +47,9 @@ function DashBoard() {
           <StatBox
             title={TotalUsers&&TotalUsers["no-seller"]}
             subtitle="Total Buyers"
-            progress="0.75"
-            increase="14%"
+            progress={(TotalUsers?.previousBuyers2 !== 0)?(((TotalUsers?.currentBuyers-TotalUsers?.previousBuyers2)*100)/TotalUsers?.previousBuyers2):TotalUsers?.currentBuyers/100}
+            // progress={'0.9'}
+            increase={TotalUsers["no-seller"]-1}
             icon={
               <EmailOutlinedIcon
               sx={{color:"gray", fontSize:"26px"}} />
@@ -56,8 +58,8 @@ function DashBoard() {
           <StatBox
             title={TotalUsers?.goods}
             subtitle="Total Goods"
-            progress="0.75"
-            increase="14%"
+            progress={(TotalUsers?.previousGoods2 !== 0)?(((TotalUsers?.currentGoods-TotalUsers?.previousGoods2)*100)/TotalUsers?.previousGoods2):TotalUsers?.currentGoods/100}
+            increase={TotalUsers?.goods}
             icon={
               <EmailOutlinedIcon
               sx={{color:"gray", fontSize:"26px"}} />
@@ -66,18 +68,25 @@ function DashBoard() {
         </div>
         <div className={styles.infographics}>
           <div className={styles.charts} id={styles.barchart}>
-            <PieChart />        
+            <PieChart values={
+              [TotalUsers['electronics'], TotalUsers['computing'], TotalUsers['home&office'],TotalUsers['fashion'],TotalUsers['baby product'], TotalUsers['game']]}/>        
           </div>
           <div className={styles.charts} id={styles.chart2}>
               <BarChart />
           </div>
-          <div className={styles.charts} id={styles.chart2}>
+          <div className={styles.charts} id={styles.chart3}>
               <LineChart />
           </div>
 
         </div>
         </div>
-    </div>: <Loading /> }
+    </div>: 
+    <div className="loading-parent" style={{height:'100vh',position:'relative',width: '100%', display: 'flex', justifyContent: 'center', marginTop:'2rem'}}>
+      <div className="loading-child" style={{position:'absolute'}}>
+        <Loading />
+      </div>
+    </div>
+     }
     
     </>
   )

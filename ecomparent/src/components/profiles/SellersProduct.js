@@ -20,7 +20,8 @@ import Tooltip from "@mui/material/Tooltip";
 
 function SellersProduct() {
   const [edit, setEdit] = useState(false);
-  const [deleteState, setdeleteState] = useState(false);
+  const [deleteState, setdeleteState] = useState(false)
+  const [id, setId] = useState(null)
   const[data, setData]=useState()
   const[details, setDetails]=useState({})
   const[error, setError]=useState(null)
@@ -105,6 +106,7 @@ function SellersProduct() {
   // }, [id]);
 
   function del(params) {
+    setId(params.id)
     setdeleteState(true)
   }
   
@@ -182,7 +184,7 @@ function SellersProduct() {
                 Delete
               </Typography>
             </IconButton>
-            {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${params.id}`}/>}
+            {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct`} id={id}/>}
           </Box>
         );
       },

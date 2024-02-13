@@ -35,7 +35,7 @@ function AdminCreate({setproduct, socket, followers}) {
     const [socketData, setSocketData] = useState(false)
     const [responseData, setResponseData] = useState(false)
     const [unsuccessful, setUnsuccessful] = useState(false)
-    const [unsuccessful2, setUnsuccessful2] = useState(false)
+    const [block, setBlock] = useState(false)
     const [response, setResponse] = useState(false)
     const[permissionDenied2, setPermissionDenied2]= useState(false)
     const[permissionDenied, setPermissionDenied]= useState(false)
@@ -75,7 +75,7 @@ function AdminCreate({setproduct, socket, followers}) {
   useEffect(()=>{
     if(unsuccessful){
       
-      setUnsuccessful2(true)
+      setBlock(true)
     }else if(permissionDenied){
       setPermissionDenied2(true)
       setproduct(false)
@@ -170,16 +170,16 @@ function AdminCreate({setproduct, socket, followers}) {
   return (
     <>
     <Modals >
-      {permissionDenied2 && <Message 
+      {(permissionDenied2) && <Message 
       value={"Sorry, you have been blocked from using this service or do not have the necessary permissions"}
       code={"error"}
       fn={setPermissionDenied2}
        />}
 
-      {unsuccessful2 && <Message 
+      {block && <Message 
       value={"Sorry, request failed"}
       code={"error"}
-      fn={setUnsuccessful2}
+      fn={setBlock}
       />
       }
 

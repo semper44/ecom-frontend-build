@@ -28,6 +28,9 @@
 }
 
 @media(max-width:1223px){
+    #chart3{
+        padding-bottom: 3rem;
+    }
     .parent{
         margin-top: 4.5rem;
         margin-left: 3%;
@@ -55,6 +58,9 @@
    
 }
 @media(max-width:1002px){
+    #chart3{
+        padding-bottom: 3rem;
+    }
     .parent{
         margin-top: 4.5rem;
         margin-left: 15%;
@@ -108,5 +114,8 @@
         width: 90%; 
         height: 410px;
      }
+    #chart3{
+        padding-bottom: 3rem;
+    }
    
 } 

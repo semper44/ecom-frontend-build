@@ -141,7 +141,7 @@ function AllProduct() {
                 Delete
               </Typography>}
             </IconButton>
-            {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${id}`} type={"admin"}/>}
+            {deleteState &&<Delete setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/profile/delete/${id}`} type={"admin"}/>}
             {!dontdisplay &&(
             params.row.blocked===false?(<IconButton
               aria-label="Delete"
@@ -220,7 +220,11 @@ function AllProduct() {
           }:{}}
             
           />
-        </Box>}</>: <Loading />}
+        </Box>}</>: <div className="loading-parent" style={{height:'100vh',position:'relative',width: '100%', display: 'flex', justifyContent: 'center', marginTop:'2rem'}}>
+      <div className="loading-child" style={{position:'absolute'}}>
+        <Loading />
+      </div>
+    </div>}
     </div>
   );
 }

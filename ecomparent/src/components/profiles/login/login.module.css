@@ -82,6 +82,10 @@
     background-color: gray;
     color: white;
 }
+.login-button{
+    display: flex; 
+    justify-content: center;
+}
 #login-button{
     margin-top: 3rem;
     padding: 0.6rem 5rem;

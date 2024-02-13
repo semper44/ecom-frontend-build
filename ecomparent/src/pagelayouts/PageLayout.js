@@ -82,7 +82,9 @@ function PageLayout(props) {
                               color: "cyan",
                               textAlign: "center",
                               marginTop: "4rem",
-    }}>{location==="admin"?"Overview":location}</Typography>
+                              marginLeft:location==="admin"?'':'-9.1rem'}}>
+                                {location==="admin"?"Overview":location}
+                                </Typography>
               <Outlet />
             </Box>
           </Navbars>

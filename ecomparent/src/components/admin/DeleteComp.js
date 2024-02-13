@@ -14,21 +14,22 @@ import Loading from "../extra comp/Loading";
 //   return axios.delete(`${process.env.REACT_APP_URLS}/product/deleteproduct/${productId}`)
 // }
 
-function DeleteComp({setdelete, url, type}) {
+function DeleteComp({setdelete, url,id, type}) {
   const [loading, isLoading] = useState(false)
   const [error, setError] = useState(null)
   const [unsuccessful, setUnsuccessful] = useState(false)
   const [responseData, setResponseData] = useState(false)
+  const joinedUrl = url+'/'+id
   let navigate=useNavigate()
 
-    const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
-    const config= {headers:{
-       'Content-Type':'multipart/form-data',
-       'Authorization': 'Bearer '+ token?.access
-    }}
+  const token= JSON.parse(window.localStorage.getItem("authToken"))|| null
+  const config= {headers:{
+      'Content-Type':'multipart/form-data',
+      'Authorization': 'Bearer '+ token?.access
+  }}
     function deletefn(){
       isLoading(true)
-      axios.delete(url,config)
+      axios.delete(joinedUrl,config)
         .then(res=>{
           if(res.status===200){
             isLoading(false)

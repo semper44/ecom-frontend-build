@@ -4,34 +4,11 @@ import ProgressCircle from "./ProgressCircle";
 import { ThemeData } from "../../../App";
 import { screensizecontext } from "../../../stores/CartContxt";
 
-// import { ThemeData } from "../../../App";
-// const Themes=useContext(ThemeData)
-
 
 const StatBox = ({ title, subtitle, icon, progress, increase }) => {
   const Theme=useContext(ThemeData)
   const {dontdisplay}=useContext(screensizecontext)
  
-  // useEffect(()=>{
-  //   const handleResize = () => {
-  //     setScreenWidth(window.innerWidth)
-  //   }
-  //   window.addEventListener("resize", handleResize);
-
-  //   return ()=>{
-  //     window.removeEventListener("resize", handleResize)
-  //  }
-  // }, [screenWidth])
-
-  // useEffect(()=>{
-  //   if(screenWidth<=710){
-  //     setdontDisplay(true)
-  //   }
-  //   else{
-  //     setdontDisplay(false)
-  //   }
-  // }, [screenWidth])
-  
   return (
     <Box sx={{
       width:"100%", boxShadow:"3"
@@ -51,7 +28,7 @@ const StatBox = ({ title, subtitle, icon, progress, increase }) => {
             </Typography>
           </Box>
           <Box>
-            <ProgressCircle progress={progress} />
+            <ProgressCircle progress={progress} increase={increase} />
           </Box>
         </Box>
         <Box sx={{display:"flex", justifyContent:"space-between",

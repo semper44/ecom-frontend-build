@@ -30,6 +30,7 @@ function AllProduct() {
   const [productData, setproductData] = useState("");
   const [deleteState, setdeleteState] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [id, setId] = useState(null)
   const[details, setDetails]=useState({})
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -53,7 +54,7 @@ function AllProduct() {
       const res= await axios.get(`${process.env.REACT_APP_URLS}/product/getproduct`)
       if(res.status===200){
         setLoading(false)
-        setproductData(res.data)
+        setproductData(res.data.reverse())
       }
     }catch(error){
       setLoading(false)
@@ -68,6 +69,7 @@ function AllProduct() {
   // const fullscreen=false
 
   function del(params) {
+    setId(params.id)
     setdeleteState(true)
   }
   function editing(params) {
@@ -91,11 +93,11 @@ function AllProduct() {
       width:dontdisplay?60: undefined,
       flex:dontdisplay?0: 1,
       renderCell: (params) => {
-        // ;
-        return <Avatar src={params.row.image_url} />;
+        <Avatar src='' />
+        return <Avatar src={params.row.image_url} />
       },
     },
-    { field: "sellers", headerName: "Sellers", flex: 1 },
+    { field: "sellerName", headerName: "Sellers", flex: 1 },
     { field: "description", headerName: "Description", flex: 1, hide: "true" },
     {
       field: "price",
@@ -168,7 +170,7 @@ function AllProduct() {
                 Delete
               </Typography>
             </IconButton>
-            {deleteState &&<DeleteComp setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct/${params.id}`} type={"admin"}/>}
+            {deleteState &&<DeleteComp setdelete={setdeleteState} url={`${process.env.REACT_APP_URLS}/product/admin/deleteproduct`} id={id} type={"admin"}/>}
           </Box>
         );
       },
@@ -222,7 +224,11 @@ function AllProduct() {
         }   />
 
         
-        </Box>}</>: <Loading />}
+        </Box>}</>: <div className="loading-parent" style={{height:'100vh',position:'relative',width: '100%', display: 'flex', justifyContent: 'center', marginTop:'2rem'}}>
+      <div className="loading-child" style={{position:'absolute'}}>
+        <Loading />
+      </div>
+    </div>}
     </div>
   );
 }

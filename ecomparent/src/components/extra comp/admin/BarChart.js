@@ -36,10 +36,10 @@ export const options = {
   },
 };
 
-export function BarChart() {
+export function BarChart({MonthlyUsers}) {
   const{Orders}=useContext(adminOverview)
   
-  let ordersDataset=undefined
+  let ordersDataset=MonthlyUsers
   if(Orders){
     ordersDataset={
       labels: ["current", "previous", "previous Two Months"],

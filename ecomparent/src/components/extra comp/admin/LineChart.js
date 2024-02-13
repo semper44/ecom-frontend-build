@@ -38,7 +38,7 @@ const options = {
 };
 
 
-export function LineChart({chartdata}) {
+export function LineChart() {
   const{MonthlyUsers}=useContext(adminOverview)
   const Theme=useContext(ThemeData)
 
